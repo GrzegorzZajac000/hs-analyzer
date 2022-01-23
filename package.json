@@ -1,0 +1,9 @@
+{
+  "name": "hs-analyzer",
+  "version": "2.0.0",
+  "description": "HS Analyzer is simple tool for checking your Helium hotspot received beacons and its stats (RSSI, Valid / Invalid). Feel free to try it!",
+  "main": "index.js",
+  "repository": "git@github.com:GrzegorzZajac000/hs-analyzer.git",
+  "author": "Grzegorz Zając <grzegorz.zajac000@gmail.com>",
+  "license": "MIT"
+}
