@@ -22,15 +22,21 @@ class App extends React.Component {
       <Provider store={this.store}>
         <PersistGate loading={null} persistor={this.persistor}>
           <div className='app-content'>
-            <Menu />
-            <div className='app-content-view'>
-              <TopBar />
+            <div className='container-fluid'>
+              <div className='row'>
+                <div className='col-2 gx-0'>
+                  <Menu />
+                </div>
+                <div className='col-10 gx-0'>
+                  <TopBar />
 
-              <BrowserRouter>
-                <Routes>
-                  <Route path='/' element={<Home />} />
-                </Routes>
-              </BrowserRouter>
+                  <BrowserRouter>
+                    <Routes>
+                      <Route path='/' element={<Home />} />
+                    </Routes>
+                  </BrowserRouter>
+                </div>
+              </div>
             </div>
           </div>
         </PersistGate>

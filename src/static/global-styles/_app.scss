@@ -1,0 +1,21 @@
+#app {
+  height: 100%;
+  width: 100%;
+}
+
+.app-content {
+  height: 100%;
+  width: 100%;
+
+  > div {
+    height: 100%;
+
+    > .row {
+      height: 100%;
+
+      > div {
+        height: 100%;
+      }
+    }
+  }
+}
