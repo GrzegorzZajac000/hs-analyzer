@@ -1,0 +1,54 @@
+{
+  "extends": "stylelint-config-standard-scss",
+  "rules": {
+    "color-no-invalid-hex": true,
+    "color-function-notation": "legacy",
+    "font-family-no-duplicate-names": true,
+    "function-calc-no-unspaced-operator": true,
+    "function-linear-gradient-no-nonstandard-direction": true,
+    "unit-no-unknown": true,
+    "shorthand-property-no-redundant-values": true,
+    "keyframe-declaration-no-important": true,
+    "block-no-empty": true,
+    "at-rule-no-unknown": null,
+    "no-extra-semicolons": true,
+    "no-unknown-animations": null,
+    "no-empty-source": null,
+    "declaration-block-single-line-max-declarations": 1,
+    "color-hex-length": "short",
+    "function-url-quotes": "always",
+    "number-leading-zero": "never",
+    "number-no-trailing-zeros": true,
+    "length-zero-no-unit": true,
+    "unit-case": "lower",
+    "value-keyword-case": "lower",
+    "indentation": 2,
+    "max-line-length": 200,
+    "declaration-empty-line-before": "never",
+    "no-descending-specificity": null,
+    "at-rule-empty-line-before": [
+      "always", {
+        "ignore": ["after-comment"],
+        "ignoreAtRules": [
+          "if",
+          "else",
+          "else if",
+          "return",
+          "warn",
+          "for",
+          "import",
+          "mixin",
+          "extend",
+          "include",
+          "media",
+          "content",
+          "keyframes",
+          "-ms-keyframes",
+          "-moz-keyframes",
+          "-webkit-keyframes"
+        ]
+      }
+    ],
+    "no-invalid-position-at-import-rule": null
+  }
+}

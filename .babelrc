@@ -1,0 +1,21 @@
+{
+  "presets": [["@babel/env", {
+    "targets": {
+      "browsers": ["> 1%", "last 2 versions", "Android >= 4.0", "not ie <= 8", "not dead", "iOS 7", "iOS 8", "iOS 9"],
+      "node": "16.1.0"
+    }
+  }], "@babel/react", "minify"],
+  "env": {
+    "production": {
+      "plugins": [
+        "@babel/plugin-proposal-function-bind",
+        ["@babel/plugin-transform-runtime", {
+          "corejs": 3
+        }],
+        "transform-remove-debugger",
+        "transform-react-remove-prop-types",
+        "transform-minify-booleans"
+      ]
+    }
+  }
+}

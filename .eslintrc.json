@@ -1,0 +1,15 @@
+{
+  "parser": "babel-eslint",
+  "extends": ["standard", "standard-jsx", "standard-react"],
+  "rules": {
+    "no-tabs": "off",
+    "semi": "off",
+    "indent": ["warn", 2],
+    "react/jsx-indent": ["warn", 2],
+    "react/jsx-first-prop-new-line": "off",
+    "react/jsx-fragments": "off",
+    "no-useless-escape": "off",
+    "no-trailing-spaces": ["error", { "skipBlankLines": true }],
+    "no-irregular-whitespace": "off"
+  }
+}
