@@ -6,6 +6,11 @@
   "repository": "git@github.com:GrzegorzZajac000/hs-analyzer.git",
   "author": "Grzegorz Zając <grzegorz.zajac000@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "dev": "yarn clean && webpack serve --hot --inline --config webpack/dev.config.babel.js",
+    "prod": "cross-env NODE_ENV=production webpack --mode production --progress --config webpack/prod.config.babel.js"
+  },
   "devDependencies": {
     "@babel/core": "^7.16.12",
     "@babel/plugin-proposal-function-bind": "^7.16.7",
