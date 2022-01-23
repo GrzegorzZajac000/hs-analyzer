@@ -17,13 +17,13 @@ const initialState = {
 
 export default function counter (state = initialState, action) {
   switch (action.type) {
-    case SET_MOBILE_MENU_OPENED:
-      return { ...state, mobileMenuOpened: true };
+  case SET_MOBILE_MENU_OPENED:
+    return { ...state, mobileMenuOpened: true };
 
-    case SET_MOBILE_MENU_CLOSED:
-      return { ...state, mobileMenuOpened: false };
+  case SET_MOBILE_MENU_CLOSED:
+    return { ...state, mobileMenuOpened: false };
 
-    default:
-      return state;
+  default:
+    return state;
   }
 }
