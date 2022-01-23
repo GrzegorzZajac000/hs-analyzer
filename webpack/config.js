@@ -29,45 +29,13 @@ const config = {
   copyFilesProd: {
     patterns: [
       {
-        from: './src/static/root-files',
+        context: './src/static/root-files',
+        from: '**',
+        to: '../dist'
+      },
+      {
+        from: './src/static/root-files/.htaccess',
         to: '../dist/'
-      },
-      {
-        context: './src/static',
-        from: '**/*',
-        to: '../static/',
-        globOptions: {
-          ignore: [
-            'favicon/**/*',
-            'global-styles/**/*',
-            'images/**/*',
-            'root-files/**/*',
-            'video/**/*'
-          ]
-        }
-      }
-    ]
-  },
-
-  copyFiles: {
-    patterns: [
-      {
-        from: './src/static/root-files',
-        to: './'
-      },
-      {
-        context: './src/static',
-        from: '**/*',
-        to: './',
-        globOptions: {
-          ignore: [
-            'favicon/**/*',
-            'global-styles/**/*',
-            'images/**/*',
-            'root-files/**/*',
-            'video/**/*'
-          ]
-        }
       }
     ]
   },

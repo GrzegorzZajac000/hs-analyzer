@@ -27,7 +27,6 @@ module.exports = {
   target: 'web',
   mode: isProd ? 'production' : 'development',
   output: {
-    path: path.join(__dirname, '/../static/'),
     filename: `js/[name].${year}_${month}_${day}_${config.buildHash}.bundle.js`
   },
   module: {
