@@ -1,0 +1,16 @@
+@import "variables";
+@import "functions";
+
+.btn {
+  -moz-appearance: none; /* stylelint-disable-line */
+  -webkit-appearance: none; /* stylelint-disable-line */
+  background-color: transparent;
+  border: 0;
+  border-radius: 100px;
+  cursor: pointer;
+  display: inline-block;
+  outline: none !important;
+  padding: 0;
+  text-align: center;
+  transition: background-color .2s ease-in-out, color .2s ease-in-out;
+}
