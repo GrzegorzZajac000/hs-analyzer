@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Routes, Route } from 'react-router';
-import { Menu, TopBar, Home } from './index';
+import { Activity, Connectivity, Donate, Home, Info, Menu, Rssi, Snr, TopBar } from './index';
 import { Provider } from 'react-redux';
 import createStore from '../store/createStore';
 import { persistStore } from 'redux-persist';
@@ -33,6 +33,12 @@ class App extends React.Component {
 
                     <Routes>
                       <Route path='/' element={<Home />} />
+                      <Route path='/info' element={<Info />} />
+                      <Route path='/connectivity' element={<Connectivity />} />
+                      <Route path='/activity' element={<Activity />} />
+                      <Route path='/rssi' element={<Rssi />} />
+                      <Route path='/snr' element={<Snr />} />
+                      <Route path='/donate' element={<Donate />} />
                     </Routes>
                   </div>
                 </div>
