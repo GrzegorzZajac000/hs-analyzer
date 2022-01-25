@@ -21,24 +21,24 @@ class App extends React.Component {
     return (
       <Provider store={this.store}>
         <PersistGate loading={null} persistor={this.persistor}>
-          <div className='app-content'>
-            <div className='container-fluid'>
-              <div className='row'>
-                <div className='col-2 gx-0'>
-                  <Menu />
-                </div>
-                <div className='col-10 gx-0'>
-                  <TopBar />
+          <BrowserRouter>
+            <div className='app-content'>
+              <div className='container-fluid'>
+                <div className='row'>
+                  <div className='col-2 gx-0'>
+                    <Menu />
+                  </div>
+                  <div className='col-10 gx-0'>
+                    <TopBar />
 
-                  <BrowserRouter>
                     <Routes>
                       <Route path='/' element={<Home />} />
                     </Routes>
-                  </BrowserRouter>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </BrowserRouter>
         </PersistGate>
       </Provider>
     );
