@@ -1,0 +1,10 @@
+@import "../functions";
+@import "../variables";
+
+&.btn-md {
+  font-size: px-to-rem(12);
+  font-weight: 700;
+  height: 38px;
+  line-height: 38px;
+  padding: 0 20px;
+}

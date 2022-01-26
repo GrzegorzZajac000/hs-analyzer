@@ -1,0 +1,33 @@
+@import "../../../static/global-styles/variables";
+@import "../../../static/global-styles/functions";
+
+.no-match {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  h1 {
+    color: $light-font-color;
+    font-size: px-to-rem(250);
+    font-weight: 700;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+  }
+
+  h2 {
+    font-size: px-to-rem(22);
+    font-weight: 400;
+    margin-bottom: 3px;
+  }
+
+  h3 {
+    font-size: px-to-rem(16);
+    font-weight: 500;
+  }
+
+  button {
+    margin-top: 20px;
+  }
+}

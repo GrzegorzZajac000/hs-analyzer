@@ -1,0 +1,10 @@
+@import "../functions";
+@import "../variables";
+
+&.btn-xl {
+  font-size: px-to-rem(16);
+  font-weight: 500;
+  height: 56px;
+  line-height: 56px;
+  padding: 0 60px;
+}

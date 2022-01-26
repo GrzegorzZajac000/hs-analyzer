@@ -1,0 +1,10 @@
+@import "../functions";
+@import "../variables";
+
+&.btn-lg {
+  font-size: px-to-rem(15);
+  font-weight: 600;
+  height: 48px;
+  line-height: 48px;
+  padding: 0 40px;
+}

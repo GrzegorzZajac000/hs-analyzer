@@ -1,0 +1,11 @@
+@import "../functions";
+@import "../variables";
+
+&.btn-sm {
+  display: inline-block;
+  font-size: px-to-rem(10);
+  font-weight: 700;
+  height: 28px;
+  line-height: 28px;
+  padding: 0 15px;
+}

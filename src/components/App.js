@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Routes, Route } from 'react-router';
 import { Menu, TopBar } from './index';
-import { Activity, Connectivity, Donate, Home, Info, Rssi, Snr } from '../routes';
+import { Activity, Connectivity, Donate, Home, Info, NoMatch, Rssi, Snr } from '../routes';
 import { Provider } from 'react-redux';
 import createStore from '../store/createStore';
 import { persistStore } from 'redux-persist';
@@ -40,6 +40,8 @@ class App extends React.Component {
                       <Route path='/rssi' element={<Rssi />} />
                       <Route path='/snr' element={<Snr />} />
                       <Route path='/donate' element={<Donate />} />
+
+                      <Route path='*' element={<NoMatch />} />
                     </Routes>
                   </div>
                 </div>

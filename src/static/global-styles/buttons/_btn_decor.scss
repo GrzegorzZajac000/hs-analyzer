@@ -1,0 +1,11 @@
+@use "sass:color";
+@import "../variables";
+
+&-decor {
+  background-color: $decor-color;
+  color: $dark-decor-color;
+
+  &:hover {
+    background-color: color.adjust($decor-color, $lightness: -15%);
+  }
+}

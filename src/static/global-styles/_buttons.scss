@@ -13,4 +13,13 @@
   padding: 0;
   text-align: center;
   transition: background-color .2s ease-in-out, color .2s ease-in-out;
+
+  // Colors
+  @import "./buttons/btn_decor";
+
+  // Sizes
+  @import "./buttons/btn_xl";
+  @import "./buttons/btn_lg";
+  @import "./buttons/btn_md";
+  @import "./buttons/btn_sm";
 }
