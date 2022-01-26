@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import createStore from '../store/createStore';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
+import PropTypes from 'prop-types';
 
 class App extends React.Component {
   constructor (props) {
@@ -30,7 +31,7 @@ class App extends React.Component {
                     <Menu />
                   </div>
                   <div className='col-10 gx-0'>
-                    <TopBar />
+                    <TopBar hsInfo={this.props.hsInfo} />
 
                     <Routes>
                       <Route path='/' element={<Home />} />
@@ -53,5 +54,9 @@ class App extends React.Component {
     );
   }
 }
+
+App.propTypes = {
+  hsInfo: PropTypes.object
+};
 
 export default App;
