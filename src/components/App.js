@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Routes, Route } from 'react-router';
-import { Activity, Connectivity, Donate, Home, Info, Menu, Rssi, Snr, TopBar } from './index';
+import { Menu, TopBar } from './index';
+import { Activity, Connectivity, Donate, Home, Info, Rssi, Snr } from '../routes';
 import { Provider } from 'react-redux';
 import createStore from '../store/createStore';
 import { persistStore } from 'redux-persist';
