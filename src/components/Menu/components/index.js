@@ -2,6 +2,7 @@ import React from 'react';
 import '../styles/Menu.scss';
 import MenuLink from '../../../utilities/MenuLink';
 import { Link } from 'react-router-dom';
+import { WindowPlus } from 'react-bootstrap-icons';
 
 class Menu extends React.Component {
   render () {
@@ -36,7 +37,7 @@ class Menu extends React.Component {
             <MenuLink to='/donate'>Donate</MenuLink>
           </li>
           <li>
-            <a href='https://github.com/GrzegorzZajac000/hs-analyzer' target='_blank' rel='noreferrer noopener'>GitHub</a>
+            <a href='https://github.com/GrzegorzZajac000/hs-analyzer' target='_blank' rel='noreferrer noopener'>GitHub <WindowPlus size={18} /></a>
           </li>
         </ul>
       </nav>
