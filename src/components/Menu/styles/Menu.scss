@@ -1,6 +1,45 @@
+@use "sass:color";
+@import "../../../static/global-styles/variables";
+
 .menu {
-  background-color: #000;
-  color: #fff;
+  background-color: $dark-bg;
+  color: $font-color;
   height: 100%;
+  padding: 80px 0 0;
   width: 100%;
+
+  ul {
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      display: block;
+      margin: 0;
+      padding: 5px 0;
+
+      a {
+        font-size: 14px;
+        font-weight: 500;
+        display: block;
+        height: 32px;
+        padding: 30px;
+        transition: color .25s ease-in-out;
+
+        &:hover {
+          color: $light-font-color;
+        }
+
+        &:active,
+        &:focus {
+          color: color.adjust($light-font-color, $lightness: -10%);
+        }
+
+        &.active {
+          color: $decor-color;
+        }
+      }
+    }
+  }
 }

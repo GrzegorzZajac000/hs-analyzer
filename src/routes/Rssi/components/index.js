@@ -4,7 +4,9 @@ import '../styles/Rssi.scss';
 class Rssi extends React.Component {
   render () {
     return (
-      <div>Rssi</div>
+      <section className='rssi route-section'>
+        RSSI
+      </section>
     );
   }
 }

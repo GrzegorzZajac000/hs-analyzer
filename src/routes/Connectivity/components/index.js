@@ -4,7 +4,9 @@ import '../styles/Connectivity.scss';
 class Connectivity extends React.Component {
   render () {
     return (
-      <div>Connectivity</div>
+      <section className='connectivity route-section'>
+        Connectivity
+      </section>
     );
   }
 }

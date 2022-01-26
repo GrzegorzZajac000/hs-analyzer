@@ -4,7 +4,9 @@ import '../styles/Activity.scss';
 class Activity extends React.Component {
   render () {
     return (
-      <div>Activity</div>
+      <section className='activity route-section'>
+        Activity
+      </section>
     );
   }
 }

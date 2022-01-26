@@ -4,7 +4,9 @@ import '../styles/Info.scss';
 class Info extends React.Component {
   render () {
     return (
-      <div>Info</div>
+      <section className='info route-section'>
+        Info
+      </section>
     );
   }
 }

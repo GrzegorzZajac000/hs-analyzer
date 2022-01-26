@@ -1,9 +1,12 @@
+@import "./variables";
+
 #app {
   height: 100%;
   width: 100%;
 }
 
 .app-content {
+  background-color: $dark-bg;
   height: 100%;
   width: 100%;
 
@@ -18,4 +21,13 @@
       }
     }
   }
+}
+
+.route-section {
+  background-color: $bg;
+  border-top-left-radius: 20px;
+  color: $font-color;
+  height: calc(100% - 60px);
+  padding: 25px;
+  width: 100%;
 }

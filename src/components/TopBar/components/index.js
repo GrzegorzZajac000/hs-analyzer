@@ -4,7 +4,9 @@ import '../styles/TopBar.scss';
 class TopBar extends React.Component {
   render () {
     return (
-      <div>TopBar</div>
+      <section className='top-bar'>
+        TopBar
+      </section>
     );
   }
 }

@@ -1,0 +1,10 @@
+@import "../../../static/global-styles/variables";
+
+.top-bar {
+  background-color: $dark-bg;
+  color: $font-color;
+  height: 60px;
+  line-height: 60px;
+  padding: 0 25px;
+  width: 100%;
+}

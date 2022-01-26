@@ -4,7 +4,9 @@ import '../styles/Snr.scss';
 class Snr extends React.Component {
   render () {
     return (
-      <div>Snr</div>
+      <section className='snr route-section'>
+        SNR
+      </section>
     );
   }
 }

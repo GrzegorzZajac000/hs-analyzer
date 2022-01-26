@@ -4,7 +4,9 @@ import '../styles/Home.scss';
 class Home extends React.Component {
   render () {
     return (
-      <div>Home</div>
+      <section className='home route-section'>
+        Home
+      </section>
     );
   }
 }

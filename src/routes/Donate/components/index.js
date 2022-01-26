@@ -4,7 +4,9 @@ import '../styles/Donate.scss';
 class Donate extends React.Component {
   render () {
     return (
-      <div>Donate</div>
+      <section className='donate route-section'>
+        Donate
+      </section>
     );
   }
 }
