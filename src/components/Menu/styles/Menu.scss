@@ -1,12 +1,31 @@
 @use "sass:color";
 @import "../../../static/global-styles/variables";
+@import "../../../static/global-styles/functions";
 
 .menu {
   background-color: $dark-bg;
   color: $font-color;
   height: 100%;
-  padding: 80px 0 0;
   width: 100%;
+
+  &-logo {
+    color: $light-font-color;
+    display: block;
+    font-weight: 700;
+    height: 60px;
+    margin-bottom: 20px;
+    padding: 15px 30px;
+
+    p {
+      font-size: px-to-rem(24);
+      font-weight: 700;
+
+      &.menu-logo-version {
+        color: $font-color;
+        font-size: px-to-rem(13);
+      }
+    }
+  }
 
   ul {
     display: block;

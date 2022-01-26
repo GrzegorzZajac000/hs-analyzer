@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/Menu.scss';
 import MenuLink from '../../../utilities/MenuLink';
+import { Link } from 'react-router-dom';
 
 class Menu extends React.Component {
   render () {
@@ -8,6 +9,10 @@ class Menu extends React.Component {
 
     return (
       <nav className='menu'>
+        <Link to='/' className='menu-logo'>
+          <p>HS Analyzer</p>
+          <p className='menu-logo-version'>Beta v0.2.0</p>
+        </Link>
         <ul>
           <li>
             <MenuLink to='/'>Config</MenuLink>
