@@ -8,6 +8,7 @@ import createStore from '../store/createStore';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import PropTypes from 'prop-types';
+import HeliumAPI from '../api/HeliumAPI';
 
 class App extends React.Component {
   constructor (props) {
@@ -17,6 +18,20 @@ class App extends React.Component {
     this.persistor = null;
 
     this.persistor = persistStore(this.store, null);
+  }
+
+  componentDidMount () {
+    return Promise.all([
+      HeliumAPI.getBlockchainStats(),
+      HeliumAPI.getBlockchainHeight(),
+      HeliumAPI.getRichestAccounts(),
+      HeliumAPI.getRewardsTotal(),
+      HeliumAPI.getDCBurnsTotal()
+    ]).then(res => {
+      console.log(res);
+    }).catch(err => {
+      console.error(err);
+    });
   }
 
   render () {
