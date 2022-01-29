@@ -8,7 +8,15 @@
   display: block;
   padding: 20px;
 
-  h2 {
+  &.decor {
+    background-color: $decor-color;
+
+    p {
+      color: $dark-decor-color;
+    }
+  }
+
+  h3 {
     color: $light-font-color;
     font-size: px-to-rem(16);
     font-weight: 700;
