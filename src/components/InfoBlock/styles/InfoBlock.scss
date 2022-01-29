@@ -1,0 +1,23 @@
+@import "../../../static/global-styles/variables";
+@import "../../../static/global-styles/functions";
+
+.info-block {
+  background-color: $box-bg;
+  border-radius: 8px;
+  color: $font-color;
+  display: block;
+  padding: 20px;
+
+  h2 {
+    color: $light-font-color;
+    font-size: px-to-rem(16);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 32px;
+    letter-spacing: .5px;
+    text-align: right;
+  }
+}
