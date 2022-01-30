@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/Home.scss';
+import { AddressForm, NameForm } from '../../../components';
 
 class Home extends React.Component {
   render () {
@@ -55,10 +56,10 @@ class Home extends React.Component {
         </ul>
         <div className='tab-content' id='home-tab-content'>
           <div className='tab-pane fade show active' id='config-tab-name-content' role='tabpanel' aria-labelledby='config-tab-name'>
-            By name
+            <NameForm />
           </div>
           <div className='tab-pane fade' id='config-tab-address-content' role='tabpanel' aria-labelledby='config-tab-address'>
-            By address
+            <AddressForm />
           </div>
           <div className='tab-pane fade' id='config-tab-wallet-content' role='tabpanel' aria-labelledby='config-tab-wallet' />
         </div>
