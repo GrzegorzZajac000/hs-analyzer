@@ -8,4 +8,8 @@
   &:hover {
     background-color: color.adjust($decor-color, $lightness: -15%);
   }
+
+  &.active {
+    background-color: color.adjust($decor-color, $lightness: -20%);
+  }
 }

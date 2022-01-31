@@ -56,10 +56,22 @@ class Home extends React.Component {
         </ul>
         <div className='tab-content' id='home-tab-content'>
           <div className='tab-pane fade show active' id='config-tab-name-content' role='tabpanel' aria-labelledby='config-tab-name'>
-            <NameForm />
+            <div className='container-fluid'>
+              <div className='row justify-content-center'>
+                <div className='col-6'>
+                  <NameForm />
+                </div>
+              </div>
+            </div>
           </div>
           <div className='tab-pane fade' id='config-tab-address-content' role='tabpanel' aria-labelledby='config-tab-address'>
-            <AddressForm />
+            <div className='container-fluid'>
+              <div className='row justify-content-center'>
+                <div className='col-6'>
+                  <AddressForm />
+                </div>
+              </div>
+            </div>
           </div>
           <div className='tab-pane fade' id='config-tab-wallet-content' role='tabpanel' aria-labelledby='config-tab-wallet' />
         </div>

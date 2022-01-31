@@ -1,3 +1,74 @@
 @use "sass:color";
 @import "variables";
 @import "functions";
+
+/* stylelint-disable selector-class-pattern */
+.react-select {
+  .rs {
+    &__control {
+      background-color: $light-bg;
+      border: 1px solid $bg;
+      border-radius: 17px;
+
+      &:hover,
+      &:focus,
+      &:active,
+      &.rs__control--is-focused {
+        border: 1px solid $dark-bg;
+        box-shadow: none;
+      }
+    }
+
+    &__indicators {
+      .rs__indicator {
+        &-separator {
+          background-color: $bg;
+        }
+
+        &.rs__dropdown-indicator {
+          color: $font-color;
+
+          &:hover,
+          &:active,
+          &:focus {
+            color: $font-color;
+          }
+        }
+      }
+    }
+
+    &__menu {
+      background-color: $light-bg;
+      border: 1px solid $bg;
+      box-shadow: none;
+      color: $font-color;
+    }
+
+    &__placeholder {
+      padding: 0 10px;
+    }
+
+    &__input {
+      padding: 0 10px !important;
+
+      &-container {
+        color: $font-color;
+      }
+    }
+  }
+}
+/* stylelint-enable selector-class-pattern */
+
+.input-radio-button {
+  display: inline-block;
+
+  input {
+    display: none;
+
+    &:checked {
+      + label {
+        background-color: color.adjust($decor-color, $lightness: -20%);
+      }
+    }
+  }
+}

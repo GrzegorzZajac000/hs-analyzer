@@ -1,0 +1,9 @@
+@import "variables";
+@import "functions";
+
+label {
+  color: $light-font-color;
+  font-size: px-to-rem(16);
+  font-weight: 700;
+  margin-bottom: 5px;
+}
