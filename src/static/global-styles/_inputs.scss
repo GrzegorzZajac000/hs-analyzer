@@ -73,9 +73,15 @@
     }
 
     &__input {
+      color: $font-color !important;
+
       &-container {
-        color: $font-color;
+        color: $font-color !important;
       }
+    }
+
+    &__single-value {
+      color: $font-color !important;
     }
   }
 }
@@ -93,4 +99,8 @@
       }
     }
   }
+}
+
+.flag {
+  margin-right: 10px;
 }

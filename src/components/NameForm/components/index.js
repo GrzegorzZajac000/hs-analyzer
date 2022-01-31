@@ -42,9 +42,10 @@ class NameForm extends React.Component {
           return {
             label: (
               <React.Fragment>
-                <Flag code={hs.geocode.short_country} height={16} /> {nameTemp}
+                <Flag className='flag' code={hs.geocode.short_country} height={16} /> {nameTemp}
               </React.Fragment>
-            )
+            ),
+            value: nameTemp
           };
         });
       })
