@@ -2,6 +2,8 @@ import React from 'react';
 import '../styles/NameForm.scss';
 import { Form, Field } from 'react-final-form';
 import AsyncSelect from 'react-select/async';
+import HeliumAPI from '../../../api/HeliumAPI';
+import Flag from 'react-world-flags';
 
 class NameForm extends React.Component {
   constructor (props) {
@@ -13,6 +15,7 @@ class NameForm extends React.Component {
 
     this.validate = this.validate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onNameChange = this.onNameChange.bind(this);
   }
 
   validate () {
@@ -21,6 +24,31 @@ class NameForm extends React.Component {
 
   handleSubmit (values) {
     console.log(values);
+  }
+
+  onNameChange (name, callback) {
+    if (name.length <= 2 || name.slice(-1) === ' ') {
+      return false;
+    }
+
+    return HeliumAPI.hotspotNameSearch(name)
+      .then(hotspots => {
+        return hotspots.data.data.map((hs) => {
+          let nameTemp = hs.name.split('-');
+
+          nameTemp = nameTemp.map(name => name.charAt(0).toUpperCase() + name.slice(1));
+          nameTemp = nameTemp.join(' ');
+
+          return {
+            label: (
+              <React.Fragment>
+                <Flag code={hs.geocode.short_country} height={16} /> {nameTemp}
+              </React.Fragment>
+            )
+          };
+        });
+      })
+      .then(hotspots => callback(hotspots));
   }
 
   render () {
@@ -39,7 +67,7 @@ class NameForm extends React.Component {
                       placeholder='HS Name e.g. Satin Enjoyed Xerus'
                       className='react-select'
                       classNamePrefix='rs'
-                      options={this.state.hotspotOptions}
+                      loadOptions={this.onNameChange}
                       autoFocus
                       isSearchable
                       noOptionsMessage={() => 'Enter at least 3 characters'}
