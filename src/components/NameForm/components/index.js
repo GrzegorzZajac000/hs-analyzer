@@ -40,8 +40,9 @@ class NameForm extends React.Component {
                       className='react-select'
                       classNamePrefix='rs'
                       options={this.state.hotspotOptions}
-                      autofocus
+                      autoFocus
                       isSearchable
+                      noOptionsMessage={() => 'Enter at least 3 characters'}
                     />
                     <p>{meta.submitFailed && meta.error}</p>
                   </React.Fragment>

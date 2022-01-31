@@ -2,6 +2,30 @@
 @import "variables";
 @import "functions";
 
+.hs-input {
+  background-color: $light-bg;
+  border: 1px solid $bg;
+  border-radius: 17px;
+  color: $font-color;
+  display: block;
+  height: 38px;
+  line-height: 38px;
+  padding: 0 20px;
+  width: 100%;
+
+  &:hover,
+  &:focus,
+  &:active {
+    border: 1px solid $dark-bg;
+    box-shadow: none;
+  }
+
+  &::placeholder {
+    color: $dark-font-color;
+    opacity: 1;
+  }
+}
+
 /* stylelint-disable selector-class-pattern */
 .react-select {
   .rs {

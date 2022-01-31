@@ -1,7 +1,6 @@
 import React from 'react';
 import '../styles/AddressForm.scss';
 import { Form, Field } from 'react-final-form';
-import Select from 'react-select/async';
 
 class AddressForm extends React.Component {
   constructor (props) {
@@ -29,19 +28,11 @@ class AddressForm extends React.Component {
         <Form onSubmit={(values) => this.handleSubmit(values)} validate={this.validate} render={({ handleSubmit, form, submitting, pristine, invalid, values }) => (
           <form onSubmit={(values) => handleSubmit(values)} id='address-form'>
             <div className='config-form-input'>
-              <Field name='address'>
+              <Field type='text' name='address'>
                 {({ input, meta }) => (
                   <React.Fragment>
                     <label htmlFor='address'>Hotspot name</label>
-                    <Select
-                      {...input}
-                      id='address'
-                      placeholder='HS Address'
-                      className='react-select'
-                      classNamePrefix='rs'
-                      autofocus
-                      isSearchable={false}
-                    />
+                    <input {...input} className='hs-input' id='address' placeholder='HS Address' autoFocus />
                     <p>{meta.submitFailed && meta.error}</p>
                   </React.Fragment>
                 )}
