@@ -25,16 +25,17 @@ class NameForm extends React.Component {
 
   render () {
     return (
-      <div className='name-form'>
+      <div className='config-form'>
         <Form onSubmit={(values) => this.handleSubmit(values)} validate={this.validate} render={({ handleSubmit, form, submitting, pristine, invalid, values }) => (
           <form onSubmit={(values) => handleSubmit(values)} id='name-form'>
-            <div className='name-form-input'>
+            <div className='config-form-input'>
               <Field name='name'>
                 {({ input, meta }) => (
                   <React.Fragment>
                     <label htmlFor='name'>Hotspot name</label>
                     <AsyncSelect
                       {...input}
+                      id='name'
                       placeholder='HS Name e.g. Satin Enjoyed Xerus'
                       className='react-select'
                       classNamePrefix='rs'
@@ -47,9 +48,9 @@ class NameForm extends React.Component {
                 )}
               </Field>
             </div>
-            <div className='name-form-days'>
+            <div className='config-form-days'>
               <h3>Date range</h3>
-              <div className='name-form-days-buttons'>
+              <div className='config-form-days-buttons'>
                 <Field name='days' type='radio' value='7'>
                   {({ input }) => (
                     <div className='input-radio-button'>
@@ -84,7 +85,7 @@ class NameForm extends React.Component {
                 </Field>
               </div>
             </div>
-            <div className='name-form-submit'>
+            <div className='config-form-submit'>
               <button className='btn btn-md btn-decor' type='submit'>Submit</button>
             </div>
           </form>
