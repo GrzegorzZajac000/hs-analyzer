@@ -1,7 +1,7 @@
 import Activity from './Activity';
+import Config from './Config';
 import Connectivity from './Connectivity';
 import Donate from './Donate';
-import Home from './Home';
 import Info from './Info';
 import NoMatch from './NoMatch';
 import Rssi from './Rssi';
@@ -9,9 +9,9 @@ import Snr from './Snr';
 
 export {
   Activity,
+  Config,
   Connectivity,
   Donate,
-  Home,
   Info,
   NoMatch,
   Rssi,

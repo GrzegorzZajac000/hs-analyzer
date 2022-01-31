@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Routes, Route } from 'react-router';
 import { Menu, TopBar } from './index';
-import { Activity, Connectivity, Donate, Home, Info, NoMatch, Rssi, Snr } from '../routes';
+import { Activity, Config, Connectivity, Donate, Info, NoMatch, Rssi, Snr } from '../routes';
 import { Provider } from 'react-redux';
 import createStore from '../store/createStore';
 import { persistStore } from 'redux-persist';
@@ -49,8 +49,8 @@ class App extends React.Component {
                     <TopBar hsInfo={this.props.hsInfo} />
 
                     <Routes>
-                      <Route path='/' element={<Home />} />
-                      <Route path='/info' element={<Info />} />
+                      <Route path='/' element={<Info />} />
+                      <Route path='/config' element={<Config />} />
                       <Route path='/connectivity' element={<Connectivity />} />
                       <Route path='/activity' element={<Activity />} />
                       <Route path='/rssi' element={<Rssi />} />

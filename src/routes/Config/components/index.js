@@ -1,8 +1,8 @@
 import React from 'react';
-import '../styles/Home.scss';
+import '../styles/Config.scss';
 import { AddressForm, NameForm } from '../../../components';
 
-class Home extends React.Component {
+class Config extends React.Component {
   render () {
     return (
       <section className='home route-section'>
@@ -80,4 +80,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default Config;

@@ -16,10 +16,10 @@ class Menu extends React.Component {
         </Link>
         <ul>
           <li>
-            <MenuLink to='/'>Config</MenuLink>
+            <MenuLink to='/'>General info</MenuLink>
           </li>
           <li>
-            <MenuLink to='/info'>General info</MenuLink>
+            <MenuLink to='/config'>Config</MenuLink>
           </li>
           <li>
             <MenuLink to='/connectivity'>Connectivity</MenuLink>
