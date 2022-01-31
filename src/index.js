@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import '@popperjs/core';
 import 'bootstrap';
+import 'react-toastify/dist/ReactToastify.css';
 
 import './index.scss';
 import App from './components/App';

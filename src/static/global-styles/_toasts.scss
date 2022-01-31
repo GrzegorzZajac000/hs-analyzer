@@ -1,0 +1,12 @@
+@import "functions";
+
+/* stylelint-disable selector-class-pattern */
+.Toastify {
+  &__toast {
+    &-body {
+      font-size: px-to-rem(13);
+      line-height: 1.3;
+    }
+  }
+}
+/* stylelint-enable selector-class-pattern */

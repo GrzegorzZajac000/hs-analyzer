@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import createStore from '../store/createStore';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
+import { ToastContainer, toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import HeliumAPI from '../api/HeliumAPI';
 
@@ -31,6 +32,10 @@ class App extends React.Component {
       console.log(res);
     }).catch(err => {
       console.error(err);
+
+      toast.error('Something went wrong with Helium API. Try one more time', {
+        theme: 'dark'
+      });
     });
   }
 
@@ -62,6 +67,13 @@ class App extends React.Component {
                   </div>
                 </div>
               </div>
+
+              <ToastContainer
+                position='top-right'
+                autoClose={500000}
+                newestOnTop
+                closeOnClick
+              />
             </div>
           </BrowserRouter>
         </PersistGate>
