@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Info from '../components';
+import { setGeneralInfo } from '../../../modules/siteReducer';
 
 class InfoContainer extends Component {
   render () {
@@ -10,10 +11,14 @@ class InfoContainer extends Component {
   }
 }
 
-const mapActionCreators = {};
+const mapActionCreators = {
+  setGeneralInfo
+};
 
-const mapStateToProps = () => {
-  return {};
+const mapStateToProps = state => {
+  return {
+    generalInfo: state.site.generalInfo
+  };
 };
 
 export default connect(mapStateToProps, mapActionCreators)(InfoContainer);

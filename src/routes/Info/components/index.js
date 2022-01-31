@@ -1,9 +1,60 @@
 import React from 'react';
 import '../styles/Info.scss';
 import { InfoBlock } from '../../../components';
+import HeliumAPI from '../../../api/HeliumAPI';
+import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 
 class Info extends React.Component {
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      loaded: false
+    };
+  }
+
+  componentDidMount () {
+    return Promise.all([
+      HeliumAPI.getBlockchainStats(),
+      HeliumAPI.getBlockchainHeight(),
+      HeliumAPI.getRichestAccounts(),
+      HeliumAPI.getRewardsTotal(),
+      HeliumAPI.getDCBurnsTotal()
+    ]).then(res => {
+      console.log(res);
+
+      const generalInfo = {
+        hotspots: {
+          total: res[0].data.data.counts.hotspots,
+          online: res[0].data.data.counts.hotspots_online,
+          dataonly: res[0].data.data.counts.hotspots_dataonly
+        },
+        validators: res[0].data.data.counts.validators,
+        blockHeight: res[1].data.data.height,
+        geolocation: {
+          countries: res[0].data.data.counts.countries,
+          cities: res[0].data.data.counts.cities
+        }
+      };
+
+      return this.props.setGeneralInfo(generalInfo);
+    }).then(() => {
+      this.setState({ ...this.state, loaded: true });
+    }).catch(err => {
+      console.error(err);
+
+      toast.error('Something went wrong with Helium API. Try one more time', {
+        theme: 'dark'
+      });
+    });
+  }
+
   render () {
+    if (!this.state.loaded) {
+      return null;
+    }
+
     return (
       <section className='info route-section'>
         <div className='container-fluid'>
@@ -12,19 +63,19 @@ class Info extends React.Component {
           </div>
           <div className='row'>
             <div className='col-2'>
-              <InfoBlock title='Hotspots total' number={535000} />
+              <InfoBlock title='Hotspots total' number={this.props.generalInfo.hotspots.total} />
             </div>
             <div className='col-2'>
-              <InfoBlock title='Hotspots online' number={420000} />
+              <InfoBlock title='Hotspots online' number={this.props.generalInfo.hotspots.online} />
             </div>
             <div className='col-2'>
-              <InfoBlock title='Hotspots dataonly' number={1000} />
+              <InfoBlock title='Hotspots dataonly' number={this.props.generalInfo.hotspots.dataonly} />
             </div>
             <div className='col-2'>
-              <InfoBlock title='Validators total' number={4000} />
+              <InfoBlock title='Validators total' number={this.props.generalInfo.validators} />
             </div>
             <div className='col-2'>
-              <InfoBlock className='decor' title='Block height' number={4000} />
+              <InfoBlock className='decor' title='Block height' number={this.props.generalInfo.blockHeight} />
             </div>
           </div>
           <div className='row'>
@@ -32,10 +83,10 @@ class Info extends React.Component {
           </div>
           <div className='row'>
             <div className='col-2'>
-              <InfoBlock title='Countries' number={5} />
+              <InfoBlock title='Countries' number={this.props.generalInfo.geolocation.countries} />
             </div>
             <div className='col-2'>
-              <InfoBlock title='Cities' number={5} />
+              <InfoBlock title='Cities' number={this.props.generalInfo.geolocation.cities} />
             </div>
           </div>
 
@@ -49,5 +100,10 @@ class Info extends React.Component {
     );
   }
 }
+
+Info.propTypes = {
+  generalInfo: PropTypes.object,
+  setGeneralInfo: PropTypes.func
+};
 
 export default Info;

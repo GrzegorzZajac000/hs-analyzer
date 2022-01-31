@@ -7,9 +7,8 @@ import { Provider } from 'react-redux';
 import createStore from '../store/createStore';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import PropTypes from 'prop-types';
-import HeliumAPI from '../api/HeliumAPI';
 
 class App extends React.Component {
   constructor (props) {
@@ -19,24 +18,6 @@ class App extends React.Component {
     this.persistor = null;
 
     this.persistor = persistStore(this.store, null);
-  }
-
-  componentDidMount () {
-    return Promise.all([
-      HeliumAPI.getBlockchainStats(),
-      HeliumAPI.getBlockchainHeight(),
-      HeliumAPI.getRichestAccounts(),
-      HeliumAPI.getRewardsTotal(),
-      HeliumAPI.getDCBurnsTotal()
-    ]).then(res => {
-      console.log(res);
-    }).catch(err => {
-      console.error(err);
-
-      toast.error('Something went wrong with Helium API. Try one more time', {
-        theme: 'dark'
-      });
-    });
   }
 
   render () {
@@ -70,7 +51,7 @@ class App extends React.Component {
 
               <ToastContainer
                 position='top-right'
-                autoClose={500000}
+                autoClose={5000}
                 newestOnTop
                 closeOnClick
               />
