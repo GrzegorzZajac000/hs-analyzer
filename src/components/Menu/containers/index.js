@@ -12,8 +12,10 @@ class MenuContainer extends Component {
 
 const mapActionCreators = {};
 
-const mapStateToProps = () => {
-  return {};
+const mapStateToProps = state => {
+  return {
+    hsInfo: state.site.hsInfo
+  };
 };
 
 export default connect(mapStateToProps, mapActionCreators)(MenuContainer);

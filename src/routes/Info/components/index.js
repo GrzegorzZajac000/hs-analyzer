@@ -59,7 +59,7 @@ class Info extends React.Component {
       <section className='info route-section'>
         <div className='container-fluid'>
           <div className='row'>
-            <h2>Project stats</h2>
+            <h2>Helium stats</h2>
           </div>
           <div className='row'>
             <div className='col-2'>

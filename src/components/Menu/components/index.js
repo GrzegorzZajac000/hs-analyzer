@@ -3,11 +3,10 @@ import '../styles/Menu.scss';
 import MenuLink from '../../../utilities/MenuLink';
 import { Link } from 'react-router-dom';
 import { WindowPlus } from 'react-bootstrap-icons';
+import PropTypes from 'prop-types';
 
 class Menu extends React.Component {
   render () {
-    console.log(this.props);
-
     return (
       <nav className='menu'>
         <Link to='/' className='menu-logo'>
@@ -19,18 +18,18 @@ class Menu extends React.Component {
             <MenuLink to='/'>General info</MenuLink>
           </li>
           <li>
-            <MenuLink to='/config'>Config</MenuLink>
+            <MenuLink to='/config'>Check your hotspot</MenuLink>
           </li>
-          <li>
+          <li className={!this.props.hsInfo.address ? 'disabled' : ''}>
             <MenuLink to='/connectivity'>Connectivity</MenuLink>
           </li>
-          <li>
+          <li className={!this.props.hsInfo.address ? 'disabled' : ''}>
             <MenuLink to='/activity'>Latest activity</MenuLink>
           </li>
-          <li>
+          <li className={!this.props.hsInfo.address ? 'disabled' : ''}>
             <MenuLink to='/rssi'>RSSI</MenuLink>
           </li>
-          <li>
+          <li className={!this.props.hsInfo.address ? 'disabled' : ''}>
             <MenuLink to='/snr'>SNR</MenuLink>
           </li>
           <li>
@@ -44,5 +43,9 @@ class Menu extends React.Component {
     );
   }
 }
+
+Menu.propTypes = {
+  hsInfo: PropTypes.object
+};
 
 export default Menu;

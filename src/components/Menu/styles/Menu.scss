@@ -38,6 +38,16 @@
       margin: 0;
       padding: 5px 0;
 
+      &.disabled {
+        cursor: not-allowed;
+
+        a {
+          color: $dark-font-color;
+          pointer-events: none;
+          user-select: none;
+        }
+      }
+
       a {
         font-size: 14px;
         font-weight: 500;

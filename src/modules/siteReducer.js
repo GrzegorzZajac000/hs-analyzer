@@ -1,6 +1,7 @@
 const SET_MOBILE_MENU_OPENED = 'SET_MOBILE_MENU_OPENED';
 const SET_MOBILE_MENU_CLOSED = 'SET_MOBILE_MENU_CLOSED';
 const SET_GENERAL_INFO = 'SET_GENERAL_INFO';
+const SET_HS_INFO = 'SET_HS_INFO';
 
 export const setMobileMenuOpened = () => ({
   type: SET_MOBILE_MENU_OPENED
@@ -13,11 +14,17 @@ export const setMobileMenuClosed = () => ({
 export const setGeneralInfo = generalInfo => ({
   type: SET_GENERAL_INFO,
   generalInfo
-})
+});
+
+export const setHsInfo = hsInfo => ({
+  type: SET_HS_INFO,
+  hsInfo
+});
 
 const initialState = {
   mobileMenuOpened: false,
-  generalInfo: {}
+  generalInfo: {},
+  hsInfo: {}
 };
 
 export default function counter (state = initialState, action) {
@@ -29,7 +36,10 @@ export default function counter (state = initialState, action) {
     return { ...state, mobileMenuOpened: false };
 
   case SET_GENERAL_INFO:
-    return { ...state, generalInfo: action.generalInfo }
+    return { ...state, generalInfo: action.generalInfo };
+
+  case SET_HS_INFO:
+    return { ...state, hsInfo: action.generalInfo };
 
   default:
     return state;
