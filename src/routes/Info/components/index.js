@@ -15,11 +15,6 @@ class Info extends React.Component {
   }
 
   componentDidMount () {
-    // @todo: add refresh after 30 minutes
-    if (this.props.generalInfo.hotspots) {
-      return this.setState({ ...this.state, loaded: true });
-    }
-
     return Promise.all([
       HeliumAPI.getBlockchainStats(),
       HeliumAPI.getBlockchainHeight(),
@@ -56,10 +51,6 @@ class Info extends React.Component {
   }
 
   render () {
-    if (!this.state.loaded) {
-      return null;
-    }
-
     return (
       <section className='info route-section'>
         <div className='container-fluid'>

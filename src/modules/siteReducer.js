@@ -23,7 +23,12 @@ export const setHsInfo = hsInfo => ({
 
 const initialState = {
   mobileMenuOpened: false,
-  generalInfo: {},
+  generalInfo: {
+    hotspots: { total: 0, online: 0, dataonly: 0 },
+    validators: 0,
+    blockHeight: 0,
+    geolocation: { countries: 0, cities: 0 }
+  },
   hsInfo: {}
 };
 

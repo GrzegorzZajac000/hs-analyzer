@@ -80,6 +80,7 @@
     "react-countup": "^6.1.1",
     "react-dom": "^17.0.2",
     "react-final-form": "^6.5.7",
+    "react-placeholder": "^4.1.0",
     "react-redux": "^7.2.6",
     "react-router": "^6.2.1",
     "react-router-dom": "^6.2.1",

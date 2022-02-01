@@ -10,7 +10,7 @@
   height: 100%;
   width: 100%;
 
-  > div {
+  > .container-fluid {
     height: 100%;
 
     > .row {
@@ -28,6 +28,15 @@
   border-top-left-radius: 20px;
   color: $font-color;
   height: calc(100% - 60px);
+  overflow-x: hidden;
+  overflow-y: auto;
   padding: 25px;
+  position: relative;
   width: 100%;
+
+  .preload {
+    height: 100%;
+    position: absolute;
+    width: 100%;
+  }
 }
