@@ -10,10 +10,6 @@ class NameForm extends React.Component {
   constructor (props) {
     super(props);
 
-    this.state = {
-      hotspotOptions: []
-    }
-
     this.validate = this.validate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onNameChange = this.onNameChange.bind(this);
@@ -32,7 +28,7 @@ class NameForm extends React.Component {
       return false;
     }
 
-    return HeliumAPI.hotspotNameSearch(name)
+    return HeliumAPI.hotspotNameSearch(name.toLowerCase().replace(/\s/g, '-'))
       .then(hotspots => {
         return hotspots.data.data.map((hs) => {
           let nameTemp = hs.name.split('-');
