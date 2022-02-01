@@ -23,11 +23,14 @@
         }
       }
     }
+  }
 
-    h3 {
-      color: $light-font-color;
-      font-size: px-to-rem(22);
-      margin-bottom: 5px;
+  &-days-custom {
+    display: none;
+    margin-top: 5px;
+
+    &.visible {
+      display: block;
     }
   }
 
@@ -36,5 +39,12 @@
     justify-content: flex-end;
     margin-top: 20px;
     width: 100%;
+  }
+
+  h3 {
+    color: $light-font-color;
+    font-size: px-to-rem(16);
+    font-weight: 700;
+    margin-bottom: 5px;
   }
 }

@@ -4,6 +4,7 @@ import { Form, Field } from 'react-final-form';
 import AsyncSelect from 'react-select/async';
 import HeliumAPI from '../../../api/HeliumAPI';
 import Flag from 'react-world-flags';
+import Calendar from 'react-calendar';
 
 class NameForm extends React.Component {
   constructor (props) {
@@ -18,8 +19,8 @@ class NameForm extends React.Component {
     this.onNameChange = this.onNameChange.bind(this);
   }
 
-  validate () {
-    console.log('validate');
+  validate (values) {
+    console.log('validate', values);
   }
 
   handleSubmit (values) {
@@ -114,6 +115,14 @@ class NameForm extends React.Component {
                   )}
                 </Field>
               </div>
+            </div>
+            <div className='config-form-days-custom'>
+              <h3>Select custom date range</h3>
+              <Calendar
+                defaultView='month'
+                minDetail='month'
+                selectRange
+              />
             </div>
             <div className='config-form-submit'>
               <button className='btn btn-md btn-decor' type='submit'>Submit</button>

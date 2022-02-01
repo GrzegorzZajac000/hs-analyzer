@@ -4,6 +4,7 @@ import '@popperjs/core';
 import 'bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-placeholder/lib/reactPlaceholder.css';
+import 'react-calendar/dist/Calendar.css';
 
 import './index.scss';
 import App from './components/App';

@@ -1,0 +1,90 @@
+@use "sass:color";
+@import "./variables";
+@import "./functions";
+
+/* stylelint-disable selector-class-pattern */
+.react-calendar {
+  background: $light-bg;
+  border: 1px solid $bg;
+  border-radius: 20px;
+  overflow: hidden;
+
+  &__navigation {
+    margin-bottom: 0;
+
+    > button {
+      background: inherit;
+      color: $font-color;
+      transition: color .25s ease-in-out;
+
+      &:enabled,
+      &:disabled {
+        background: inherit;
+
+        &:hover,
+        &:focus {
+          background: inherit;
+          color: $light-font-color;
+        }
+      }
+    }
+  }
+
+  &__viewContainer {
+    .react-calendar__month-view__weekdays__weekday {
+      > abbr {
+        color: $light-font-color;
+        cursor: default;
+        text-decoration: none;
+      }
+    }
+
+    .react-calendar__tile--active {
+      &:enabled {
+        background: $decor-color !important;
+        color: $light-font-color !important;
+      }
+    }
+
+    .react-calendar__month-view__days__day {
+      &:enabled {
+        color: $font-color;
+
+        &:hover {
+          background: $decor-color;
+          color: $light-font-color;
+        }
+      }
+    }
+
+    .react-calendar__month-view__days__day--neighboringMonth {
+      color: color.adjust($dark-font-color, $lightness: -20%) !important;
+    }
+
+    .react-calendar__month-view__days__day--weekend {
+      color: $danger !important;
+    }
+
+    .react-calendar__tile {
+      border-radius: 6px;
+      transition: background .25s ease-in-out, color .25s ease-in-out;
+
+      &:enabled {
+        &:hover {
+          color: $light-font-color;
+        }
+      }
+    }
+
+    .react-calendar__tile--now {
+      background: $dark-decor-color;
+      color: $light-font-color;
+
+      &:hover {
+        background: $dark-decor-color;
+        color: $light-font-color;
+      }
+    }
+  }
+}
+/* stylelint-enable selector-class-pattern */

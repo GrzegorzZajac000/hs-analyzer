@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/AddressForm.scss';
 import { Form, Field } from 'react-final-form';
+import Calendar from 'react-calendar';
 
 class AddressForm extends React.Component {
   constructor (props) {
@@ -74,6 +75,14 @@ class AddressForm extends React.Component {
                   )}
                 </Field>
               </div>
+            </div>
+            <div className='config-form-days-custom'>
+              <h3>Select custom date range</h3>
+              <Calendar
+                defaultView='month'
+                minDetail='month'
+                selectRange
+              />
             </div>
             <div className='config-form-submit'>
               <button className='btn btn-md btn-decor' type='submit'>Submit</button>

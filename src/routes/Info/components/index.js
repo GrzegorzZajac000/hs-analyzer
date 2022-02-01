@@ -17,7 +17,6 @@ class Info extends React.Component {
   componentDidMount () {
     return Promise.all([
       HeliumAPI.getBlockchainStats(),
-      HeliumAPI.getBlockchainHeight(),
       HeliumAPI.getRichestAccounts(),
       HeliumAPI.getRewardsTotal(),
       HeliumAPI.getDCBurnsTotal()
@@ -31,7 +30,7 @@ class Info extends React.Component {
           dataonly: res[0].data.data.counts.hotspots_dataonly
         },
         validators: res[0].data.data.counts.validators,
-        blockHeight: res[1].data.data.height,
+        blockHeight: res[0].data.data.counts.blocks,
         geolocation: {
           countries: res[0].data.data.counts.countries,
           cities: res[0].data.data.counts.cities
