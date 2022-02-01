@@ -8,15 +8,19 @@ class AddressForm extends React.Component {
     super(props);
 
     this.state = {
-      hotspotOptions: []
-    }
+      customDate: false
+    };
 
     this.validate = this.validate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  validate () {
-    console.log('validate');
+  validate (values) {
+    console.log('validate', values);
+
+    if (values.days) {
+      this.setState({ ...this.state, customDate: values.days === 'custom' });
+    }
   }
 
   handleSubmit (values) {
@@ -76,7 +80,7 @@ class AddressForm extends React.Component {
                 </Field>
               </div>
             </div>
-            <div className='config-form-days-custom'>
+            <div className={'config-form-days-custom' + (this.state.customDate ? ' visible' : '')}>
               <h3>Select custom date range</h3>
               <Calendar
                 defaultView='month'
