@@ -13,7 +13,7 @@
   &-days {
     &-buttons {
       display: flex;
-      flex-direction: row;
+      flex-flow: wrap row;
 
       .input-radio-button {
         margin-right: 10px;

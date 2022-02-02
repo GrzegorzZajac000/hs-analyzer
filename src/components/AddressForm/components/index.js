@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/AddressForm.scss';
 import { Form, Field } from 'react-final-form';
 import Calendar from 'react-calendar';
+
+const CalendarComponent = props => {
+  const calendarProps = props;
+  const [date, setDate] = useState(calendarProps.value);
+  return <Calendar {...calendarProps} onChange={(e) => { setDate(e); calendarProps.onChange(e); }} value={date} />;
+};
 
 class AddressForm extends React.Component {
   constructor (props) {
@@ -21,24 +27,39 @@ class AddressForm extends React.Component {
     if (values.days) {
       this.setState({ ...this.state, customDate: values.days === 'custom' });
     }
+
+    const addressExp = /^[a-zA-Z0-9]{40,60}$/;
+    const errors = {};
+
+    if (!values.address) {
+      errors.address = 'Ooops! Your hotspot is required';
+    } else if (!addressExp.test(values.address)) {
+      errors.address = 'Your address is wrong. Check it one more time';
+    }
+
+    if (!values.days) {
+      errors.days = 'Ooops! Date range is required. Choose one';
+    }
+
+    return errors;
   }
 
   handleSubmit (values) {
-    console.log(values);
+    console.log('handleSubmit', values);
   }
 
   render () {
     return (
       <div className='config-form'>
-        <Form onSubmit={(values) => this.handleSubmit(values)} validate={this.validate} render={({ handleSubmit, form, submitting, pristine, invalid, values }) => (
-          <form onSubmit={(values) => handleSubmit(values)} id='address-form'>
+        <Form onSubmit={values => this.handleSubmit(values)} validate={this.validate} render={({ handleSubmit, form, submitting, pristine, invalid, values }) => (
+          <form onSubmit={values => handleSubmit(values)} id='address-form'>
             <div className='config-form-input'>
               <Field type='text' name='address'>
                 {({ input, meta }) => (
                   <React.Fragment>
-                    <label htmlFor='address'>Hotspot name</label>
+                    <label htmlFor='address'>Hotspot address</label>
                     <input {...input} className='hs-input' id='address' placeholder='HS Address' autoFocus />
-                    <p>{meta.submitFailed && meta.error}</p>
+                    <p className='input-error'>{meta.submitFailed && meta.error}</p>
                   </React.Fragment>
                 )}
               </Field>
@@ -71,25 +92,37 @@ class AddressForm extends React.Component {
                   )}
                 </Field>
                 <Field name='days' type='radio' value='custom'>
-                  {({ input }) => (
-                    <div className='input-radio-button'>
-                      <input {...input} id='address-custom-days' />
-                      <label className='btn btn-sm btn-decor' htmlFor='address-custom-days'>Custom</label>
-                    </div>
+                  {({ input, meta }) => (
+                    <React.Fragment>
+                      <div className='input-radio-button'>
+                        <input {...input} id='address-custom-days' />
+                        <label className='btn btn-sm btn-decor' htmlFor='address-custom-days'>Custom</label>
+                      </div>
+                      <p className='input-error'>{meta.submitFailed && meta.error}</p>
+                    </React.Fragment>
                   )}
                 </Field>
               </div>
             </div>
             <div className={'config-form-days-custom' + (this.state.customDate ? ' visible' : '')}>
               <h3>Select custom date range</h3>
-              <Calendar
-                defaultView='month'
-                minDetail='month'
-                selectRange
-              />
+              <Field name='custom-dates-calendar'>
+                {({ input, meta }) => (
+                  <React.Fragment>
+                    <CalendarComponent {...input} value={[new Date(new Date().setDate(new Date().getDate() - 7)), new Date()]} defaultView='month' minDetail='month' selectRange />
+                    <p className='input-error'>{meta.submitFailed && meta.error}</p>
+                  </React.Fragment>
+                )}
+              </Field>
             </div>
             <div className='config-form-submit'>
-              <button className='btn btn-md btn-decor' type='submit'>Submit</button>
+              <button
+                className='btn btn-md btn-decor'
+                type='submit'
+                disabled={submitting}
+              >
+                Submit
+              </button>
             </div>
           </form>
         )}
