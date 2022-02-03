@@ -4,6 +4,22 @@ import { ArrowClockwise } from 'react-bootstrap-icons';
 import PropTypes from 'prop-types';
 
 class TopBar extends React.Component {
+  renderLocation () {
+    if (!this.props.hsInfo || !this.props.hsInfo.geocode || !this.props.hsInfo.geocode.long_city || !this.props.hsInfo.geocode.short_country) {
+      return '-';
+    }
+
+    return `${this.props.hsInfo.geocode.long_city}, ${this.props.hsInfo.geocode.short_country}`;
+  }
+
+  renderAntenna () {
+    if (!this.props.hsInfo || !this.props.hsInfo.gain || !this.props.hsInfo.elevation) {
+      return '-';
+    }
+
+    return `${this.props.hsInfo.gain / 10}dBi, ${this.props.hsInfo.elevation}m`;
+  }
+
   render () {
     if (this.props.hsInfo) {
       return (
@@ -12,19 +28,19 @@ class TopBar extends React.Component {
             <div className='top-bar-left'>
               <div className='top-bar-hs'>
                 <p><strong>Hotspot name</strong></p>
-                <p>-</p>
+                <p>{this.props.hsInfo.name || '-'}</p>
               </div>
               <div className='top-bar-hs'>
                 <p><strong>Hotspot address</strong></p>
-                <p>-</p>
+                <p>{this.props.hsInfo.address || '-'}</p>
               </div>
               <div className='top-bar-hs'>
                 <p><strong>Location</strong></p>
-                <p>-</p>
+                <p>{this.renderLocation()}</p>
               </div>
               <div className='top-bar-hs'>
                 <p><strong>Antenna</strong></p>
-                <p>-</p>
+                <p>{this.renderAntenna()}</p>
               </div>
             </div>
 
