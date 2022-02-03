@@ -4,6 +4,11 @@ import { ArrowClockwise } from 'react-bootstrap-icons';
 import PropTypes from 'prop-types';
 
 class TopBar extends React.Component {
+  constructor (props) {
+    super(props);
+    this.handleHsRefresh = this.handleHsRefresh.bind(this);
+  }
+
   renderLocation () {
     if (!this.props.hsInfo || !this.props.hsInfo.geocode || !this.props.hsInfo.geocode.long_city || !this.props.hsInfo.geocode.short_country) {
       return '-';
@@ -20,8 +25,12 @@ class TopBar extends React.Component {
     return `${this.props.hsInfo.gain / 10}dBi, ${this.props.hsInfo.elevation}m`;
   }
 
+  handleHsRefresh () {
+    return this.props.clearHsInfo();
+  }
+
   render () {
-    if (this.props.hsInfo) {
+    if (this.props.hsInfo && Object.keys(this.props.hsInfo).length > 0) {
       return (
         <section className='top-bar'>
           <div className='top-bar-configured'>
@@ -68,7 +77,7 @@ class TopBar extends React.Component {
               </div>
 
               <div className='top-bar-refresh'>
-                <button type='button' className='btn btn-decor btn-refresh'>
+                <button type='button' className='btn btn-decor btn-refresh' onClick={this.handleHsRefresh}>
                   <ArrowClockwise size={18} />
                 </button>
               </div>
@@ -89,7 +98,8 @@ class TopBar extends React.Component {
 }
 
 TopBar.propTypes = {
-  hsInfo: PropTypes.object
+  hsInfo: PropTypes.object,
+  clearHsInfo: PropTypes.func
 };
 
 export default TopBar;
