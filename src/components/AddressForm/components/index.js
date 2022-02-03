@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import '../styles/AddressForm.scss';
 import { Form, Field } from 'react-final-form';
 import Calendar from 'react-calendar';
+import HeliumAPI from '../../../api/HeliumAPI';
+import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 
 const CalendarComponent = props => {
   const calendarProps = props;
@@ -45,7 +48,15 @@ class AddressForm extends React.Component {
   }
 
   handleSubmit (values) {
-    console.log('handleSubmit', values);
+    return HeliumAPI.getHotspotForAddress(values.address)
+      .then(res => this.props.setHsInfo(res.data.data))
+      .catch(err => {
+        console.error(err);
+
+        toast.error('Something went wrong with Helium API. Try one more time', {
+          theme: 'dark'
+        });
+      });
   }
 
   render () {
@@ -131,5 +142,9 @@ class AddressForm extends React.Component {
     );
   }
 }
+
+AddressForm.propTypes = {
+  setHsInfo: PropTypes.func
+};
 
 export default AddressForm;
