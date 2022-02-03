@@ -2,6 +2,7 @@ import React from 'react';
 import '../styles/TopBar.scss';
 import { ArrowClockwise } from 'react-bootstrap-icons';
 import PropTypes from 'prop-types';
+import HSName from '../../../utilities/HSName';
 
 class TopBar extends React.Component {
   constructor (props) {
@@ -37,11 +38,11 @@ class TopBar extends React.Component {
             <div className='top-bar-left'>
               <div className='top-bar-hs'>
                 <p><strong>Hotspot name</strong></p>
-                <p>{this.props.hsInfo.name || '-'}</p>
+                <p>{HSName.toView(this.props.hsInfo.name) || '-'}</p>
               </div>
               <div className='top-bar-hs'>
                 <p><strong>Hotspot address</strong></p>
-                <p>{this.props.hsInfo.address || '-'}</p>
+                <p title={this.props.hsInfo.address}>{(this.props.hsInfo.address.substr(0, 20) + '...') || '-'}</p>
               </div>
               <div className='top-bar-hs'>
                 <p><strong>Location</strong></p>
