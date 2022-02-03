@@ -44,7 +44,7 @@ export default function counter (state = initialState, action) {
     return { ...state, generalInfo: action.generalInfo };
 
   case SET_HS_INFO:
-    return { ...state, hsInfo: action.generalInfo };
+    return { ...state, hsInfo: action.hsInfo };
 
   default:
     return state;
