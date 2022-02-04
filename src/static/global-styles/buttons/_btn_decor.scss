@@ -12,4 +12,9 @@
   &.active {
     background-color: color.adjust($decor-color, $lightness: -20%);
   }
+
+  &:disabled {
+    background-color: color.adjust($decor-color, $saturation: -15%);
+    cursor: not-allowed;
+  }
 }
