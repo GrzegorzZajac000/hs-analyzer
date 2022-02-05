@@ -1,0 +1,53 @@
+@import "../../../static/global-styles/variables";
+@import "../../../static/global-styles/functions";
+
+.donate {
+  &-content {
+    text-align: center;
+  }
+
+  &-qr {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+
+    &-box {
+      background-color: $box-bg;
+      border-radius: 8px;
+      padding: 20px;
+    }
+  }
+
+  &-amount {
+    background-color: $box-bg;
+    border-radius: 8px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto 20px;
+    padding: 20px;
+    width: 296px;
+  }
+
+  h2 {
+    color: $light-font-color;
+    font-size: px-to-rem(22);
+    font-weight: 700;
+  }
+
+  p {
+    line-height: 1.4;
+
+    &.donate-wallet {
+      color: $light-font-color;
+      font-size: px-to-rem(14);
+    }
+
+    &.donate-thank-you {
+      color: $light-font-color;
+      font-size: px-to-rem(28);
+      font-weight: 700;
+      margin-top: 20px;
+    }
+  }
+}

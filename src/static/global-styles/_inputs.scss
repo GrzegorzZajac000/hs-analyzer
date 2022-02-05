@@ -24,6 +24,11 @@
     color: $dark-font-color;
     opacity: 1;
   }
+
+  &-donate {
+    text-align: center;
+    width: 100px;
+  }
 }
 
 /* stylelint-disable selector-class-pattern */
