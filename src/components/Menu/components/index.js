@@ -2,7 +2,7 @@ import React from 'react';
 import '../styles/Menu.scss';
 import MenuLink from '../../../utilities/MenuLink';
 import { Link } from 'react-router-dom';
-import { WindowPlus } from 'react-bootstrap-icons';
+// import { WindowPlus } from 'react-bootstrap-icons';
 import PropTypes from 'prop-types';
 
 class Menu extends React.Component {
@@ -20,9 +20,9 @@ class Menu extends React.Component {
           <li>
             <MenuLink to='/config'>Check your hotspot</MenuLink>
           </li>
-          <li className={!this.props.hsInfo.address ? 'disabled' : ''}>
-            <MenuLink to='/connectivity'>Connectivity</MenuLink>
-          </li>
+          {/* <li className={!this.props.hsInfo.address ? 'disabled' : ''}> */}
+          {/*  <MenuLink to='/connectivity'>Connectivity</MenuLink> */}
+          {/* </li> */}
           <li className={!this.props.hsInfo.address ? 'disabled' : ''}>
             <MenuLink to='/activity'>Latest activity</MenuLink>
           </li>
@@ -35,9 +35,9 @@ class Menu extends React.Component {
           <li>
             <MenuLink to='/donate'>Donate</MenuLink>
           </li>
-          <li>
-            <a href='https://github.com/GrzegorzZajac000/hs-analyzer' target='_blank' rel='noreferrer noopener'>GitHub <WindowPlus size={18} /></a>
-          </li>
+          {/* <li> */}
+          {/*  <a href='https://github.com/GrzegorzZajac000/hs-analyzer' target='_blank' rel='noreferrer noopener'>GitHub <WindowPlus size={18} /></a> */}
+          {/* </li> */}
         </ul>
       </nav>
     );
