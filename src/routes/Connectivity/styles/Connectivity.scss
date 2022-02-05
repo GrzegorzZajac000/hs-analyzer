@@ -1,0 +1,45 @@
+@import "../../../static/global-styles/variables";
+@import "../../../static/global-styles/functions";
+
+.connectivity {
+  &-address {
+    margin-bottom: 20px;
+
+    &-api {
+      margin-bottom: 10px;
+    }
+
+    &-buttons {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+
+      button {
+        &:first-of-type {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+  pre {
+    background-color: $box-bg;
+    border-radius: 8px;
+    color: $font-color;
+    height: 400px;
+    padding: 20px;
+    width: 100%;
+  }
+
+  h2 {
+    color: $light-font-color;
+    font-size: px-to-rem(22);
+    font-weight: 700;
+  }
+
+  h3 {
+    color: $font-color;
+    font-size: px-to-rem(16);
+    font-weight: 400;
+  }
+}
