@@ -3,6 +3,7 @@ const SET_MOBILE_MENU_CLOSED = 'SET_MOBILE_MENU_CLOSED';
 const SET_GENERAL_INFO = 'SET_GENERAL_INFO';
 const SET_HS_INFO = 'SET_HS_INFO';
 const CLEAR_HS_INFO = 'CLEAR_HS_INFO';
+const SET_DAYS_INFO = 'SET_DAYS_INFO';
 
 export const setMobileMenuOpened = () => ({
   type: SET_MOBILE_MENU_OPENED
@@ -26,6 +27,11 @@ export const clearHsInfo = () => ({
   type: CLEAR_HS_INFO
 });
 
+export const setDaysInfo = daysInfo => ({
+  type: SET_DAYS_INFO,
+  daysInfo
+})
+
 const initialState = {
   mobileMenuOpened: false,
   generalInfo: {
@@ -34,7 +40,8 @@ const initialState = {
     blockHeight: 0,
     geolocation: { countries: 0, cities: 0 }
   },
-  hsInfo: {}
+  hsInfo: {},
+  daysInfo: {}
 };
 
 export default function counter (state = initialState, action) {
@@ -52,7 +59,10 @@ export default function counter (state = initialState, action) {
     return { ...state, hsInfo: action.hsInfo };
 
   case CLEAR_HS_INFO:
-    return { ...state, hsInfo: {} };
+    return { ...state, hsInfo: {}, daysInfo: {} };
+
+  case SET_DAYS_INFO:
+    return { ...state, daysInfo: action.daysInfo };
 
   default:
     return state;

@@ -48,8 +48,14 @@ class AddressForm extends React.Component {
   }
 
   handleSubmit (values) {
+    const daysInfo = {
+      mode: values.days,
+      custom: values['custom-dates-calendar']
+    };
+
     return HeliumAPI.getHotspotForAddress(values.address)
       .then(res => this.props.setHsInfo(res.data.data))
+      .then(() => this.props.setDaysInfo(daysInfo))
       .catch(err => {
         console.error(err);
 
@@ -144,7 +150,8 @@ class AddressForm extends React.Component {
 }
 
 AddressForm.propTypes = {
-  setHsInfo: PropTypes.func
+  setHsInfo: PropTypes.func,
+  setDaysInfo: PropTypes.func
 };
 
 export default AddressForm;
