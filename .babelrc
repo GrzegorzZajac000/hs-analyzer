@@ -4,7 +4,11 @@
       "browsers": ["> 1%", "last 2 versions", "Android >= 4.0", "not ie <= 8", "not dead", "iOS 7", "iOS 8", "iOS 9"],
       "node": "16.1.0"
     }
-  }], "@babel/react", "minify"],
+  }], "@babel/react", ["minify", {
+    "builtIns": false,
+    "evaluate": false,
+    "mangle": false
+  }]],
   "env": {
     "production": {
       "plugins": [
