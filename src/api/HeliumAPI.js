@@ -594,6 +594,15 @@ const HeliumAPI = {
   getListAssertLocations: (config = {}) => {
     const url = URLBuilder(`${instance.defaults.baseURL}/v1/assert_locations`, config);
     return instance.get(url);
+  },
+
+  // Get Next Page
+  getNextPage: cursor => {
+    if (!cursor) {
+      return {};
+    }
+
+    return instance.get(`/v1?cursor=${cursor}`);
   }
 };
 
