@@ -341,6 +341,36 @@ const HeliumAPI = {
     return instance.get(url);
   },
 
+  getHotspotActivityAllData: (address, loadingStateUpdate, config = {}) => {
+    if (!address) {
+      throw new Error('HeliumAPI.getHotspotActivity - address is required');
+    }
+
+    const data = [];
+    let url = URLBuilder(`${instance.defaults.baseURL}/v1/hotspots/${address}/activity`, config);
+
+    return instance.get(url)
+      .then(async res => {
+        data.push(res.data.data);
+
+        if (loadingStateUpdate && typeof loadingStateUpdate === 'function') {
+          loadingStateUpdate(data.flat().length);
+        }
+
+        while (res.data.cursor) {
+          url = URLBuilder(`${instance.defaults.baseURL}/v1/hotspots/${address}/activity?cursor=${res.data.cursor}`, config);
+          res = await instance.get(url);
+          data.push(res.data.data);
+
+          if (loadingStateUpdate && typeof loadingStateUpdate === 'function') {
+            loadingStateUpdate(data.flat().length);
+          }
+        }
+
+        return data.flat();
+      })
+  },
+
   getHotspotActivityCounts: (address, config = {}) => {
     if (!address) {
       throw new Error('HeliumAPI.getHotspotActivityCounts - address is required');
@@ -594,15 +624,6 @@ const HeliumAPI = {
   getListAssertLocations: (config = {}) => {
     const url = URLBuilder(`${instance.defaults.baseURL}/v1/assert_locations`, config);
     return instance.get(url);
-  },
-
-  // Get Next Page
-  getNextPage: cursor => {
-    if (!cursor) {
-      return {};
-    }
-
-    return instance.get(`/v1?cursor=${cursor}`);
   }
 };
 

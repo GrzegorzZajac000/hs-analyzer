@@ -12,8 +12,11 @@ class ActivityContainer extends Component {
 
 const mapActionCreators = {};
 
-const mapStateToProps = () => {
-  return {};
+const mapStateToProps = state => {
+  return {
+    hsInfo: state.site.hsInfo,
+    daysInfo: state.site.daysInfo
+  };
 };
 
 export default connect(mapStateToProps, mapActionCreators)(ActivityContainer);
