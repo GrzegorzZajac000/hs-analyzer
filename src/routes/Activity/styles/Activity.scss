@@ -1,0 +1,43 @@
+@import "../../../static/global-styles/variables";
+@import "../../../static/global-styles/functions";
+
+.activity {
+  width: 100%;
+
+  &-list {
+    margin-top: 20px;
+  }
+
+  &-item {
+    align-items: center;
+    background-color: $box-bg;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    padding: 5px 10px;
+
+    &-block-height {
+      &-header {
+        color: $light-font-color;
+        font-size: px-to-rem(12);
+      }
+
+      &-content {
+        color: $font-color;
+        font-size: px-to-rem(16);
+      }
+    }
+
+    &-time {
+      font-size: px-to-rem(12);
+    }
+  }
+
+  h2 {
+    color: $light-font-color;
+    font-size: px-to-rem(22);
+    font-weight: 700;
+  }
+}

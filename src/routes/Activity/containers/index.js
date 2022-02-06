@@ -14,8 +14,7 @@ const mapActionCreators = {};
 
 const mapStateToProps = state => {
   return {
-    hsInfo: state.site.hsInfo,
-    daysInfo: state.site.daysInfo
+    hsInfo: state.site.hsInfo
   };
 };
 
