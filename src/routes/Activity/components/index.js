@@ -45,18 +45,21 @@ class Activity extends React.Component {
       console.log(activity);
 
       return (
-        <div className='activity-item' key={i}>
-          <div className='activity-item-type'>{activity.type}</div>
-          <div className='activity-item-desc'>
-            <div className='activity-item-desc-title'>Title</div>
-            <div className='activity-item-desc-info'>Additional info</div>
-          </div>
-          <div className='activity-item-block-height'>
-            <div className='activity-item-block-height-header'>Block height</div>
-            <div className='activity-item-block-height-content'>{activity.height}</div>
-          </div>
-          <div className='activity-item-time'>{timeAgo}</div>
-        </div>
+        <React.Fragment key={i}>
+          <tr className='activity-item'>
+            <td className='activity-item-type'>{activity.type}</td>
+            <td className='activity-item-desc'>
+              <div className='activity-item-desc-title'>Title</div>
+              <div className='activity-item-desc-info'>Additional info</div>
+            </td>
+            <td className='activity-item-block-height'>
+              <div className='activity-item-block-height-header'>Block height</div>
+              <div className='activity-item-block-height-content'>{activity.height}</div>
+            </td>
+            <td className='activity-item-time'>{timeAgo}</td>
+          </tr>
+          <tr className='activity-item-spacer' />
+        </React.Fragment>
       );
     });
   }
@@ -79,7 +82,9 @@ class Activity extends React.Component {
       <section className='activity route-section'>
         <h2>Latest activity</h2>
         <div className='activity-list'>
-          {this.generateActivity()}
+          <table>
+            {this.generateActivity()}
+          </table>
         </div>
       </section>
     );

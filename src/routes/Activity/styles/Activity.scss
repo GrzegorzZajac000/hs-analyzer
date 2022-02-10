@@ -6,18 +6,13 @@
 
   &-list {
     margin-top: 20px;
+
+    table {
+      width: 100%;
+    }
   }
 
   &-item {
-    align-items: center;
-    background-color: $box-bg;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    padding: 5px 10px;
-
     &-block-height {
       &-header {
         color: $light-font-color;
@@ -32,7 +27,28 @@
 
     &-time {
       font-size: px-to-rem(12);
+      text-align: right;
+      width: 100px;
     }
+
+    td {
+      background-color: $box-bg;
+      padding: 5px 16px;
+
+      &:first-of-type {
+        border-bottom-left-radius: 8px;
+        border-top-left-radius: 8px;
+      }
+
+      &:last-of-type {
+        border-bottom-right-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+    }
+  }
+
+  &-item-spacer {
+    height: 12px;
   }
 
   h2 {
