@@ -2,7 +2,6 @@ import React from 'react';
 import '../styles/Activity.scss';
 import HeliumAPI from '../../../api/HeliumAPI';
 import PropTypes from 'prop-types';
-import DataGenerator from '../../../api/DateGenerator';
 import GetTimeAgo from '../../../utilities/GetTimeAgo';
 
 class Activity extends React.Component {
@@ -17,25 +16,32 @@ class Activity extends React.Component {
 
   componentDidMount () {
     // @todo
-    // Last 48 hours
-    // Loader
     // Infinite scroll
     // Table
 
+    let minTime = new Date().setDate(new Date().getDate() - 2);
+    minTime = new Date(minTime).setMinutes(0);
+    minTime = new Date(minTime).setSeconds(0);
+    minTime = new Date(minTime).setMilliseconds(0);
+
+    let maxTime = new Date().setHours(new Date().getHours() + 1);
+    maxTime = new Date(maxTime).setMinutes(0);
+    maxTime = new Date(maxTime).setSeconds(0);
+    maxTime = new Date(maxTime).setMilliseconds(0);
+
     const config = {
-      min_time: DataGenerator(new Date(), false),
-      max_time: DataGenerator(new Date(), true)
+      min_time: new Date(minTime).toISOString(),
+      max_time: new Date(maxTime).toISOString()
     };
 
     HeliumAPI.getHotspotActivityAllData(this.props.hsInfo.address, () => {}, config)
-      .then(res => this.setState({ ...this.state, activityData: res }))
+      .then(res => this.setState({ ...this.state, activityData: res, loaded: true }))
       .catch(console.error);
   }
 
   generateActivity () {
     return this.state.activityData.map((activity, i) => {
       const timeAgo = GetTimeAgo(activity.time * 1000);
-
       console.log(activity);
 
       return (
@@ -56,6 +62,19 @@ class Activity extends React.Component {
   }
 
   render () {
+    if (!this.state.loaded) {
+      return (
+        <section className='activity route-section'>
+          <div className='preload show-preloader'>
+            <div className='preload-circle'>
+              <div />
+              <div />
+            </div>
+          </div>
+        </section>
+      );
+    }
+
     return (
       <section className='activity route-section'>
         <h2>Latest activity</h2>
