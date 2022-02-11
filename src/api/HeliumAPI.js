@@ -3,7 +3,7 @@ import URLBuilder from '../utilities/URLBuilder';
 
 const instance = axios.create({
   baseURL: 'https://api.helium.io',
-  timeout: 30000
+  timeout: 60000
 });
 
 const HeliumAPI = {

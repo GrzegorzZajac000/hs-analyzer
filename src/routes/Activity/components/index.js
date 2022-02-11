@@ -3,23 +3,13 @@ import '../styles/Activity.scss';
 import HeliumAPI from '../../../api/HeliumAPI';
 import PropTypes from 'prop-types';
 import GetTimeAgo from '../../../utilities/GetTimeAgo';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 class Activity extends React.Component {
   constructor (props) {
     super(props);
 
-    this.state = {
-      loaded: false,
-      activityData: []
-    };
-  }
-
-  componentDidMount () {
-    // @todo
-    // Infinite scroll
-    // Table
-
-    let minTime = new Date().setDate(new Date().getDate() - 2);
+    let minTime = new Date().setDate(new Date().getDate() - 5);
     minTime = new Date(minTime).setMinutes(0);
     minTime = new Date(minTime).setSeconds(0);
     minTime = new Date(minTime).setMilliseconds(0);
@@ -29,20 +19,51 @@ class Activity extends React.Component {
     maxTime = new Date(maxTime).setSeconds(0);
     maxTime = new Date(maxTime).setMilliseconds(0);
 
-    const config = {
-      min_time: new Date(minTime).toISOString(),
-      max_time: new Date(maxTime).toISOString()
+    this.state = {
+      loaded: false,
+      activityData: [],
+      config: {
+        min_time: new Date(minTime).toISOString(),
+        max_time: new Date(maxTime).toISOString()
+      }
     };
 
-    HeliumAPI.getHotspotActivityAllData(this.props.hsInfo.address, () => {}, config)
-      .then(res => this.setState({ ...this.state, activityData: res, loaded: true }))
+    this.getHSActivity = this.getHSActivity.bind(this);
+  }
+
+  componentDidMount () {
+    this.getHSActivity();
+  }
+
+  getHSActivity () {
+    return HeliumAPI.getHotspotActivityAllData(this.props.hsInfo.address, () => {}, this.state.config)
+      .then(res => {
+        const arr = this.state.activityData.concat(res);
+        return this.setState({ ...this.state, activityData: arr, loaded: true });
+      })
+      .then(() => {
+        let minTime = new Date(this.state.config.min_time);
+        minTime.setDate(minTime.getDate() - 3);
+        minTime = new Date(minTime).setMinutes(0);
+        minTime = new Date(minTime).setSeconds(0);
+        minTime = new Date(minTime).setMilliseconds(0);
+
+        const config = {
+          min_time: new Date(minTime).toISOString(),
+          max_time: this.state.config.min_time
+        };
+
+        console.log(config);
+
+        this.setState({ ...this.state, config });
+      })
       .catch(console.error);
   }
 
   generateActivity () {
     return this.state.activityData.map((activity, i) => {
       const timeAgo = GetTimeAgo(activity.time * 1000);
-      console.log(activity);
+      // console.log(activity);
 
       return (
         <React.Fragment key={i}>
@@ -79,12 +100,23 @@ class Activity extends React.Component {
     }
 
     return (
-      <section className='activity route-section'>
+      <section className='activity route-section' id='activity-infinite-scroll'>
         <h2>Latest activity</h2>
         <div className='activity-list'>
-          <table>
-            {this.generateActivity()}
-          </table>
+          <InfiniteScroll
+            dataLength={this.state.activityData.length}
+            next={this.getHSActivity}
+            hasMore
+            loader={<h4>Loading...</h4>}
+            scrollableTarget='activity-infinite-scroll'
+            scrollThreshold={0.25}
+          >
+            <table>
+              <tbody>
+                {this.generateActivity()}
+              </tbody>
+            </table>
+          </InfiniteScroll>
         </div>
       </section>
     );
