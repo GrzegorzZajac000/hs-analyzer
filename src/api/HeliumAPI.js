@@ -1,10 +1,13 @@
 import axios from 'axios';
 import URLBuilder from '../utilities/URLBuilder';
+import axiosRetry from 'axios-retry';
 
 const instance = axios.create({
   baseURL: 'https://api.helium.io',
   timeout: 60000
 });
+
+axiosRetry(instance, { retries: 3 });
 
 const HeliumAPI = {
   // Stats
