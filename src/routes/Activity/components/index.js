@@ -4,6 +4,7 @@ import HeliumAPI from '../../../api/HeliumAPI';
 import PropTypes from 'prop-types';
 import GetTimeAgo from '../../../utilities/GetTimeAgo';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { toast } from 'react-toastify';
 
 class Activity extends React.Component {
   constructor (props) {
@@ -57,7 +58,13 @@ class Activity extends React.Component {
 
         this.setState({ ...this.state, config });
       })
-      .catch(console.error);
+      .catch(err => {
+        console.error(err);
+
+        toast.error('Something went wrong with Helium API. Try one more time', {
+          theme: 'dark'
+        });
+      });
   }
 
   generateActivity () {
