@@ -1,13 +1,21 @@
 import axios from 'axios';
 import URLBuilder from '../utilities/URLBuilder';
-import axiosRetry from 'axios-retry';
+import * as rax from 'retry-axios';
 
 const instance = axios.create({
   baseURL: 'https://api.helium.io',
-  timeout: 60000
+  timeout: 60000,
+  headers: {
+    'Cache-Control': 'max-age=60'
+  }
 });
 
-axiosRetry(instance, { retries: 3 });
+instance.defaults.raxConfig = {
+  instance,
+  retry: 3,
+  statusCodesToRetry: [[100, 199], [429, 429], [500, 599]]
+};
+rax.attach(instance);
 
 const HeliumAPI = {
   // Stats

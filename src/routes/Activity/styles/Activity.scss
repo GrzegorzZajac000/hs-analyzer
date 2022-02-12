@@ -13,6 +13,96 @@
   }
 
   &-item {
+    &.activity-reward {
+      .activity-item-icon {
+        > div {
+          background-color: $activity-reward-color;
+        }
+      }
+    }
+
+    &.activity-transferred-packets {
+      .activity-item-icon {
+        > div {
+          background-color: $activity-transferred-packets;
+        }
+      }
+    }
+
+    &.activity-constructed-challenge {
+      .activity-item-icon {
+        > div {
+          background-color: $activity-constructed-challenge;
+        }
+      }
+    }
+
+    &.activity-challenged-beaconer {
+      .activity-item-icon {
+        > div {
+          background-color: $activity-challenged-beaconer;
+        }
+      }
+    }
+
+    &.activity-witnessed-beacon {
+      .activity-item-icon {
+        > div {
+          background-color: $activity-witnessed-beacon;
+        }
+      }
+    }
+
+    &.activity-broadcasted-beacon {
+      .activity-item-icon {
+        > div {
+          background-color: $activity-broadcasted-beacon;
+        }
+      }
+    }
+
+    &-icon {
+      width: 32px;
+
+      > div {
+        align-items: center;
+        color: $light-font-color;
+        border-radius: 50%;
+        display: flex;
+        height: 32px;
+        justify-content: center;
+        width: 32px;
+
+        svg {
+          vertical-align: unset;
+        }
+      }
+    }
+
+    &-type {
+      color: $light-font-color;
+      font-size: px-to-rem(15);
+      font-weight: 700;
+    }
+
+    &-desc {
+      &-block {
+        &:not(:last-of-type) {
+          margin-bottom: 7px;
+        }
+
+        p {
+          color: $light-font-color;
+          font-size: px-to-rem(12);
+        }
+
+        h6 {
+          color: $font-color;
+          font-size: px-to-rem(16);
+        }
+      }
+    }
+
     &-block-height {
       &-header {
         color: $light-font-color;
@@ -33,7 +123,7 @@
 
     td {
       background-color: $box-bg;
-      padding: 5px 16px;
+      padding: 7px 16px;
 
       &:first-of-type {
         border-bottom-left-radius: 8px;
@@ -49,6 +139,14 @@
 
   &-item-spacer {
     height: 12px;
+  }
+
+  &-loading {
+    color: $light-font-color;
+    font-size: px-to-rem(14);
+    font-weight: 400;
+    margin: 20px 0;
+    text-align: center;
   }
 
   h2 {
