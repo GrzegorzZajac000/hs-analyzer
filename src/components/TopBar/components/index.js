@@ -1,6 +1,5 @@
 import React from 'react';
 import '../styles/TopBar.scss';
-import { ArrowClockwise } from 'react-bootstrap-icons';
 import PropTypes from 'prop-types';
 import HSName from '../../../utilities/HSName';
 
@@ -75,12 +74,6 @@ class TopBar extends React.Component {
                     <a className='dropdown-item' href={`https://app.heliumstatus.io/hotspots/${this.props.hsInfo.address}`}>HeliumStatus.io (Paid)</a>
                   </div>
                 </div>
-              </div>
-
-              <div className='top-bar-refresh'>
-                <button type='button' className='btn btn-decor btn-refresh' onClick={this.handleHsRefresh}>
-                  <ArrowClockwise size={18} />
-                </button>
               </div>
             </div>
           </div>

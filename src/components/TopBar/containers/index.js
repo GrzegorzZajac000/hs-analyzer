@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TopBar from '../components';
-import { clearHsInfo } from '../../../modules/siteReducer';
 
 class TopBarContainer extends Component {
   render () {
@@ -11,9 +10,7 @@ class TopBarContainer extends Component {
   }
 }
 
-const mapActionCreators = {
-  clearHsInfo
-};
+const mapActionCreators = {};
 
 const mapStateToProps = state => {
   return {

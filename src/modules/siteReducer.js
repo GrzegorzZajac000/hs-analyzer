@@ -2,7 +2,6 @@ const SET_MOBILE_MENU_OPENED = 'SET_MOBILE_MENU_OPENED';
 const SET_MOBILE_MENU_CLOSED = 'SET_MOBILE_MENU_CLOSED';
 const SET_GENERAL_INFO = 'SET_GENERAL_INFO';
 const SET_HS_INFO = 'SET_HS_INFO';
-const CLEAR_HS_INFO = 'CLEAR_HS_INFO';
 const SET_DAYS_INFO = 'SET_DAYS_INFO';
 
 export const setMobileMenuOpened = () => ({
@@ -21,10 +20,6 @@ export const setGeneralInfo = generalInfo => ({
 export const setHsInfo = hsInfo => ({
   type: SET_HS_INFO,
   hsInfo
-});
-
-export const clearHsInfo = () => ({
-  type: CLEAR_HS_INFO
 });
 
 export const setDaysInfo = daysInfo => ({
@@ -57,9 +52,6 @@ export default function counter (state = initialState, action) {
 
   case SET_HS_INFO:
     return { ...state, hsInfo: action.hsInfo };
-
-  case CLEAR_HS_INFO:
-    return { ...state, hsInfo: {}, daysInfo: {} };
 
   case SET_DAYS_INFO:
     return { ...state, daysInfo: action.daysInfo };
