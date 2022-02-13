@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 class HSModal extends React.Component {
   constructor (props) {
     super(props);
+    this.props.hideHSModal();
     this.handleHide = this.handleHide.bind(this);
   }
 
