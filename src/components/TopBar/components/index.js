@@ -27,7 +27,7 @@ class TopBar extends React.Component {
   }
 
   handleChange (option) {
-    if (option.value === 'new') {
+    if (option.value === 'new-hs') {
       this.props.showHSModal();
     } else {
       console.log('old hotspot');
@@ -92,11 +92,10 @@ class TopBar extends React.Component {
           <Select
             className='react-select'
             classNamePrefix='rs'
-            options={[
-              { label: 'HS 1', value: 1 },
-              { label: 'HS 2', value: 2 },
-              { label: 'Add new Hotspot...', value: 'new' }
-            ]}
+            options={this.props.hsList.concat({
+              label: 'Add new hotspot',
+              value: 'new-hs'
+            })}
             onChange={this.handleChange}
           />
         </div>
@@ -107,6 +106,7 @@ class TopBar extends React.Component {
 
 TopBar.propTypes = {
   hsInfo: PropTypes.object,
+  hsList: PropTypes.array,
   showHSModal: PropTypes.func
 };
 

@@ -4,6 +4,7 @@ import { Form, Field } from 'react-final-form';
 import HeliumAPI from '../../../api/HeliumAPI';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
+import HSName from '../../../utilities/HSName';
 
 class AddressForm extends React.Component {
   constructor (props) {
@@ -28,7 +29,16 @@ class AddressForm extends React.Component {
 
   handleSubmit (values) {
     return HeliumAPI.getHotspotForAddress(values.address)
-      .then(res => this.props.setHsInfo(res.data.data))
+      .then(res => {
+        const hs = {};
+        hs.value = res.data.data.address;
+        hs.label = `${HSName.toView(res.data.data.name)} - ${res.data.data.geocode.long_city}, ${res.data.data.geocode.long_country}`;
+        hs.data = res.data.data;
+
+        return this.props.addHSToList(hs);
+      })
+      .then(() => this.props.hideHSModal())
+      .then(() => this.props.useHS(this.props.hsList.length - 1))
       .catch(err => {
         console.error(err);
 
@@ -72,7 +82,10 @@ class AddressForm extends React.Component {
 }
 
 AddressForm.propTypes = {
-  setHsInfo: PropTypes.func
+  addHSToList: PropTypes.func,
+  hideHSModal: PropTypes.func,
+  hsList: PropTypes.array,
+  useHS: PropTypes.func
 };
 
 export default AddressForm;
