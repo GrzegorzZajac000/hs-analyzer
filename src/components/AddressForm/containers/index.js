@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import AddressForm from '../components';
-import { setHsInfo, setDaysInfo } from '../../../modules/siteReducer';
+import { setHsInfo } from '../../../modules/siteReducer';
 
 class AddressFormContainer extends Component {
   render () {
@@ -12,8 +12,7 @@ class AddressFormContainer extends Component {
 }
 
 const mapActionCreators = {
-  setHsInfo,
-  setDaysInfo
+  setHsInfo
 };
 
 const mapStateToProps = () => {
