@@ -2,11 +2,12 @@ import React from 'react';
 import '../styles/TopBar.scss';
 import PropTypes from 'prop-types';
 import HSName from '../../../utilities/HSName';
+import Select from 'react-select';
 
 class TopBar extends React.Component {
   constructor (props) {
     super(props);
-    this.handleHsRefresh = this.handleHsRefresh.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   renderLocation () {
@@ -25,8 +26,12 @@ class TopBar extends React.Component {
     return `${this.props.hsInfo.gain / 10}dBi, ${this.props.hsInfo.elevation}m`;
   }
 
-  handleHsRefresh () {
-    return this.props.clearHsInfo();
+  handleChange (option) {
+    if (option.value === 'new') {
+      this.props.showHSModal();
+    } else {
+      console.log('old hotspot');
+    }
   }
 
   render () {
@@ -84,7 +89,16 @@ class TopBar extends React.Component {
     return (
       <section className='top-bar'>
         <div className='top-bar-unconfigured'>
-          <p className='top-bar-unconfigured-text'>Add information in config to continue...</p>
+          <Select
+            className='react-select'
+            classNamePrefix='rs'
+            options={[
+              { label: 'HS 1', value: 1 },
+              { label: 'HS 2', value: 2 },
+              { label: 'Add new Hotspot...', value: 'new' }
+            ]}
+            onChange={this.handleChange}
+          />
         </div>
       </section>
     );
@@ -93,7 +107,7 @@ class TopBar extends React.Component {
 
 TopBar.propTypes = {
   hsInfo: PropTypes.object,
-  clearHsInfo: PropTypes.func
+  showHSModal: PropTypes.func
 };
 
 export default TopBar;

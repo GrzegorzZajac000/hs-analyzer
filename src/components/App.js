@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Routes, Route } from 'react-router';
-import { Menu, TopBar } from './index';
+import { Menu, TopBar, HSModal } from './index';
 import { Activity, Config, Connectivity, Donate, Info, NoMatch, Rssi, Snr } from '../routes';
 import { Provider } from 'react-redux';
 import createStore from '../store/createStore';
@@ -33,6 +33,7 @@ class App extends React.Component {
                   </div>
                   <div className='col-10 gx-0'>
                     <TopBar hsInfo={this.props.hsInfo} />
+                    <HSModal />
 
                     <Routes>
                       <Route path='/' element={<Info />} />

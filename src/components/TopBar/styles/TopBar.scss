@@ -19,9 +19,8 @@
   }
 
   &-unconfigured {
-    &-text {
-      color: $light-font-color;
-      font-size: px-to-rem(14);
+    .react-select {
+      width: 75%;
     }
   }
 

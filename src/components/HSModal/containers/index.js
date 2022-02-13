@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import HSModal from '../components';
+import { hideHSModal } from '../../../modules/siteReducer';
 
 class HSModalContainer extends Component {
   render () {
@@ -10,10 +11,14 @@ class HSModalContainer extends Component {
   }
 }
 
-const mapActionCreators = {};
+const mapActionCreators = {
+  hideHSModal
+};
 
-const mapStateToProps = () => {
-  return {};
+const mapStateToProps = state => {
+  return {
+    hsModal: state.site.hsModal
+  };
 };
 
 export default connect(mapStateToProps, mapActionCreators)(HSModalContainer);
