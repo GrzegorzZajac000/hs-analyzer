@@ -79,6 +79,7 @@
     "luxon": "^2.3.0",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
+    "react-bootstrap": "^2.1.2",
     "react-bootstrap-icons": "^1.7.2",
     "react-calendar": "^3.7.0",
     "react-copy-to-clipboard": "^5.0.4",
