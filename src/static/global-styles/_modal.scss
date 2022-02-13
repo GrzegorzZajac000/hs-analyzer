@@ -1,0 +1,11 @@
+@import "./variables";
+@import "./functions";
+
+.modal {
+  &-content {
+    background-color: $light-bg;
+    border: 0;
+    border-radius: 16px;
+    padding: 20px;
+  }
+}
