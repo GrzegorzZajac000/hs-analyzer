@@ -48,6 +48,14 @@ module.exports = merge(baseConfig, {
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
       'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
       'Access-Control-Allow-Credentials': true
+    },
+    proxy: {
+      '/api': {
+        target: 'https://api.helium.io',
+        pathRewrite: {'^/api' : ''}, // In this case we don't pass `api` path
+        secure: false,
+        changeOrigin: true
+      }
     }
   }
 });

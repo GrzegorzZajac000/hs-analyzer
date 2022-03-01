@@ -13,6 +13,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 // Env
 const isProd = process.env.NODE_ENV === 'production';
@@ -61,6 +62,7 @@ module.exports = {
   },
   devtool: 'source-map',
   plugins: [
+    new Dotenv(),
     new ESLintPlugin({
       extensions: ['js', 'jsx']
     }),
@@ -109,12 +111,6 @@ module.exports = {
       failOnError: true,
       failOnWarning: true,
       files: './src/**/*.s?(a|c)ss'
-    }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(isProd ? 'production' : 'development'),
-        DOMAIN: JSON.stringify(process.env.DOMAIN)
-      }
     })
   ]
 };

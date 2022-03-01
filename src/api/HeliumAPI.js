@@ -3,7 +3,7 @@ import URLBuilder from '../utilities/URLBuilder';
 import * as rax from 'retry-axios';
 
 const instance = axios.create({
-  baseURL: 'https://api.helium.io',
+  baseURL: process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:3000/api' : 'https://api.helium.io',
   timeout: 60000,
   headers: {
     'Cache-Control': 'max-age=60'
