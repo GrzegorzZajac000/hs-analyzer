@@ -47,7 +47,7 @@
     "favicons-webpack-plugin": "5.0.2",
     "file-loader": "6.2.0",
     "html-webpack-plugin": "5.5.0",
-    "mini-css-extract-plugin": "2.5.3",
+    "mini-css-extract-plugin": "2.6.0",
     "node-sass": "7.0.1",
     "path": "0.12.7",
     "postcss": "8.4.7",
