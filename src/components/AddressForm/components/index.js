@@ -22,6 +22,13 @@ class AddressForm extends React.Component {
       errors.address = 'Ooops! Your hotspot is required';
     } else if (!addressExp.test(values.address)) {
       errors.address = 'Your address is wrong. Check it one more time';
+    } else {
+      let hsList = this.props.hsList;
+      hsList = hsList.filter(hs => hs.value === values.address);
+
+      if (hsList.length > 0) {
+        errors.address = `Ooops! Your hotspot is on the list as ${hsList[0].label}`;
+      }
     }
 
     return errors;
