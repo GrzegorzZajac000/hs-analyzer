@@ -28,7 +28,7 @@ const initialState = {
   },
   hsInfo: {},
   hsList: [],
-  currentHS: 0,
+  currentHS: null,
   hsModal: false
 };
 

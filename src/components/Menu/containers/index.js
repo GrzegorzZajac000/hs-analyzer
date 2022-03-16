@@ -14,7 +14,7 @@ const mapActionCreators = {};
 
 const mapStateToProps = state => {
   return {
-    hsInfo: state.site.hsInfo
+    currentHS: state.site.currentHS
   };
 };
 
