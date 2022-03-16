@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TopBar from '../components';
-import { showHSModal } from '../../../modules/siteReducer';
+import { showHSModal, addHSToList, useHS, removeHSFromList } from '../../../modules/siteReducer';
 
 class TopBarContainer extends Component {
   render () {
@@ -12,13 +12,20 @@ class TopBarContainer extends Component {
 }
 
 const mapActionCreators = {
-  showHSModal
+  showHSModal,
+  addHSToList,
+  useHS,
+  removeHSFromList
 };
 
 const mapStateToProps = state => {
+  console.log(state.site.hsList);
+  console.log(state.site.currentHS);
+
   return {
     hsInfo: state.site.hsInfo,
-    hsList: state.site.hsList
+    hsList: state.site.hsList,
+    currentHS: state.site.currentHS
   };
 };
 

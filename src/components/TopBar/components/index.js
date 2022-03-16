@@ -54,8 +54,12 @@ class TopBar extends React.Component {
     if (option.value === 'new-hs') {
       this.props.showHSModal();
     } else {
-      console.log('old hotspot');
+      console.log('old hotspot', option);
     }
+  }
+
+  isCurrentHS (value) {
+    return !isNaN(value) && parseInt(Number(value)) === value && !isNaN(parseInt(value, 10));
   }
 
   render () {
@@ -71,6 +75,7 @@ class TopBar extends React.Component {
             })}
             placeholder='Add or select hotspot...'
             onChange={this.handleChange}
+            value={this.isCurrentHS(this.props.currentHS) ? this.props.hsList[this.props.currentHS] : { label: 'Add new hotspot', value: 'new-hs' }}
           />
         </div>
 
