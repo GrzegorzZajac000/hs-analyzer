@@ -17,9 +17,6 @@ class Menu extends React.Component {
           <li>
             <MenuLink to='/'>General info</MenuLink>
           </li>
-          <li>
-            <MenuLink to='/config'>Check your hotspot</MenuLink>
-          </li>
           {/* <li className={!this.props.hsInfo.address ? 'disabled' : ''}> */}
           {/*  <MenuLink to='/connectivity'>Connectivity</MenuLink> */}
           {/* </li> */}

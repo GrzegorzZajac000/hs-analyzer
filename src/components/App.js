@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Routes, Route } from 'react-router';
 import { Menu, TopBar, HSModal } from './index';
-import { Activity, Config, Connectivity, Donate, Info, NoMatch, Rssi, Snr } from '../routes';
+import { Activity, Connectivity, Donate, Info, NoMatch, Rssi, Snr } from '../routes';
 import { Provider } from 'react-redux';
 import createStore from '../store/createStore';
 import { persistStore } from 'redux-persist';
@@ -37,7 +37,6 @@ class App extends React.Component {
 
                     <Routes>
                       <Route path='/' element={<Info />} />
-                      <Route path='/config' element={<Config />} />
                       <Route path='/connectivity' element={<Connectivity />} />
                       <Route path='/activity' element={<Activity />} />
                       <Route path='/rssi' element={<Rssi />} />
