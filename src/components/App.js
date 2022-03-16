@@ -8,7 +8,6 @@ import createStore from '../store/createStore';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ToastContainer } from 'react-toastify';
-import PropTypes from 'prop-types';
 
 class App extends React.Component {
   constructor (props) {
@@ -32,7 +31,7 @@ class App extends React.Component {
                     <Menu />
                   </div>
                   <div className='col-10 gx-0'>
-                    <TopBar hsInfo={this.props.hsInfo} />
+                    <TopBar />
                     <HSModal />
 
                     <Routes>
@@ -62,9 +61,5 @@ class App extends React.Component {
     );
   }
 }
-
-App.propTypes = {
-  hsInfo: PropTypes.object
-};
 
 export default App;
