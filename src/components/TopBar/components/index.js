@@ -54,7 +54,7 @@ class TopBar extends React.Component {
     if (option.value === 'new-hs') {
       this.props.showHSModal();
     } else {
-      console.log('old hotspot', option);
+      this.props.useHS(this.props.hsList.indexOf(option));
     }
   }
 
@@ -107,7 +107,8 @@ TopBar.propTypes = {
   currentHS: PropTypes.number,
   hsInfo: PropTypes.object,
   hsList: PropTypes.array,
-  showHSModal: PropTypes.func
+  showHSModal: PropTypes.func,
+  useHS: PropTypes.func
 };
 
 export default TopBar;
