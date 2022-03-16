@@ -20,7 +20,7 @@
     "@babel/preset-react": "7.16.7",
     "@babel/register": "7.17.0",
     "@babel/runtime-corejs3": "7.17.2",
-    "autoprefixer": "10.4.2",
+    "autoprefixer": "10.4.4",
     "babel-loader": "8.2.3",
     "babel-plugin-transform-minify-booleans": "6.9.4",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24",
