@@ -5,7 +5,6 @@ import HeliumAPI from '../../../api/HeliumAPI';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import HSName from '../../../utilities/HSName';
-import Flag from 'react-world-flags';
 
 class AddressForm extends React.Component {
   constructor (props) {
@@ -40,11 +39,7 @@ class AddressForm extends React.Component {
       .then(res => {
         const hs = {};
         hs.value = res.data.data.address;
-        hs.label = (
-          <React.Fragment>
-            <Flag className='flag' code={res.data.data.geocode.short_country} height={16} /> {HSName.toView(res.data.data.name)}
-          </React.Fragment>
-        );
+        hs.label = HSName.toView(res.data.data.name);
         hs.data = res.data.data;
 
         return this.props.addHSToList(hs);

@@ -3,6 +3,7 @@ import '../styles/TopBar.scss';
 import PropTypes from 'prop-types';
 // import HSName from '../../../utilities/HSName';
 import Select from 'react-select';
+import Flag from 'react-world-flags';
 
 class TopBar extends React.Component {
   constructor (props) {
@@ -37,7 +38,7 @@ class TopBar extends React.Component {
           <a className='dropdown-item' href={`https://www.heliumtracker.io/hotspots/${this.props.hsInfo.address}`} target='_blank' rel='noreferrer noopener'>HeliumTracker</a>
           <a className='dropdown-item' href={`https://etl.dewi.org/dashboard/7-hotspot-details?hotspot_address=${this.props.hsInfo.address}&days=30`} target='_blank' rel='noreferrer noopener'>ETL dewi</a>
         </React.Fragment>
-      )
+      );
     }
 
     return (
@@ -47,7 +48,7 @@ class TopBar extends React.Component {
         <a className='dropdown-item' href='https://www.heliumtracker.io/' target='_blank' rel='noreferrer noopener'>HeliumTracker</a>
         <a className='dropdown-item' href='https://etl.dewi.org/dashboard/4-network-overview' target='_blank' rel='noreferrer noopener'>ETL dewi</a>
       </React.Fragment>
-    )
+    );
   }
 
   handleChange (option) {
@@ -69,13 +70,22 @@ class TopBar extends React.Component {
           <Select
             className='react-select'
             classNamePrefix='rs'
-            options={this.props.hsList.concat({
-              label: 'Add new hotspot',
-              value: 'new-hs'
-            })}
+            options={this.props.hsList.concat({ label: 'Add new hotspot', value: 'new-hs' })}
             placeholder='Add or select hotspot...'
             onChange={this.handleChange}
             value={this.isCurrentHS(this.props.currentHS) ? this.props.hsList[this.props.currentHS] : { label: 'Add new hotspot', value: 'new-hs' }}
+            getOptionLabel={data => {
+              if (!data.data) {
+                return data.label;
+              }
+
+              return (
+                <React.Fragment>
+                  <Flag className='flag' code={data.data.geocode.short_country} height={16} />
+                  <span>{data.label}</span>
+                </React.Fragment>
+              );
+            }}
           />
         </div>
 
