@@ -39,7 +39,7 @@ class Activity extends React.Component {
   }
 
   getHSActivity () {
-    return HeliumAPI.getHotspotActivityAllData(this.props.hsInfo.address, () => {}, this.state.config)
+    return HeliumAPI.getHotspotActivityAllData(this.props.hsList[this.props.currentHS].data.address, () => {}, this.state.config)
       .then(res => {
         const arr = this.state.activityData.concat(res);
         return this.setState({ ...this.state, activityData: arr, loaded: true });
@@ -125,9 +125,9 @@ class Activity extends React.Component {
   }
 
   generateWitnessedBeacon (activity) {
-    const witnessedData = activity.path[0].witnesses.filter(item => item.gateway === this.props.hsInfo.address);
+    const witnessedData = activity.path[0].witnesses.filter(item => item.gateway === this.props.hsList[this.props.currentHS].data.address);
     const distance = getDistance(
-      { latitude: this.props.hsInfo.lat, longitude: this.props.hsInfo.lng },
+      { latitude: this.props.hsList[this.props.currentHS].data.lat, longitude: this.props.hsList[this.props.currentHS].data.lng },
       { latitude: activity.path[0].challengee_lat, longitude: activity.path[0].challengee_lon }
     );
 
@@ -172,9 +172,9 @@ class Activity extends React.Component {
       }
 
       case 'poc_receipts_v1': {
-        if (activity.path && activity.path[0] && activity.path[0].challengee && activity.path[0].challengee === this.props.hsInfo.address) {
+        if (activity.path && activity.path[0] && activity.path[0].challengee && activity.path[0].challengee === this.props.hsList[this.props.currentHS].data.address) {
           item = this.generateBroadcastedBeacon(activity);
-        } else if (activity.challenger && activity.challenger === this.props.hsInfo.address) {
+        } else if (activity.challenger && activity.challenger === this.props.hsList[this.props.currentHS].data.address) {
           item = this.generateChallengedBeaconer();
         } else {
           item = this.generateWitnessedBeacon(activity);
@@ -255,7 +255,8 @@ class Activity extends React.Component {
 }
 
 Activity.propTypes = {
-  hsInfo: PropTypes.object
+  hsList: PropTypes.array,
+  currentHS: PropTypes.number
 };
 
 export default Activity;
