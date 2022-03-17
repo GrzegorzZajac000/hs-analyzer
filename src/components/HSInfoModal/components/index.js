@@ -24,7 +24,6 @@ class HSInfoModal extends React.Component {
 
   render () {
     const hsInfo = this.props.hsList[this.props.currentHS].data;
-    console.log(hsInfo);
 
     return (
       <Modal

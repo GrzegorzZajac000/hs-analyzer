@@ -3,20 +3,24 @@ import '../styles/TopBar.scss';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import Flag from 'react-world-flags';
-import HSInfoModal from '../../HSInfoModal';
+import { ConfirmModal, HSInfoModal } from '../../index';
 
 class TopBar extends React.Component {
   constructor (props) {
     super(props);
 
     this.state = {
-      hsInfoModalShow: false
+      hsInfoModalShow: false,
+      removeModalShow: false
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.generateDropdown = this.generateDropdown.bind(this);
     this.handleHSInfoClick = this.handleHSInfoClick.bind(this);
     this.handleHSInfoHide = this.handleHSInfoHide.bind(this);
+    this.handleHSRemoveClick = this.handleHSRemoveClick.bind(this);
+    this.handleHSRemoveHide = this.handleHSRemoveHide.bind(this);
+    this.handleHSRemoveConfirm = this.handleHSRemoveConfirm.bind(this);
   }
 
   handleChange (option) {
@@ -67,6 +71,19 @@ class TopBar extends React.Component {
     this.setState({ ...this.state, hsInfoModalShow: false });
   }
 
+  handleHSRemoveClick () {
+    this.setState({ ...this.state, removeModalShow: true });
+  }
+
+  handleHSRemoveHide () {
+    this.setState({ ...this.state, removeModalShow: false });
+  }
+
+  handleHSRemoveConfirm () {
+    this.handleHSRemoveHide();
+    console.log('conf');
+  }
+
   render () {
     return (
       <React.Fragment>
@@ -83,7 +100,7 @@ class TopBar extends React.Component {
             />
             <div className={'top-bar-left-hs-buttons' + (this.isCurrentHS(this.props.currentHS) ? '' : ' hidden')}>
               <button className='btn btn-sm btn-decor' onClick={this.handleHSInfoClick}>HS Info</button>
-              <button className='btn btn-sm btn-danger'>Remove HS from list</button>
+              <button className='btn btn-sm btn-danger' onClick={this.handleHSRemoveClick}>Remove HS from list</button>
             </div>
           </div>
 
@@ -109,6 +126,12 @@ class TopBar extends React.Component {
         </section>
 
         <HSInfoModal show={this.state.hsInfoModalShow} onHide={this.handleHSInfoHide} />
+        <ConfirmModal
+          show={this.state.removeModalShow}
+          onConfirm={this.handleHSRemoveConfirm}
+          onHide={this.handleHSRemoveHide}
+          message={<React.Fragment>Are you sure to remove <strong>{this.props.hsList[this.props.currentHS].label}</strong> from list?</React.Fragment>}
+        />
       </React.Fragment>
     );
   }

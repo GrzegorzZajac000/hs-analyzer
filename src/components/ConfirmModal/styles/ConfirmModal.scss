@@ -1,0 +1,31 @@
+@import "../../../static/global-styles/variables";
+@import "../../../static/global-styles/functions";
+
+.confirm-modal {
+  &-buttons {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    button {
+      margin-right: 15px;
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+  }
+
+  h2 {
+    color: $light-font-color;
+    font-size: px-to-rem(28);
+    margin: 0 auto 20px;
+    max-width: 60%;
+    text-align: center;
+
+    strong {
+      color: $danger;
+    }
+  }
+}
