@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TopBar from '../components';
-import { showHSModal, addHSToList, useHS, removeHSFromList } from '../../../modules/siteReducer';
+import { showHSModal, useHS, removeHSFromList } from '../../../modules/siteReducer';
 
 class TopBarContainer extends Component {
   render () {
@@ -13,7 +13,6 @@ class TopBarContainer extends Component {
 
 const mapActionCreators = {
   showHSModal,
-  addHSToList,
   useHS,
   removeHSFromList
 };

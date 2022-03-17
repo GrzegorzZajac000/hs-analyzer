@@ -22,7 +22,15 @@ class HSInfoModal extends React.Component {
     return `${hsInfo.gain / 10}dBi, ${hsInfo.elevation}m`;
   }
 
+  isCurrentHS (value) {
+    return !isNaN(value) && parseInt(Number(value)) === value && !isNaN(parseInt(value, 10));
+  }
+
   render () {
+    if (this.props.hsList.length <= 0 || !this.isCurrentHS(this.props.currentHS)) {
+      return null;
+    }
+
     const hsInfo = this.props.hsList[this.props.currentHS].data;
 
     return (

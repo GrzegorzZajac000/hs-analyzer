@@ -25,6 +25,10 @@
       display: flex;
       flex-direction: row;
 
+      &.hidden {
+        display: none;
+      }
+
       .btn {
         margin-right: 10px;
         white-space: nowrap;

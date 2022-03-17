@@ -81,7 +81,9 @@ class TopBar extends React.Component {
 
   handleHSRemoveConfirm () {
     this.handleHSRemoveHide();
-    console.log('conf');
+
+    this.props.removeHSFromList(this.props.currentHS);
+    this.props.useHS(null);
   }
 
   render () {
@@ -130,7 +132,7 @@ class TopBar extends React.Component {
           show={this.state.removeModalShow}
           onConfirm={this.handleHSRemoveConfirm}
           onHide={this.handleHSRemoveHide}
-          message={<React.Fragment>Are you sure to remove <strong>{this.props.hsList[this.props.currentHS].label}</strong> from list?</React.Fragment>}
+          message={<React.Fragment>Are you sure to remove <strong>{(this.props.hsList && this.isCurrentHS(this.props.currentHS)) ? this.props.hsList[this.props.currentHS].label : ''}</strong> from list?</React.Fragment>}
         />
       </React.Fragment>
     );
@@ -141,7 +143,8 @@ TopBar.propTypes = {
   currentHS: PropTypes.number,
   hsList: PropTypes.array,
   showHSModal: PropTypes.func,
-  useHS: PropTypes.func
+  useHS: PropTypes.func,
+  removeHSFromList: PropTypes.func
 };
 
 export default TopBar;
