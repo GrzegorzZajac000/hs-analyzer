@@ -63,6 +63,19 @@ class TopBar extends React.Component {
     return !isNaN(value) && parseInt(Number(value)) === value && !isNaN(parseInt(value, 10));
   }
 
+  getOptionLabel (data) {
+    if (!data.data) {
+      return data.label;
+    }
+
+    return (
+      <React.Fragment>
+        <Flag className='flag' code={data.data.geocode.short_country} height={16} />
+        <span>{data.label}</span>
+      </React.Fragment>
+    );
+  }
+
   render () {
     return (
       <section className='top-bar'>
@@ -74,18 +87,7 @@ class TopBar extends React.Component {
             placeholder='Add or select hotspot...'
             onChange={this.handleChange}
             value={this.isCurrentHS(this.props.currentHS) ? this.props.hsList[this.props.currentHS] : { label: 'Add new hotspot', value: 'new-hs' }}
-            getOptionLabel={data => {
-              if (!data.data) {
-                return data.label;
-              }
-
-              return (
-                <React.Fragment>
-                  <Flag className='flag' code={data.data.geocode.short_country} height={16} />
-                  <span>{data.label}</span>
-                </React.Fragment>
-              );
-            }}
+            getOptionLabel={this.getOptionLabel}
           />
         </div>
 
