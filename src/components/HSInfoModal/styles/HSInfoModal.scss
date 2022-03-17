@@ -1,0 +1,59 @@
+@import "../../../static/global-styles/variables";
+@import "../../../static/global-styles/functions";
+
+.hs-info-modal {
+  color: $light-font-color;
+
+  &-close {
+    background: none;
+    border: 0;
+    color: $light-font-color;
+    font-size: px-to-rem(32);
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    transition: color .2s ease-in-out;
+
+    &:hover {
+      color: $font-color;
+    }
+  }
+
+  h2 {
+    font-size: px-to-rem(32);
+    font-weight: 700;
+  }
+
+  h3 {
+    font-size: px-to-rem(14);
+    font-weight: 300;
+    margin-bottom: 20px;
+    word-break: break-word;
+    white-space: pre-wrap;
+  }
+
+  table {
+    border: 0;
+    width: 100%;
+
+    tr {
+      td {
+        padding: 5px 0;
+
+        &:first-of-type {
+          color: $font-color;
+        }
+
+        a {
+          color: $light-font-color;
+          text-decoration: underline !important;
+
+          &:hover {
+            color: $decor-color;
+            text-decoration: underline !important;
+          }
+        }
+      }
+    }
+  }
+}

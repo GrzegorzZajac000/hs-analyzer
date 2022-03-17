@@ -1,32 +1,22 @@
 import React from 'react';
 import '../styles/TopBar.scss';
 import PropTypes from 'prop-types';
-// import HSName from '../../../utilities/HSName';
 import Select from 'react-select';
 import Flag from 'react-world-flags';
+import HSInfoModal from '../../HSInfoModal';
 
 class TopBar extends React.Component {
   constructor (props) {
     super(props);
 
+    this.state = {
+      hsInfoModalShow: false
+    };
+
     this.handleChange = this.handleChange.bind(this);
     this.generateDropdown = this.generateDropdown.bind(this);
-  }
-
-  renderLocation () {
-    if (!this.props.hsInfo || !this.props.hsInfo.geocode || !this.props.hsInfo.geocode.long_city || !this.props.hsInfo.geocode.short_country) {
-      return '-';
-    }
-
-    return `${this.props.hsInfo.geocode.long_city}, ${this.props.hsInfo.geocode.short_country}`;
-  }
-
-  renderAntenna () {
-    if (!this.props.hsInfo || !this.props.hsInfo.gain || !this.props.hsInfo.elevation) {
-      return '-';
-    }
-
-    return `${this.props.hsInfo.gain / 10}dBi, ${this.props.hsInfo.elevation}m`;
+    this.handleHSInfoClick = this.handleHSInfoClick.bind(this);
+    this.handleHSInfoHide = this.handleHSInfoHide.bind(this);
   }
 
   handleChange (option) {
@@ -69,52 +59,63 @@ class TopBar extends React.Component {
     );
   }
 
+  handleHSInfoClick () {
+    this.setState({ ...this.state, hsInfoModalShow: true });
+  }
+
+  handleHSInfoHide () {
+    this.setState({ ...this.state, hsInfoModalShow: false });
+  }
+
   render () {
     return (
-      <section className='top-bar'>
-        <div className='top-bar-left'>
-          <Select
-            className='react-select'
-            classNamePrefix='rs'
-            options={this.props.hsList.concat({ label: 'Add new hotspot', value: 'new-hs' })}
-            placeholder='Add or select hotspot...'
-            onChange={this.handleChange}
-            value={this.isCurrentHS(this.props.currentHS) ? this.props.hsList[this.props.currentHS] : { label: 'Add new hotspot', value: 'new-hs' }}
-            getOptionLabel={this.getOptionLabel}
-          />
-          <div className={'top-bar-left-hs-buttons' + (this.isCurrentHS(this.props.currentHS) ? '' : ' hidden')}>
-            <button className='btn btn-sm btn-decor'>HS Info</button>
-            <button className='btn btn-sm btn-danger'>Remove HS from list</button>
+      <React.Fragment>
+        <section className='top-bar'>
+          <div className='top-bar-left'>
+            <Select
+              className='react-select'
+              classNamePrefix='rs'
+              options={this.props.hsList.concat({ label: 'Add new hotspot', value: 'new-hs' })}
+              placeholder='Add or select hotspot...'
+              onChange={this.handleChange}
+              value={this.isCurrentHS(this.props.currentHS) ? this.props.hsList[this.props.currentHS] : { label: 'Add new hotspot', value: 'new-hs' }}
+              getOptionLabel={this.getOptionLabel}
+            />
+            <div className={'top-bar-left-hs-buttons' + (this.isCurrentHS(this.props.currentHS) ? '' : ' hidden')}>
+              <button className='btn btn-sm btn-decor' onClick={this.handleHSInfoClick}>HS Info</button>
+              <button className='btn btn-sm btn-danger'>Remove HS from list</button>
+            </div>
           </div>
-        </div>
 
-        <div className='top-bar-right'>
-          <div className={'top-bar-dropdown' + (this.isCurrentHS(this.props.currentHS) ? '' : ' hidden')}>
-            <div className='dropdown'>
-              <button
-                className='btn btn-secondary dropdown-toggle'
-                type='button'
-                id='dropdownMenuButton'
-                data-bs-toggle='dropdown'
-                aria-haspopup='true'
-                aria-expanded='false'
-              >
-                Check your HS in other tools
-              </button>
-              <div className='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
-                {this.generateDropdown()}
+          <div className='top-bar-right'>
+            <div className={'top-bar-dropdown' + (this.isCurrentHS(this.props.currentHS) ? '' : ' hidden')}>
+              <div className='dropdown'>
+                <button
+                  className='btn btn-secondary dropdown-toggle'
+                  type='button'
+                  id='dropdownMenuButton'
+                  data-bs-toggle='dropdown'
+                  aria-haspopup='true'
+                  aria-expanded='false'
+                >
+                  Check your HS in other tools
+                </button>
+                <div className='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                  {this.generateDropdown()}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        <HSInfoModal show={this.state.hsInfoModalShow} onHide={this.handleHSInfoHide} />
+      </React.Fragment>
     );
   }
 }
 
 TopBar.propTypes = {
   currentHS: PropTypes.number,
-  hsInfo: PropTypes.object,
   hsList: PropTypes.array,
   showHSModal: PropTypes.func,
   useHS: PropTypes.func
