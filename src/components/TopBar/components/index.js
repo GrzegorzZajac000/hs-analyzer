@@ -82,6 +82,10 @@ class TopBar extends React.Component {
             value={this.isCurrentHS(this.props.currentHS) ? this.props.hsList[this.props.currentHS] : { label: 'Add new hotspot', value: 'new-hs' }}
             getOptionLabel={this.getOptionLabel}
           />
+          <div className={'top-bar-left-hs-buttons' + (this.isCurrentHS(this.props.currentHS) ? '' : ' hidden')}>
+            <button className='btn btn-sm btn-decor'>HS Info</button>
+            <button className='btn btn-sm btn-danger'>Remove HS from list</button>
+          </div>
         </div>
 
         <div className='top-bar-right'>

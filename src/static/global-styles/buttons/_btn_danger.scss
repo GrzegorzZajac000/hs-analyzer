@@ -1,0 +1,20 @@
+@use "sass:color";
+@import "../variables";
+
+&-danger {
+  background-color: $danger;
+  color: $light-font-color;
+
+  &:hover {
+    background-color: color.adjust($danger, $lightness: -15%);
+  }
+
+  &.active {
+    background-color: color.adjust($danger, $lightness: -20%);
+  }
+
+  &:disabled {
+    background-color: color.adjust($danger, $saturation: -15%);
+    cursor: not-allowed;
+  }
+}
