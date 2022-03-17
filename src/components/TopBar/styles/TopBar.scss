@@ -47,6 +47,10 @@
     display: flex;
     margin-right: 20px;
 
+    &.hidden {
+      display: none;
+    }
+
     .dropdown {
       &-toggle {
         color: $light-font-color;

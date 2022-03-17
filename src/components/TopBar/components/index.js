@@ -29,28 +29,6 @@ class TopBar extends React.Component {
     return `${this.props.hsInfo.gain / 10}dBi, ${this.props.hsInfo.elevation}m`;
   }
 
-  generateDropdown () {
-    if (Number.isInteger(this.props.currentHS) && this.props.currentHS !== 0) {
-      return (
-        <React.Fragment>
-          <a className='dropdown-item' href={`https://explorer.helium.com/hotspots/${this.props.hsInfo.address}`} target='_blank' rel='noreferrer noopener'>Helium Explorer</a>
-          <a className='dropdown-item' href={`https://app.hotspotty.net/hotspots/${this.props.hsInfo.address}/status`} target='_blank' rel='noreferrer noopener'>Hotspotty</a>
-          <a className='dropdown-item' href={`https://www.heliumtracker.io/hotspots/${this.props.hsInfo.address}`} target='_blank' rel='noreferrer noopener'>HeliumTracker</a>
-          <a className='dropdown-item' href={`https://etl.dewi.org/dashboard/7-hotspot-details?hotspot_address=${this.props.hsInfo.address}&days=30`} target='_blank' rel='noreferrer noopener'>ETL dewi</a>
-        </React.Fragment>
-      );
-    }
-
-    return (
-      <React.Fragment>
-        <a className='dropdown-item' href='https://explorer.helium.com/' target='_blank' rel='noreferrer noopener'>Helium Explorer</a>
-        <a className='dropdown-item' href='https://app.hotspotty.net/' target='_blank' rel='noreferrer noopener'>Hotspotty</a>
-        <a className='dropdown-item' href='https://www.heliumtracker.io/' target='_blank' rel='noreferrer noopener'>HeliumTracker</a>
-        <a className='dropdown-item' href='https://etl.dewi.org/dashboard/4-network-overview' target='_blank' rel='noreferrer noopener'>ETL dewi</a>
-      </React.Fragment>
-    );
-  }
-
   handleChange (option) {
     if (option.value === 'new-hs') {
       this.props.showHSModal();
@@ -61,6 +39,21 @@ class TopBar extends React.Component {
 
   isCurrentHS (value) {
     return !isNaN(value) && parseInt(Number(value)) === value && !isNaN(parseInt(value, 10));
+  }
+
+  generateDropdown () {
+    if (!this.isCurrentHS(this.props.currentHS)) {
+      return null;
+    }
+
+    return (
+      <React.Fragment>
+        <a className='dropdown-item' href={`https://explorer.helium.com/hotspots/${this.props.hsList[this.props.currentHS].data.address}`} target='_blank' rel='noreferrer noopener'>Helium Explorer</a>
+        <a className='dropdown-item' href={`https://app.hotspotty.net/hotspots/${this.props.hsList[this.props.currentHS].data.address}/status`} target='_blank' rel='noreferrer noopener'>Hotspotty</a>
+        <a className='dropdown-item' href={`https://www.heliumtracker.io/hotspots/${this.props.hsList[this.props.currentHS].data.address}`} target='_blank' rel='noreferrer noopener'>HeliumTracker</a>
+        <a className='dropdown-item' href={`https://etl.dewi.org/dashboard/7-hotspot-details?hotspot_address=${this.props.hsList[this.props.currentHS].data.address}&days=30`} target='_blank' rel='noreferrer noopener'>ETL dewi</a>
+      </React.Fragment>
+    );
   }
 
   getOptionLabel (data) {
@@ -92,7 +85,7 @@ class TopBar extends React.Component {
         </div>
 
         <div className='top-bar-right'>
-          <div className='top-bar-dropdown'>
+          <div className={'top-bar-dropdown' + (this.isCurrentHS(this.props.currentHS) ? '' : ' hidden')}>
             <div className='dropdown'>
               <button
                 className='btn btn-secondary dropdown-toggle'
@@ -102,7 +95,7 @@ class TopBar extends React.Component {
                 aria-haspopup='true'
                 aria-expanded='false'
               >
-                Check other tools
+                Check your HS in other tools
               </button>
               <div className='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
                 {this.generateDropdown()}
