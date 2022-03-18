@@ -2,9 +2,9 @@ import React from 'react';
 import '../styles/TopBar.scss';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
-import Flag from 'react-world-flags';
 import { ConfirmModal, HSInfoModal } from '../../index';
 import isCurrentHS from '../../../utilities/isCurrentHS';
+import getOptionLabel from '../../../utilities/getOptionLabel';
 
 class TopBar extends React.Component {
   constructor (props) {
@@ -47,19 +47,6 @@ class TopBar extends React.Component {
     );
   }
 
-  getOptionLabel (data) {
-    if (!data.data) {
-      return data.label;
-    }
-
-    return (
-      <React.Fragment>
-        <Flag className='flag' code={data.data.geocode.short_country} height={16} />
-        <span>{data.label}</span>
-      </React.Fragment>
-    );
-  }
-
   handleHSInfoClick () {
     this.setState({ ...this.state, hsInfoModalShow: true });
   }
@@ -95,7 +82,7 @@ class TopBar extends React.Component {
               placeholder='Add or select hotspot...'
               onChange={this.handleChange}
               value={isCurrentHS(this.props.currentHS) ? this.props.hsList[this.props.currentHS] : { label: 'Add new hotspot', value: 'new-hs' }}
-              getOptionLabel={this.getOptionLabel}
+              getOptionLabel={getOptionLabel}
             />
             <div className={'top-bar-left-hs-buttons' + (isCurrentHS(this.props.currentHS) ? '' : ' hidden')}>
               <button className='btn btn-sm btn-decor' onClick={this.handleHSInfoClick}>HS Info</button>

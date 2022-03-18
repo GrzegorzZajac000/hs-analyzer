@@ -3,9 +3,9 @@ import '../styles/NameForm.scss';
 import { Form, Field } from 'react-final-form';
 import AsyncSelect from 'react-select/async';
 import HeliumAPI from '../../../api/HeliumAPI';
-import Flag from 'react-world-flags';
 import HSName from '../../../utilities/HSName';
 import PropTypes from 'prop-types';
+import getOptionLabel from '../../../utilities/getOptionLabel';
 
 class NameForm extends React.Component {
   constructor (props) {
@@ -69,19 +69,6 @@ class NameForm extends React.Component {
       .then(hotspots => callback(hotspots));
   }
 
-  getOptionLabel (data) {
-    if (!data.data) {
-      return data.label;
-    }
-
-    return (
-      <React.Fragment>
-        <Flag className='flag' code={data.data.geocode.short_country} height={16} />
-        <span>{data.label}</span>
-      </React.Fragment>
-    );
-  }
-
   render () {
     return (
       <div className='config-form'>
@@ -102,7 +89,7 @@ class NameForm extends React.Component {
                       autoFocus
                       isSearchable
                       noOptionsMessage={() => 'Enter at least 3 characters'}
-                      getOptionLabel={this.getOptionLabel}
+                      getOptionLabel={getOptionLabel}
                     />
                     <p className='input-error'>{meta.submitFailed && meta.error}</p>
                   </React.Fragment>
