@@ -4,6 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import PropTypes from 'prop-types';
 import HSName from '../../../utilities/HSName';
 import { X } from 'react-bootstrap-icons';
+import isCurrentHS from '../../../utilities/isCurrentHS';
 
 class HSInfoModal extends React.Component {
   renderLocation (hsInfo) {
@@ -22,12 +23,8 @@ class HSInfoModal extends React.Component {
     return `${hsInfo.gain / 10}dBi, ${hsInfo.elevation}m`;
   }
 
-  isCurrentHS (value) {
-    return !isNaN(value) && parseInt(Number(value)) === value && !isNaN(parseInt(value, 10));
-  }
-
   render () {
-    if (this.props.hsList.length <= 0 || !this.isCurrentHS(this.props.currentHS)) {
+    if (this.props.hsList.length <= 0 || !isCurrentHS(this.props.currentHS)) {
       return null;
     }
 

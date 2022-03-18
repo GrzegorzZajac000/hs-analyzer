@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import Flag from 'react-world-flags';
 import { ConfirmModal, HSInfoModal } from '../../index';
+import isCurrentHS from '../../../utilities/isCurrentHS';
 
 class TopBar extends React.Component {
   constructor (props) {
@@ -31,12 +32,8 @@ class TopBar extends React.Component {
     }
   }
 
-  isCurrentHS (value) {
-    return !isNaN(value) && parseInt(Number(value)) === value && !isNaN(parseInt(value, 10));
-  }
-
   generateDropdown () {
-    if (!this.isCurrentHS(this.props.currentHS)) {
+    if (!isCurrentHS(this.props.currentHS)) {
       return null;
     }
 
@@ -97,17 +94,17 @@ class TopBar extends React.Component {
               options={this.props.hsList.concat({ label: 'Add new hotspot', value: 'new-hs' })}
               placeholder='Add or select hotspot...'
               onChange={this.handleChange}
-              value={this.isCurrentHS(this.props.currentHS) ? this.props.hsList[this.props.currentHS] : { label: 'Add new hotspot', value: 'new-hs' }}
+              value={isCurrentHS(this.props.currentHS) ? this.props.hsList[this.props.currentHS] : { label: 'Add new hotspot', value: 'new-hs' }}
               getOptionLabel={this.getOptionLabel}
             />
-            <div className={'top-bar-left-hs-buttons' + (this.isCurrentHS(this.props.currentHS) ? '' : ' hidden')}>
+            <div className={'top-bar-left-hs-buttons' + (isCurrentHS(this.props.currentHS) ? '' : ' hidden')}>
               <button className='btn btn-sm btn-decor' onClick={this.handleHSInfoClick}>HS Info</button>
               <button className='btn btn-sm btn-danger' onClick={this.handleHSRemoveClick}>Remove HS from list</button>
             </div>
           </div>
 
           <div className='top-bar-right'>
-            <div className={'top-bar-dropdown' + (this.isCurrentHS(this.props.currentHS) ? '' : ' hidden')}>
+            <div className={'top-bar-dropdown' + (isCurrentHS(this.props.currentHS) ? '' : ' hidden')}>
               <div className='dropdown'>
                 <button
                   className='btn btn-secondary dropdown-toggle'
@@ -132,7 +129,7 @@ class TopBar extends React.Component {
           show={this.state.removeModalShow}
           onConfirm={this.handleHSRemoveConfirm}
           onHide={this.handleHSRemoveHide}
-          message={<React.Fragment>Are you sure to remove <strong>{(this.props.hsList && this.isCurrentHS(this.props.currentHS)) ? this.props.hsList[this.props.currentHS].label : ''}</strong> from list?</React.Fragment>}
+          message={<React.Fragment>Are you sure to remove <strong>{(this.props.hsList && isCurrentHS(this.props.currentHS)) ? this.props.hsList[this.props.currentHS].label : ''}</strong> from list?</React.Fragment>}
         />
       </React.Fragment>
     );
