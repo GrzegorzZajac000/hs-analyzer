@@ -16,10 +16,10 @@ class Info extends React.Component {
 
   componentDidMount () {
     return Promise.all([
-      HeliumAPI.getBlockchainStats(),
-      HeliumAPI.getRichestAccounts(),
-      HeliumAPI.getRewardsTotal(),
-      HeliumAPI.getDCBurnsTotal()
+      HeliumAPI.getBlockchainStats()
+      // HeliumAPI.getRichestAccounts(),
+      // HeliumAPI.getRewardsTotal(),
+      // HeliumAPI.getDCBurnsTotal()
     ]).then(res => {
       console.log(res);
 
