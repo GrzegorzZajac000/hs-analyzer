@@ -7,6 +7,7 @@ import InfoBlock from './InfoBlock';
 import Menu from './Menu';
 import NameForm from './NameForm';
 import TopBar from './TopBar';
+import WalletForm from './WalletForm';
 
 export {
   AddressForm,
@@ -17,5 +18,6 @@ export {
   InfoBlock,
   Menu,
   NameForm,
-  TopBar
+  TopBar,
+  WalletForm
 };

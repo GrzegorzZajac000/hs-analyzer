@@ -28,22 +28,6 @@
           border-radius: 1.5px;
           color: $decor-color;
         }
-
-        &.coming-soon {
-          color: $dark-font-color;
-          cursor: not-allowed;
-        }
-
-        .nav-link-coming-soon {
-          border: 1px solid $dark-font-color;
-          border-radius: 10px;
-          color: $dark-font-color;
-          font-size: px-to-rem(10);
-          padding: 3px 7px;
-          position: absolute;
-          right: 0;
-          top: 0;
-        }
       }
     }
   }

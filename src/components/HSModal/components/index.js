@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/HSModal.scss';
-import { AddressForm, NameForm } from '../../../components';
+import { AddressForm, NameForm, WalletForm } from '../../../components';
 import Modal from 'react-bootstrap/Modal';
 import PropTypes from 'prop-types';
 
@@ -60,7 +60,7 @@ class HSModal extends React.Component {
             </li>
             <li className='nav-item' role='presentation'>
               <button
-                className='nav-link coming-soon'
+                className='nav-link'
                 id='config-tab-wallet'
                 data-bs-toggle='tab'
                 data-bs-target='#config-tab-wallet-content'
@@ -68,10 +68,8 @@ class HSModal extends React.Component {
                 role='tab'
                 aria-controls='config-tab-wallet'
                 aria-selected='false'
-                disabled
               >
                 By wallet
-                <span className='nav-link-coming-soon'>Coming soon</span>
               </button>
             </li>
           </ul>
@@ -82,7 +80,9 @@ class HSModal extends React.Component {
             <div className='tab-pane fade' id='config-tab-address-content' role='tabpanel' aria-labelledby='config-tab-address'>
               <AddressForm />
             </div>
-            <div className='tab-pane fade' id='config-tab-wallet-content' role='tabpanel' aria-labelledby='config-tab-wallet' />
+            <div className='tab-pane fade' id='config-tab-wallet-content' role='tabpanel' aria-labelledby='config-tab-wallet'>
+              <WalletForm />
+            </div>
           </div>
         </div>
       </Modal>
