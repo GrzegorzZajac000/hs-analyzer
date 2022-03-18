@@ -2,9 +2,8 @@ import React from 'react';
 import '../styles/HSInfoModal.scss';
 import Modal from 'react-bootstrap/Modal';
 import PropTypes from 'prop-types';
-import HSName from '../../../utilities/HSName';
 import { X } from 'react-bootstrap-icons';
-import isCurrentHS from '../../../utilities/isCurrentHS';
+import { HSName, isCurrentHS } from '../../../utilities';
 
 class HSInfoModal extends React.Component {
   renderLocation (hsInfo) {

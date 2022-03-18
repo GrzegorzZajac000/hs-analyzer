@@ -3,8 +3,7 @@ import '../styles/TopBar.scss';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { ConfirmModal, HSInfoModal } from '../../index';
-import isCurrentHS from '../../../utilities/isCurrentHS';
-import getOptionLabel from '../../../utilities/getOptionLabel';
+import { isCurrentHS, getOptionLabel } from '../../../utilities';
 
 class TopBar extends React.Component {
   constructor (props) {

@@ -3,9 +3,8 @@ import '../styles/NameForm.scss';
 import { Form, Field } from 'react-final-form';
 import AsyncSelect from 'react-select/async';
 import HeliumAPI from '../../../api/HeliumAPI';
-import HSName from '../../../utilities/HSName';
 import PropTypes from 'prop-types';
-import getOptionLabel from '../../../utilities/getOptionLabel';
+import { HSName, getOptionLabel } from '../../../utilities';
 
 class NameForm extends React.Component {
   constructor (props) {
