@@ -17,9 +17,6 @@ class Menu extends React.Component {
           <li>
             <MenuLink to='/'>General info</MenuLink>
           </li>
-          {/* <li className={!this.props.hsInfo.address ? 'disabled' : ''}> */}
-          {/*  <MenuLink to='/connectivity'>Connectivity</MenuLink> */}
-          {/* </li> */}
           <li className={(Number.isInteger(this.props.currentHS) && this.props.currentHS >= 0) ? '' : 'disabled'}>
             <MenuLink to='/activity'>Latest activity</MenuLink>
           </li>

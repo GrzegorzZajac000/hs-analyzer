@@ -1,6 +1,5 @@
 import React from 'react';
 import '../styles/Connectivity.scss';
-import PropTypes from 'prop-types';
 
 // WARNING
 // Can't be done without Node server
@@ -26,36 +25,37 @@ class Connectivity extends React.Component {
   }
 
   generateListenAddresses () {
-    const listenAddressRegex = /^\/ip4\/(.*)\/tcp\/(.*)/;
+    // const listenAddressRegex = /^\/ip4\/(.*)\/tcp\/(.*)/;
+    return null;
 
-    return this.props.hsInfo.status.listen_addrs.filter(la => {
-      return listenAddressRegex.test(la);
-    }).map((addr, i) => {
-      const [, ip, port] = listenAddressRegex.exec(addr);
-
-      return (
-        <div className='connectivity-address' key={i}>
-          <div className='container-fluid'>
-            <div className='row connectivity-address-api'>
-              <div className='col-3'>
-                <h2>Hotspot IP</h2>
-                <h3>{ip}</h3>
-              </div>
-              <div className='col-3'>
-                <h2>Hotspot port</h2>
-                <h3>{port}</h3>
-              </div>
-            </div>
-            <div className='row'>
-              <div className='col-6 connectivity-address-buttons'>
-                <button className='btn btn-decor btn-lg' onClick={() => this.checkPortState(ip, port)}>Check port state</button>
-                <button className='btn btn-decor btn-lg' onClick={() => this.ping(ip, port)}>Ping</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    });
+    // return this.props.hsInfo.status.listen_addrs.filter(la => {
+    //   return listenAddressRegex.test(la);
+    // }).map((addr, i) => {
+    //   const [, ip, port] = listenAddressRegex.exec(addr);
+    //
+    //   return (
+    //     <div className='connectivity-address' key={i}>
+    //       <div className='container-fluid'>
+    //         <div className='row connectivity-address-api'>
+    //           <div className='col-3'>
+    //             <h2>Hotspot IP</h2>
+    //             <h3>{ip}</h3>
+    //           </div>
+    //           <div className='col-3'>
+    //             <h2>Hotspot port</h2>
+    //             <h3>{port}</h3>
+    //           </div>
+    //         </div>
+    //         <div className='row'>
+    //           <div className='col-6 connectivity-address-buttons'>
+    //             <button className='btn btn-decor btn-lg' onClick={() => this.checkPortState(ip, port)}>Check port state</button>
+    //             <button className='btn btn-decor btn-lg' onClick={() => this.ping(ip, port)}>Ping</button>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   );
+    // });
   }
 
   render () {
@@ -71,9 +71,5 @@ class Connectivity extends React.Component {
     );
   }
 }
-
-Connectivity.propTypes = {
-  hsInfo: PropTypes.object
-};
 
 export default Connectivity;

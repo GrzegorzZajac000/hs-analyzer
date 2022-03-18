@@ -26,7 +26,7 @@ const initialState = {
     blockHeight: 0,
     geolocation: { countries: 0, cities: 0 }
   },
-  hsInfo: {},
+  hsInfo: [],
   hsList: [],
   currentHS: null,
   hsModal: false

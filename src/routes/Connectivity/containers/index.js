@@ -12,10 +12,8 @@ class ConnectivityContainer extends Component {
 
 const mapActionCreators = {};
 
-const mapStateToProps = state => {
-  return {
-    hsInfo: state.site.hsInfo
-  };
+const mapStateToProps = () => {
+  return {};
 };
 
 export default connect(mapStateToProps, mapActionCreators)(ConnectivityContainer);

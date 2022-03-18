@@ -13,6 +13,7 @@ const instance = axios.create({
 instance.defaults.raxConfig = {
   instance,
   retry: 3,
+  retryDelay: 300000,
   statusCodesToRetry: [[100, 199], [429, 429], [500, 599]]
 };
 rax.attach(instance);
