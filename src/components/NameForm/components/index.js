@@ -4,6 +4,8 @@ import { Form, Field } from 'react-final-form';
 import AsyncSelect from 'react-select/async';
 import HeliumAPI from '../../../api/HeliumAPI';
 import Flag from 'react-world-flags';
+import HSName from '../../../utilities/HSName';
+import PropTypes from 'prop-types';
 
 class NameForm extends React.Component {
   constructor (props) {
@@ -15,37 +17,69 @@ class NameForm extends React.Component {
   }
 
   validate (values) {
-    console.log('validate', values);
+    const addressExp = /^[a-zA-Z0-9]{40,60}$/;
+    const errors = {};
+
+    if (!values.hs) {
+      errors.hs = 'Ooops! Your hotspot is required';
+    } else if (!values.hs.data.address) {
+      errors.hs = 'Ooops! Your hotspot address is required';
+    } else if (!addressExp.test(values.hs.data.address)) {
+      errors.hs = 'Your address is wrong. Check it one more time';
+    } else {
+      let hsList = this.props.hsList;
+      hsList = hsList.filter(hs => hs.value === values.hs.data.address);
+
+      if (hsList.length > 0) {
+        errors.hs = `Ooops! Your hotspot is on the list as ${hsList[0].label}`;
+      }
+    }
+
+    return errors;
   }
 
   handleSubmit (values) {
-    console.log(values);
+    const hs = values.hs;
+    hs.label = HSName.toView(hs.data.name);
+
+    this.props.addHSToList(hs);
+    this.props.hideHSModal();
+    this.props.useHS(this.props.hsList.length - 1);
   }
 
-  onNameChange (name, callback) {
-    if (name.length <= 2 || name.slice(-1) === ' ') {
+  onNameChange (hsName, callback) {
+    let name = hsName;
+
+    if (name.length <= 2) {
       return false;
     }
 
+    if (name.slice(-1) === ' ') {
+      name = name.slice(0, -1);
+    }
+
     return HeliumAPI.hotspotNameSearch(name.toLowerCase().replace(/\s/g, '-'))
-      .then(hotspots => {
-        return hotspots.data.data.map((hs) => {
-          let nameTemp = hs.name.split('-');
-
-          nameTemp = nameTemp.map(name => name.charAt(0).toUpperCase() + name.slice(1));
-          nameTemp = nameTemp.join(' ');
-
-          return {
-            label: (
-              <React.Fragment>
-                <Flag className='flag' code={hs.geocode.short_country} height={16} /> {nameTemp}
-              </React.Fragment>
-            ),
-            value: nameTemp
-          };
-        });
-      })
+      .then(hotspots => hotspots.data.data.map(hs => {
+        return {
+          label: `${HSName.toView(hs.name)} - ${hs.address.substr(0, 32)}...`,
+          value: hs.address,
+          data: hs
+        };
+      }))
       .then(hotspots => callback(hotspots));
+  }
+
+  getOptionLabel (data) {
+    if (!data.data) {
+      return data.label;
+    }
+
+    return (
+      <React.Fragment>
+        <Flag className='flag' code={data.data.geocode.short_country} height={16} />
+        <span>{data.label}</span>
+      </React.Fragment>
+    );
   }
 
   render () {
@@ -54,13 +88,13 @@ class NameForm extends React.Component {
         <Form onSubmit={(values) => this.handleSubmit(values)} validate={this.validate} render={({ handleSubmit, form, submitting, pristine, invalid, values }) => (
           <form onSubmit={(values) => handleSubmit(values)} id='name-form'>
             <div className='config-form-input'>
-              <Field name='name'>
+              <Field name='hs'>
                 {({ input, meta }) => (
                   <React.Fragment>
-                    <label htmlFor='name'>Hotspot name</label>
+                    <label htmlFor='hs'>Hotspot name</label>
                     <AsyncSelect
                       {...input}
-                      id='name'
+                      id='hs'
                       placeholder='HS Name e.g. Satin Enjoyed Xerus'
                       className='react-select'
                       classNamePrefix='rs'
@@ -68,14 +102,21 @@ class NameForm extends React.Component {
                       autoFocus
                       isSearchable
                       noOptionsMessage={() => 'Enter at least 3 characters'}
+                      getOptionLabel={this.getOptionLabel}
                     />
-                    <p>{meta.submitFailed && meta.error}</p>
+                    <p className='input-error'>{meta.submitFailed && meta.error}</p>
                   </React.Fragment>
                 )}
               </Field>
             </div>
             <div className='config-form-submit'>
-              <button className='btn btn-md btn-decor' type='submit'>Submit</button>
+              <button
+                className='btn btn-md btn-decor'
+                type='submit'
+                disabled={submitting}
+              >
+                Submit
+              </button>
             </div>
           </form>
         )}
@@ -84,5 +125,12 @@ class NameForm extends React.Component {
     );
   }
 }
+
+NameForm.propTypes = {
+  addHSToList: PropTypes.func,
+  hideHSModal: PropTypes.func,
+  hsList: PropTypes.array,
+  useHS: PropTypes.func
+};
 
 export default NameForm;
