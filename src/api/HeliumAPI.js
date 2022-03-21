@@ -141,6 +141,25 @@ const HeliumAPI = {
     return instance.get(url);
   },
 
+  // @todo: Dodać roles
+  getRolesForAccount: (address, config = {}) => {
+    if (!address) {
+      throw new Error('HeliumAPI.getRolesForAccount - address is required');
+    }
+
+    const url = URLBuilder(`${instance.defaults.baseURL}/v1/accounts/${address}/roles`, config);
+    return instance.get(url);
+  },
+
+  getRolesCountsForAccount: (address, config = {}) => {
+    if (!address) {
+      throw new Error('HeliumAPI.getRolesCountsForAccount - address is required');
+    }
+
+    const url = URLBuilder(`${instance.defaults.baseURL}/v1/accounts/${address}/roles/count`, config);
+    return instance.get(url);
+  },
+
   getElectionsForAccount: (address, config = {}) => {
     if (!address) {
       throw new Error('HeliumAPI.getElectionsForAccount - address is required');
