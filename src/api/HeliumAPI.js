@@ -141,14 +141,34 @@ const HeliumAPI = {
     return instance.get(url);
   },
 
-  // @todo: Dodać roles
-  getRolesForAccount: (address, config = {}) => {
+  getRolesForAccount: (address, loadingStateUpdate, config = {}) => {
     if (!address) {
       throw new Error('HeliumAPI.getRolesForAccount - address is required');
     }
 
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/accounts/${address}/roles`, config);
-    return instance.get(url);
+    let url = URLBuilder(`${instance.defaults.baseURL}/v1/accounts/${address}/roles`, config);
+    const data = [];
+
+    return instance.get(url)
+      .then(async res => {
+        data.push(res.data.data);
+
+        if (loadingStateUpdate && typeof loadingStateUpdate === 'function') {
+          loadingStateUpdate(data.flat().length);
+        }
+
+        while (res.data.cursor) {
+          url = URLBuilder(`${instance.defaults.baseURL}/v1/accounts/${address}/roles?cursor=${res.data.cursor}`, config);
+          res = await instance.get(url);
+          data.push(res.data.data);
+
+          if (loadingStateUpdate && typeof loadingStateUpdate === 'function') {
+            loadingStateUpdate(data.flat().length);
+          }
+        }
+
+        return data.flat();
+      });
   },
 
   getRolesCountsForAccount: (address, config = {}) => {
@@ -399,7 +419,7 @@ const HeliumAPI = {
         }
 
         return data.flat();
-      })
+      });
   },
 
   getHotspotActivityCounts: (address, config = {}) => {
