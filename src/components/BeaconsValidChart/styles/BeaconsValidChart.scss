@@ -2,5 +2,41 @@
 @import "../../../static/global-styles/functions";
 
 .beacons-valid-chart {
-  width: auto;
+  background: $light-bg;
+  border-radius: 8px;
+  margin-bottom: 40px;
+  padding: 16px;
+
+  &-legend {
+    display: flex;
+    flex-direction: row-reverse;
+    font-size: 12px;
+    justify-content: flex-end;
+    margin-top: 10px;
+    width: 100%;
+
+    &-item {
+      display: flex;
+      flex-direction: column;
+      margin-right: 10px;
+
+      &-box {
+        border-radius: 4px;
+        display: block;
+        height: 24px;
+        margin: 0 auto 4px;
+        width: 24px;
+      }
+
+      &-label {
+        text-align: center;
+      }
+    }
+  }
+
+  h2 {
+    color: $light-font-color;
+    font-size: px-to-rem(26);
+    margin-bottom: 20px;
+  }
 }
