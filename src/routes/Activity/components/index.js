@@ -25,6 +25,7 @@ class Activity extends React.Component {
     this.state = {
       loaded: false,
       activityData: [],
+      dataLoadingLength: 0,
       config: {
         min_time: new Date(minTime).toISOString(),
         max_time: new Date(maxTime).toISOString()
@@ -32,14 +33,23 @@ class Activity extends React.Component {
     };
 
     this.getHSActivity = this.getHSActivity.bind(this);
+    this.handleDataLoadingUpdate = this.handleDataLoadingUpdate.bind(this);
   }
 
   componentDidMount () {
     this.getHSActivity();
   }
 
+  handleDataLoadingUpdate (dataLoadingLength) {
+    this.setState({ ...this.state, dataLoadingLength });
+  }
+
   getHSActivity () {
-    return HeliumAPI.getHotspotActivityAllData(this.props.hsList[this.props.currentHS].data.address, () => {}, this.state.config)
+    return HeliumAPI.getHotspotActivityAllData(
+      this.props.hsList[this.props.currentHS].data.address,
+      this.handleDataLoadingUpdate,
+      this.state.config
+    )
       .then(res => {
         const arr = this.state.activityData.concat(res);
         return this.setState({ ...this.state, activityData: arr, loaded: true });
@@ -224,6 +234,10 @@ class Activity extends React.Component {
             <div className='preload-circle'>
               <div />
               <div />
+            </div>
+            <div className='preload-progress'>
+              <p className='preload-progress-entries'>Loaded {this.state.dataLoadingLength} entries...</p>
+              <p className='preload-progress-joke'>#justHeliumAPIThings</p>
             </div>
           </div>
         </section>

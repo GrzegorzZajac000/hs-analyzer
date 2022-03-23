@@ -39,6 +39,24 @@ $preload-color: #cef;
       }
     }
   }
+
+  &-progress {
+    color: $light-font-color;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    transform: translateY(40px);
+
+    &-entries {
+      font-size: px-to-rem(16);
+      font-weight: 700;
+    }
+
+    &-joke {
+      font-size: px-to-rem(12);
+      margin-top: 3px;
+    }
+  }
 }
 
 @keyframes preload {
