@@ -1,0 +1,15 @@
+@import "../../../static/global-styles/variables";
+@import "../../../static/global-styles/functions";
+
+.witness-invalids {
+  background: $light-bg;
+  border-radius: 8px;
+  margin-bottom: 40px;
+  padding: 16px;
+
+  h2 {
+    color: $light-font-color;
+    font-size: px-to-rem(26);
+    margin-bottom: 20px;
+  }
+}

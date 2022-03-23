@@ -3,20 +3,7 @@ import '../styles/Rssi.scss';
 import HeliumAPI from '../../../api/HeliumAPI';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
-import { BeaconsChart, BeaconsValidChart, RSSIChart } from '../../../components';
-
-// @todo
-// X. Pobierać ostatnie 7 dni
-// 2. Rysować chart RSSI
-// 3. Rysować chart send valid / invalid beacons
-// 4. Rysować chart z ilościami wysłanych beaconów
-// 5. Watermark
-// 6. Info o ilości invalidów
-// 7. Min, Max, Avg, Total Witnesses
-// 8. Min, Max, Avg, Total Invalids
-// 9. Dodać obsługę od / do + kalendarz
-// 10. Dodać linię zarobków na wykres
-// 11. Dodać klikanie w słupek i wyświetlanie danych z dnia z podziałem na godziny
+import { BeaconsChart, BeaconsValidChart, RSSIChart, WitnessInvalids } from '../../../components';
 
 class Rssi extends React.Component {
   constructor (props) {
@@ -125,6 +112,9 @@ class Rssi extends React.Component {
       <section className='rssi route-section'>
         <div className='container-fluid'>
           <div className='row'>
+            <div className='col-6'>
+              <WitnessInvalids data={this.state.sentBeacon} config={this.state.config} />
+            </div>
             <div className='col-6'>
               <RSSIChart data={this.state.witnessedBeacon} config={this.state.config} />
             </div>

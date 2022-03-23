@@ -11,6 +11,7 @@ import NameForm from './NameForm';
 import RSSIChart from './RSSIChart';
 import TopBar from './TopBar';
 import WalletForm from './WalletForm';
+import WitnessInvalids from './WitnessInvalids';
 
 export {
   AddressForm,
@@ -25,5 +26,6 @@ export {
   NameForm,
   RSSIChart,
   TopBar,
-  WalletForm
+  WalletForm,
+  WitnessInvalids
 };

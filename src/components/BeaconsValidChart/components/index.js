@@ -84,8 +84,6 @@ class BeaconsValidChart extends React.Component {
       return day;
     });
 
-    console.log(chartDataset);
-
     this.setState({ ...this.state, data: chartDataset, loaded: true });
   }
 
