@@ -29,7 +29,70 @@
     width: 296px;
   }
 
-  h2 {
+  &-info {
+    height: 100%;
+    position: relative;
+    width: 100%;
+  }
+
+  &-history {
+    background-color: $light-bg;
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 10px;
+
+    table {
+      width: 100%;
+
+      th {
+        color: $light-font-color;
+
+        &:last-of-type {
+          text-align: right;
+        }
+      }
+
+      td {
+        padding: 7px 0;
+
+        &:last-of-type {
+          text-align: right;
+        }
+
+        a {
+          transition: color .2s ease-in-out;
+
+          &:hover {
+            color: $decor-color;
+          }
+        }
+      }
+    }
+  }
+
+  &-chart {
+    margin-top: 30px;
+
+    &-box {
+      margin: 0 auto;
+      width: 400px;
+    }
+  }
+
+  > .container-fluid {
+    height: 100%;
+
+    > .row {
+      height: 100%;
+
+      > div {
+        height: 100%;
+      }
+    }
+  }
+
+  h2,
+  h3 {
     color: $light-font-color;
     font-size: px-to-rem(22);
     font-weight: 700;
@@ -41,13 +104,6 @@
     &.donate-wallet {
       color: $light-font-color;
       font-size: px-to-rem(14);
-    }
-
-    &.donate-thank-you {
-      color: $light-font-color;
-      font-size: px-to-rem(28);
-      font-weight: 700;
-      margin-top: 20px;
     }
   }
 }

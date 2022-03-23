@@ -88,7 +88,7 @@ class Donate extends React.Component {
   generateDonatesArray () {
     if (this.state.donates.length <= 0) {
       return (
-        <section className='donate-table-loading'>
+        <section className='donate-history-loading'>
           <div className='preload show-preloader'>
             <div className='preload-circle'>
               <div />
@@ -122,7 +122,9 @@ class Donate extends React.Component {
           <td>
             <Flag className='flag' code={donate.country} height={16} />
           </td>
-          <td>{donate.payer}</td>
+          <td>
+            <a href={`https://explorer.helium.com/accounts/${donate.payer}`} target='_blank' rel='noreferrer noopener'>{donate.payer}</a>
+          </td>
           <td>{(donate.payments[0].amount / 100000000).toFixed(2)} HNT</td>
         </tr>
       );
@@ -145,12 +147,17 @@ class Donate extends React.Component {
           label: 'HNT',
           data: dataset,
           backgroundColor: [
-            'rgb(255, 99, 132)',
-            'rgb(54, 162, 235)',
-            'rgb(255, 206, 86)',
-            'rgb(75, 192, 192)',
-            'rgb(153, 102, 255)',
-            'rgb(255, 159, 64)'
+            '#4f6980',
+            '#849db1',
+            '#a2ceaa',
+            '#638b66',
+            '#bfbb60',
+            '#f47942',
+            '#fbb04e',
+            '#b66353',
+            '#d7ce9f',
+            '#b9aa97',
+            '#7e756d'
           ],
           borderColor: '#1b1c26',
           borderWidth: 1
@@ -197,12 +204,17 @@ class Donate extends React.Component {
               </div>
             </div>
             <div className='col-6'>
-              <p className='donate-thank-you'>Thank to donators from last 30 days</p>
-              <div className='donate-history'>
-                {this.generateDonatesArray()}
-              </div>
-              <div className='donate-chart'>
-                {this.generateDataChart()}
+              <div className='donate-info'>
+                <h3>Thank to donators from last 30 days</h3>
+                <div className='donate-history'>
+                  {this.generateDonatesArray()}
+                </div>
+                <div className='donate-chart'>
+                  <h3>Pie chart of donations</h3>
+                  <div className='donate-chart-box'>
+                    {this.generateDataChart()}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
