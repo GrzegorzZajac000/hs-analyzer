@@ -1,7 +1,107 @@
 import React from 'react';
 import '../styles/Rssi.scss';
+import HeliumAPI from '../../../api/HeliumAPI';
+import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
+
+// @todo
+// X. Pobierać ostatnie 7 dni
+// 2. Rysować chart RSSI
+// 3. Rysować chart send valid / invalid beacons
+// 4. Rysować chart z ilościami wysłanych beaconów
+// 5. Watermark
+// 6. Info o ilości invalidów
+// 7. Min, Max, Avg, Total Witnesses
+// 8. Min, Max, Avg, Total Invalids
+// 9. Dodać obsługę od / do + kalendarz
+// 10. Dodać linię zarobków na wykres
+// 11. Dodać klikanie w słupek i wyświetlanie danych z dnia z podziałem na godziny
 
 class Rssi extends React.Component {
+  constructor (props) {
+    super(props);
+
+    let minTime = new Date().setDate(new Date().getDate() - 5);
+    minTime = new Date(minTime).setMinutes(0);
+    minTime = new Date(minTime).setSeconds(0);
+    minTime = new Date(minTime).setMilliseconds(0);
+
+    let maxTime = new Date().setHours(new Date().getHours() + 1);
+    maxTime = new Date(maxTime).setMinutes(0);
+    maxTime = new Date(maxTime).setSeconds(0);
+    maxTime = new Date(maxTime).setMilliseconds(0);
+
+    this.state = {
+      loaded: false,
+      activityData: [],
+      sentBeacon: [],
+      witnessedBeacon: [],
+      dataLoadingLength: 0,
+      config: {
+        min_time: new Date(minTime).toISOString(),
+        max_time: new Date(maxTime).toISOString(),
+        filter_types: 'poc_receipts_v1'
+      }
+    };
+
+    this.getHSActivity = this.getHSActivity.bind(this);
+    this.handleDataLoadingUpdate = this.handleDataLoadingUpdate.bind(this);
+  }
+
+  componentDidMount () {
+    this.getHSActivity();
+  }
+
+  getHSActivity () {
+    return HeliumAPI.getHotspotActivityAllData(
+      this.props.hsList[this.props.currentHS].data.address,
+      this.handleDataLoadingUpdate,
+      this.state.config
+    )
+      .then(res => {
+        const witnessedBeacon = [];
+        const sentBeacon = [];
+        const addr = this.props.hsList[this.props.currentHS].data.address;
+
+        res.map(action => {
+          try {
+            if (action.path[0].challengee === addr) {
+              sentBeacon.push(action);
+            }
+          } catch (e) {}
+
+          try {
+            const witnesses = action.path[0].witnesses;
+
+            if (witnesses && Array.isArray(witnesses) && witnesses.length > 0) {
+              witnesses.map(witness => {
+                if (witness.gateway === addr) {
+                  witnessedBeacon.push(action);
+                }
+
+                return witness;
+              });
+            }
+          } catch (e) {}
+
+          return action;
+        });
+
+        return this.setState({ ...this.state, sentBeacon, witnessedBeacon, activityData: res });
+      })
+      .catch(err => {
+        console.error(err);
+
+        toast.error('Something went wrong with Helium API. Try one more time', {
+          theme: 'dark'
+        });
+      });
+  }
+
+  handleDataLoadingUpdate (dataLoadingLength) {
+    this.setState({ ...this.state, dataLoadingLength });
+  }
+
   render () {
     return (
       <section className='rssi route-section'>
@@ -10,5 +110,10 @@ class Rssi extends React.Component {
     );
   }
 }
+
+Rssi.propTypes = {
+  hsList: PropTypes.array,
+  currentHS: PropTypes.number
+};
 
 export default Rssi;

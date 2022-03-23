@@ -12,8 +12,11 @@ class RssiContainer extends Component {
 
 const mapActionCreators = {};
 
-const mapStateToProps = () => {
-  return {};
+const mapStateToProps = state => {
+  return {
+    hsList: state.site.hsList,
+    currentHS: state.site.currentHS
+  };
 };
 
 export default connect(mapStateToProps, mapActionCreators)(RssiContainer);
