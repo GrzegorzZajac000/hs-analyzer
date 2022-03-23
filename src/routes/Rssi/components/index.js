@@ -3,6 +3,7 @@ import '../styles/Rssi.scss';
 import HeliumAPI from '../../../api/HeliumAPI';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
+import { BeaconsChart, BeaconsValidChart, RSSIChart } from '../../../components';
 
 // @todo
 // X. Pobierać ostatnie 7 dni
@@ -87,7 +88,7 @@ class Rssi extends React.Component {
           return action;
         });
 
-        return this.setState({ ...this.state, sentBeacon, witnessedBeacon, activityData: res });
+        return this.setState({ ...this.state, sentBeacon, witnessedBeacon, activityData: res, loaded: true });
       })
       .catch(err => {
         console.error(err);
@@ -103,9 +104,38 @@ class Rssi extends React.Component {
   }
 
   render () {
+    if (!this.state.loaded) {
+      return (
+        <section className='activity route-section'>
+          <div className='preload show-preloader'>
+            <div className='preload-circle'>
+              <div />
+              <div />
+            </div>
+            <div className='preload-progress'>
+              <p className='preload-progress-entries'>Loaded {this.state.dataLoadingLength} entries...</p>
+              <p className='preload-progress-joke'>#justHeliumAPIThings</p>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
     return (
       <section className='rssi route-section'>
-        RSSI
+        <div className='container-fluid'>
+          <div className='row'>
+            <div className='col-6'>
+              <RSSIChart data={this.state.witnessedBeacon} config={this.state.config} />
+            </div>
+            <div className='col-6'>
+              <BeaconsChart data={this.state.sentBeacon} config={this.state.config} />
+            </div>
+            <div className='col-6'>
+              <BeaconsValidChart data={this.state.sentBeacon} config={this.state.config} />
+            </div>
+          </div>
+        </div>
       </section>
     );
   }
