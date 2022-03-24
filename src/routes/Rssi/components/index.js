@@ -93,7 +93,7 @@ class Rssi extends React.Component {
   render () {
     if (!this.state.loaded) {
       return (
-        <section className='activity route-section'>
+        <section className='rssi route-section'>
           <div className='preload show-preloader'>
             <div className='preload-circle'>
               <div />

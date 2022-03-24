@@ -1,15 +1,13 @@
 import React from 'react';
 import '../styles/RSSIChart.scss';
 import PropTypes from 'prop-types';
-import { chartOptions, dateUtility } from '../../../utilities';
+import { chartOptions, dateUtility, generateLegend, generateLabels } from '../../../utilities';
 import { toast } from 'react-toastify';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
 class RSSIChart extends React.Component {
   constructor (props) {
     super(props);
-    ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
     this.state = {
       labels: [],
@@ -17,12 +15,11 @@ class RSSIChart extends React.Component {
       loaded: false
     };
 
-    this.generateLabels = this.generateLabels.bind(this);
     this.generateData = this.generateData.bind(this);
   }
 
   componentDidMount () {
-    this.generateLabels()
+    generateLabels(this.props.config.min_time, this.props.config.max_time)
       .then(this.generateData)
       .catch(err => {
         console.error(err);
@@ -31,21 +28,6 @@ class RSSIChart extends React.Component {
           theme: 'dark'
         });
       })
-  }
-
-  generateLabels () {
-    return new Promise(resolve => {
-      const labels = [];
-      const currentDate = new Date(this.props.config.min_time);
-      const endDate = new Date(this.props.config.max_time);
-
-      while (currentDate <= endDate) { // eslint-disable-line no-unmodified-loop-condition
-        labels.push(dateUtility(currentDate));
-        currentDate.setDate(currentDate.getDate() + 1);
-      }
-
-      this.setState({ ...this.state, labels }, () => resolve(labels));
-    });
   }
 
   generateData (labels) {
@@ -73,7 +55,7 @@ class RSSIChart extends React.Component {
       return day;
     });
 
-    this.setState({ ...this.state, data: chartDataset, loaded: true });
+    this.setState({ ...this.state, labels, data: chartDataset, loaded: true });
   }
 
   generateChartDataset () {
@@ -117,24 +99,13 @@ class RSSIChart extends React.Component {
     ];
   }
 
-  generateLegend (data) {
-    return data.map((dataset, i) => {
-      return (
-        <div className='rssi-chart-legend-item' key={i}>
-          <div className='rssi-chart-legend-item-box' style={{ backgroundColor: dataset.backgroundColor }} />
-          <div className='rssi-chart-legend-item-label'>{dataset.label}</div>
-        </div>
-      );
-    });
-  }
-
   render () {
     if (!this.state.loaded) {
       return null;
     }
 
     return (
-      <div className='rssi-chart'>
+      <div className='rssi-box'>
         <h2>RSSI Chart</h2>
 
         <Bar
@@ -142,8 +113,8 @@ class RSSIChart extends React.Component {
           data={{ labels: this.state.labels, datasets: this.state.data }}
         />
 
-        <div className='rssi-chart-legend'>
-          {this.generateLegend(this.state.data)}
+        <div className='rssi-box-legend space'>
+          {generateLegend(this.state.data)}
         </div>
       </div>
     );

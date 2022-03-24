@@ -21,10 +21,10 @@ class Menu extends React.Component {
             <MenuLink to='/activity'>Latest activity</MenuLink>
           </li>
           <li className={(Number.isInteger(this.props.currentHS) && this.props.currentHS >= 0) ? '' : 'disabled'}>
-            <MenuLink to='/rssi'>RSSI</MenuLink>
+            <MenuLink to='/rssi'>RSSI / Beacon Analysis</MenuLink>
           </li>
           <li className={(Number.isInteger(this.props.currentHS) && this.props.currentHS >= 0) ? '' : 'disabled'}>
-            <MenuLink to='/snr'>SNR</MenuLink>
+            <MenuLink to='/snr'>SNR Data</MenuLink>
           </li>
           <li>
             <MenuLink to='/donate'>Donate</MenuLink>

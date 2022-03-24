@@ -1,0 +1,82 @@
+@import "../../../static/global-styles/variables";
+@import "../../../static/global-styles/functions";
+
+.rssi {
+  width: auto;
+
+  &-box {
+    background: $light-bg;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    padding: 16px;
+
+    &-legend {
+      display: flex;
+      flex-direction: row-reverse;
+      font-size: 12px;
+      justify-content: flex-end;
+      margin-top: 10px;
+      width: 100%;
+
+      &.space {
+        justify-content: space-between;
+      }
+
+      &-item {
+        display: flex;
+        flex-direction: column;
+        margin-right: 10px;
+
+        &-box {
+          border-radius: 4px;
+          display: block;
+          height: 24px;
+          margin: 0 auto 4px;
+          width: 24px;
+        }
+
+        &-label {
+          color: $light-font-color;
+          text-align: center;
+        }
+      }
+    }
+
+    &-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-bottom: 20px;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+
+      &-box {
+        background-color: $box-bg;
+        border-radius: 16px;
+        color: $light-font-color;
+        padding: 16px;
+        text-align: center;
+        width: 125px;
+
+        h3 {
+          font-size: px-to-rem(18);
+          font-weight: 400;
+          margin-bottom: 5px;
+        }
+
+        h4 {
+          font-size: px-to-rem(28);
+          font-weight: 700;
+        }
+      }
+    }
+
+    h2 {
+      color: $light-font-color;
+      font-size: px-to-rem(26);
+      margin-bottom: 20px;
+    }
+  }
+}

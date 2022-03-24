@@ -43,11 +43,11 @@ class WitnessInvalids extends React.Component {
     }
 
     return (
-      <div className='witness-invalids'>
+      <div className='rssi-box'>
         <h2>Witnesses</h2>
 
-        <div className='witness-invalids-container'>
-          <div className='witness-invalids-container-box'>
+        <div className='rssi-box-container'>
+          <div className='rssi-box-container-box'>
             <h3>Min</h3>
             <h4>
               <CountUp
@@ -57,7 +57,7 @@ class WitnessInvalids extends React.Component {
               />
             </h4>
           </div>
-          <div className='witness-invalids-container-box'>
+          <div className='rssi-box-container-box'>
             <h3>Max</h3>
             <h4>
               <CountUp
@@ -67,7 +67,7 @@ class WitnessInvalids extends React.Component {
               />
             </h4>
           </div>
-          <div className='witness-invalids-container-box'>
+          <div className='rssi-box-container-box'>
             <h3>Average</h3>
             <h4>
               <CountUp
@@ -78,7 +78,7 @@ class WitnessInvalids extends React.Component {
               />
             </h4>
           </div>
-          <div className='witness-invalids-container-box'>
+          <div className='rssi-box-container-box'>
             <h3>Total</h3>
             <h4>
               <CountUp
@@ -91,8 +91,8 @@ class WitnessInvalids extends React.Component {
         </div>
 
         <h2>Invalids</h2>
-        <div className='witness-invalids-container'>
-          <div className='witness-invalids-container-box'>
+        <div className='rssi-box-container'>
+          <div className='rssi-box-container-box'>
             <h3>Min</h3>
             <h4>
               <CountUp
@@ -102,7 +102,7 @@ class WitnessInvalids extends React.Component {
               />
             </h4>
           </div>
-          <div className='witness-invalids-container-box'>
+          <div className='rssi-box-container-box'>
             <h3>Max</h3>
             <h4>
               <CountUp
@@ -112,7 +112,7 @@ class WitnessInvalids extends React.Component {
               />
             </h4>
           </div>
-          <div className='witness-invalids-container-box'>
+          <div className='rssi-box-container-box'>
             <h3>Average</h3>
             <h4>
               <CountUp
@@ -123,7 +123,7 @@ class WitnessInvalids extends React.Component {
               />
             </h4>
           </div>
-          <div className='witness-invalids-container-box'>
+          <div className='rssi-box-container-box'>
             <h3>Total</h3>
             <h4>
               <CountUp

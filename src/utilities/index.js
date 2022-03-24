@@ -1,6 +1,9 @@
 import arrayUnique from './arrayUnique';
-import dateUtility from './dateUtility';
 import chartOptions from './chartOptions';
+import chartWatermark from './chartWatermark';
+import dateUtility from './dateUtility';
+import generateLabels from './generateLabels';
+import generateLegend from './generateLegend';
 import getOptionLabel from './getOptionLabel';
 import GetTimeAgo from './GetTimeAgo';
 import HSName from './HSName';
@@ -10,8 +13,11 @@ import URLBuilder from './URLBuilder';
 
 export {
   arrayUnique,
-  dateUtility,
   chartOptions,
+  chartWatermark,
+  dateUtility,
+  generateLabels,
+  generateLegend,
   getOptionLabel,
   GetTimeAgo,
   HSName,

@@ -5,11 +5,8 @@ import DonateAddress from '../../../components/DonateAddress';
 import HeliumAPI from '../../../api/HeliumAPI';
 import { toast } from 'react-toastify';
 import Flag from 'react-world-flags';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import { arrayUnique } from '../../../utilities';
-
-ChartJS.register(ArcElement, Tooltip, Legend);
 
 class Donate extends React.Component {
   constructor (props) {
