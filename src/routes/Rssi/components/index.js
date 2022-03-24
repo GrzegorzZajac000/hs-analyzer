@@ -113,7 +113,7 @@ class Rssi extends React.Component {
         <div className='container-fluid'>
           <div className='row'>
             <div className='col-6'>
-              <WitnessInvalids data={this.state.sentBeacon} config={this.state.config} />
+              <WitnessInvalids data={this.state.sentBeacon} />
             </div>
             <div className='col-6'>
               <RSSIChart data={this.state.witnessedBeacon} config={this.state.config} />

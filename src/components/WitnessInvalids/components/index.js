@@ -1,37 +1,40 @@
 import React from 'react';
 import '../styles/WitnessInvalids.scss';
 import PropTypes from 'prop-types';
+import CountUp from 'react-countup';
 
 class WitnessInvalids extends React.Component {
   constructor (props) {
     super(props);
 
     this.state = {
-      loaded: false
+      loaded: false,
+      witnesses: {},
+      invalids: {}
     };
   }
 
   componentDidMount () {
-    console.log(this.props.data, this.props.config);
-
     const wData = this.props.data.map(beacon => beacon.path[0].witnesses.length);
     const witnesses = {
       min: Math.min(...wData),
       max: Math.max(...wData),
-      avg: (wData.reduce((a, b) => a + b, 0) / wData.length).toFixed(2),
+      avg: (wData.reduce((a, b) => a + b, 0) / wData.length),
       total: wData.reduce((a, b) => a + b, 0)
     };
 
-    console.log(witnesses);
+    let vData = this.props.data.map(beacon => beacon.path[0].witnesses);
+    vData = vData.map(data => data.map(item => item.is_valid));
+    vData = vData.map(data => data.filter(x => !x).length);
 
-    const vData = this.props.data.map(beacon => beacon.path[0].witnesses);
-    console.log(vData);
-    // vData = vData.map(data => data.is_valid);
-    //
-    // const vDataT = vData.filter(x => x).length;
-    // const vDataF = vData.filter(x => !x).length;
-    //
-    // console.log(vData, vDataT, vDataF);
+    const invalids = {
+      min: Math.min(...vData),
+      max: Math.max(...vData),
+      avg: (vData.reduce((a, b) => a + b, 0) / vData.length),
+      total: vData.reduce((a, b) => a + b, 0)
+    };
+
+    this.setState({ ...this.state, witnesses, invalids, loaded: true });
   }
 
   render () {
@@ -41,15 +44,103 @@ class WitnessInvalids extends React.Component {
 
     return (
       <div className='witness-invalids'>
-        <h2>Witness / Invalids</h2>
+        <h2>Witnesses</h2>
+
+        <div className='witness-invalids-container'>
+          <div className='witness-invalids-container-box'>
+            <h3>Min</h3>
+            <h4>
+              <CountUp
+                start={0}
+                end={this.state.witnesses.min}
+                duration={1}
+              />
+            </h4>
+          </div>
+          <div className='witness-invalids-container-box'>
+            <h3>Max</h3>
+            <h4>
+              <CountUp
+                start={0}
+                end={this.state.witnesses.max}
+                duration={1}
+              />
+            </h4>
+          </div>
+          <div className='witness-invalids-container-box'>
+            <h3>Average</h3>
+            <h4>
+              <CountUp
+                start={0}
+                end={this.state.witnesses.avg}
+                decimals={2}
+                duration={1}
+              />
+            </h4>
+          </div>
+          <div className='witness-invalids-container-box'>
+            <h3>Total</h3>
+            <h4>
+              <CountUp
+                start={0}
+                end={this.state.witnesses.total}
+                duration={1}
+              />
+            </h4>
+          </div>
+        </div>
+
+        <h2>Invalids</h2>
+        <div className='witness-invalids-container'>
+          <div className='witness-invalids-container-box'>
+            <h3>Min</h3>
+            <h4>
+              <CountUp
+                start={0}
+                end={this.state.invalids.min}
+                duration={1}
+              />
+            </h4>
+          </div>
+          <div className='witness-invalids-container-box'>
+            <h3>Max</h3>
+            <h4>
+              <CountUp
+                start={0}
+                end={this.state.invalids.max}
+                duration={1}
+              />
+            </h4>
+          </div>
+          <div className='witness-invalids-container-box'>
+            <h3>Average</h3>
+            <h4>
+              <CountUp
+                start={0}
+                end={this.state.invalids.avg}
+                decimals={2}
+                duration={1}
+              />
+            </h4>
+          </div>
+          <div className='witness-invalids-container-box'>
+            <h3>Total</h3>
+            <h4>
+              <CountUp
+                start={0}
+                end={this.state.invalids.total}
+                duration={1}
+              />
+            </h4>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
 WitnessInvalids.propTypes = {
-  data: PropTypes.array,
-  config: PropTypes.object
+  data: PropTypes.array
 };
 
 export default WitnessInvalids;
