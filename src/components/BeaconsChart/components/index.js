@@ -38,8 +38,14 @@ class BeaconsChart extends React.Component {
       return action;
     });
 
+    const earnings = this.props.earnings.map(reward => {
+      reward.date = dateUtility(new Date(reward.timestamp));
+      return reward;
+    });
+
     labels.map(day => {
       const dayData = data.filter(action => action.date === day);
+      const earningsData = earnings.filter(r => r.date === day).map(r => r.amount);
       let amount = 0;
 
       if (!Array.isArray(dayData) || dayData.length <= 0) {
@@ -58,6 +64,9 @@ class BeaconsChart extends React.Component {
 
       chartDataset[0].data.push(amount);
 
+      const dayReward = earningsData.reduce((p, c) => p + c);
+      chartDataset[1].data.push(dayReward / 100000000);
+
       return day;
     });
 
@@ -66,11 +75,8 @@ class BeaconsChart extends React.Component {
 
   generateChartDataset () {
     return [
-      {
-        label: 'Amount',
-        backgroundColor: '#b2e061',
-        data: []
-      }
+      { label: 'Amount', backgroundColor: '#b2e061', data: [], order: 1, yAxisID: 'dataAxis' },
+      { label: 'Earnings', backgroundColor: '#a9dfd8', borderColor: '#a9dfd8', data: [], type: 'line', order: 0, yAxisID: 'earningsAxis' }
     ]
   }
 
@@ -98,7 +104,8 @@ class BeaconsChart extends React.Component {
 
 BeaconsChart.propTypes = {
   data: PropTypes.array,
-  config: PropTypes.object
+  config: PropTypes.object,
+  earnings: PropTypes.array
 };
 
 export default BeaconsChart;

@@ -38,8 +38,14 @@ class BeaconsValidChart extends React.Component {
       return action;
     });
 
+    const earnings = this.props.earnings.map(reward => {
+      reward.date = dateUtility(new Date(reward.timestamp));
+      return reward;
+    });
+
     labels.map(day => {
       const dayData = data.filter(action => action.date === day);
+      const earningsData = earnings.filter(r => r.date === day).map(r => r.amount);
       let invalid = 0;
       let valid = 0;
 
@@ -63,6 +69,9 @@ class BeaconsValidChart extends React.Component {
       chartDataset[0].data.push(invalid);
       chartDataset[1].data.push(valid);
 
+      const dayReward = earningsData.reduce((p, c) => p + c);
+      chartDataset[2].data.push(dayReward / 100000000);
+
       return day;
     });
 
@@ -71,18 +80,9 @@ class BeaconsValidChart extends React.Component {
 
   generateChartDataset () {
     return [
-      {
-        label: 'Invalid',
-        backgroundColor: '#fd7f6f',
-        stack: 'Stack 0',
-        data: []
-      },
-      {
-        label: 'Valid',
-        backgroundColor: '#b2e061',
-        stack: 'Stack 0',
-        data: []
-      }
+      { label: 'Invalid', backgroundColor: '#fd7f6f', stack: 'Stack 0', data: [], order: 1, yAxisID: 'dataAxis' },
+      { label: 'Valid', backgroundColor: '#b2e061', stack: 'Stack 0', data: [], order: 1, yAxisID: 'dataAxis' },
+      { label: 'Earnings', backgroundColor: '#a9dfd8', borderColor: '#a9dfd8', data: [], type: 'line', order: 0, yAxisID: 'earningsAxis' }
     ]
   }
 
@@ -110,7 +110,8 @@ class BeaconsValidChart extends React.Component {
 
 BeaconsValidChart.propTypes = {
   data: PropTypes.array,
-  config: PropTypes.object
+  config: PropTypes.object,
+  earnings: PropTypes.array
 };
 
 export default BeaconsValidChart;

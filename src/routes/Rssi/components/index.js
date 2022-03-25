@@ -173,10 +173,10 @@ class Rssi extends React.Component {
               <RSSIChart data={this.state.witnessedBeacon} earnings={this.state.earnings} config={this.state.config} />
             </div>
             <div className='col-6'>
-              <BeaconsChart data={this.state.sentBeacon} config={this.state.config} />
+              <BeaconsChart data={this.state.sentBeacon} earnings={this.state.earnings} config={this.state.config} />
             </div>
             <div className='col-6'>
-              <BeaconsValidChart data={this.state.sentBeacon} config={this.state.config} />
+              <BeaconsValidChart data={this.state.sentBeacon} earnings={this.state.earnings} config={this.state.config} />
             </div>
           </div>
         </div>
