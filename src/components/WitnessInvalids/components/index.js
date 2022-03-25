@@ -16,9 +16,10 @@ class WitnessInvalids extends React.Component {
 
   componentDidMount () {
     const wData = this.props.data.map(beacon => beacon.path[0].witnesses.length);
+
     const witnesses = {
-      min: Math.min(...wData),
-      max: Math.max(...wData),
+      min: wData.length > 0 ? Math.min(...wData) : 0,
+      max: wData.length > 0 ? Math.max(...wData) : 0,
       avg: (wData.reduce((a, b) => a + b, 0) / wData.length),
       total: wData.reduce((a, b) => a + b, 0)
     };
@@ -28,8 +29,8 @@ class WitnessInvalids extends React.Component {
     vData = vData.map(data => data.filter(x => !x).length);
 
     const invalids = {
-      min: Math.min(...vData),
-      max: Math.max(...vData),
+      min: vData.length > 0 ? Math.min(...vData) : 0,
+      max: vData.length > 0 ? Math.max(...vData) : 0,
       avg: (vData.reduce((a, b) => a + b, 0) / vData.length),
       total: vData.reduce((a, b) => a + b, 0)
     };
