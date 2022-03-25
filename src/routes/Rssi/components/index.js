@@ -40,6 +40,14 @@ class Rssi extends React.Component {
     this.getHSActivity();
   }
 
+  componentDidUpdate (prevProps, prevState, snapshot) {
+    if (prevProps.currentHS !== this.props.currentHS) {
+      this.setState({ ...this.state, loaded: false, activityBeacon: [], witnessedBeacon: [], dataLoadingLength: 0 }, () => {
+        this.getHSActivity();
+      });
+    }
+  }
+
   getHSActivity () {
     return HeliumAPI.getHotspotActivityAllData(
       this.props.hsList[this.props.currentHS].data.address,

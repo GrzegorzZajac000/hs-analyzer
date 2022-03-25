@@ -40,6 +40,14 @@ class Activity extends React.Component {
     this.getHSActivity();
   }
 
+  componentDidUpdate (prevProps, prevState, snapshot) {
+    if (prevProps.currentHS !== this.props.currentHS) {
+      this.setState({ ...this.state, loaded: false, activityData: [], dataLoadingLength: 0 }, () => {
+        this.getHSActivity();
+      });
+    }
+  }
+
   handleDataLoadingUpdate (dataLoadingLength) {
     this.setState({ ...this.state, dataLoadingLength });
   }
@@ -78,6 +86,10 @@ class Activity extends React.Component {
   }
 
   generateRewards (activity) {
+    if (!activity) {
+      return null;
+    }
+
     return {
       name: 'Received Mining Rewards',
       icon: <CashCoin size={18} />,
@@ -104,6 +116,10 @@ class Activity extends React.Component {
   }
 
   generateTransferPackets (activity) {
+    if (!activity) {
+      return null;
+    }
+
     return {
       name: 'Transferred Packets',
       icon: <Truck size={18} />,
@@ -134,12 +150,25 @@ class Activity extends React.Component {
     };
   }
 
-  generateWitnessedBeacon (activity) {
-    const witnessedData = activity.path[0].witnesses.filter(item => item.gateway === this.props.hsList[this.props.currentHS].data.address);
+  generateWitnessedBeacon (activity, hs) {
+    if (!activity || !hs) {
+      return null;
+    }
+
+    const witnessedData = activity.path[0].witnesses.filter(item => item.gateway === hs.data.address);
+
+    if (!witnessedData || witnessedData.length <= 0) {
+      return null;
+    }
+
     const distance = getDistance(
-      { latitude: this.props.hsList[this.props.currentHS].data.lat, longitude: this.props.hsList[this.props.currentHS].data.lng },
+      { latitude: hs.data.lat, longitude: hs.data.lng },
       { latitude: activity.path[0].challengee_lat, longitude: activity.path[0].challengee_lon }
     );
+
+    if (!distance) {
+      return null;
+    }
 
     return {
       name: 'Witnessed Beacon',
@@ -155,6 +184,10 @@ class Activity extends React.Component {
   }
 
   generateBroadcastedBeacon (activity) {
+    if (!activity) {
+      return null;
+    }
+
     const valid = activity.path[0].witnesses.filter(witness => witness.is_valid);
     const invalid = activity.path[0].witnesses.length - valid.length;
 
@@ -172,6 +205,12 @@ class Activity extends React.Component {
   }
 
   generateActivity () {
+    if (!this.state.activityData || !Array.isArray(this.state.activityData) || this.state.activityData.length <= 0) {
+      return null;
+    }
+
+    const hs = this.props.hsList[this.props.currentHS];
+
     return this.state.activityData.map((activity, i) => {
       let item = {};
 
@@ -182,12 +221,12 @@ class Activity extends React.Component {
       }
 
       case 'poc_receipts_v1': {
-        if (activity.path && activity.path[0] && activity.path[0].challengee && activity.path[0].challengee === this.props.hsList[this.props.currentHS].data.address) {
+        if (activity.path && activity.path[0] && activity.path[0].challengee && activity.path[0].challengee === hs.data.address) {
           item = this.generateBroadcastedBeacon(activity);
-        } else if (activity.challenger && activity.challenger === this.props.hsList[this.props.currentHS].data.address) {
+        } else if (activity.challenger && activity.challenger === hs.data.address) {
           item = this.generateChallengedBeaconer();
         } else {
-          item = this.generateWitnessedBeacon(activity);
+          item = this.generateWitnessedBeacon(activity, hs);
         }
 
         break;
@@ -199,11 +238,15 @@ class Activity extends React.Component {
       }
 
       case 'state_channel_close_v1': {
-        item = this.generateTransferPackets(activity);
+        item = this.generateTransferPackets(activity, hs);
         break;
       }
 
       default: break;
+      }
+
+      if (!item || !activity) {
+        return null;
       }
 
       return (
