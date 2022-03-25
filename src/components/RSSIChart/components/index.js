@@ -42,8 +42,14 @@ class RSSIChart extends React.Component {
       return action;
     });
 
+    const earnings = this.props.earnings.map(reward => {
+      reward.date = dateUtility(new Date(reward.timestamp));
+      return reward;
+    });
+
     labels.map(day => {
       const dayData = data.filter(action => action.date === day);
+      const earningsData = earnings.filter(r => r.date === day).map(r => r.amount);
 
       chartDataset[0].data.push(dayData.filter(w => w.signal < -130).length);
       chartDataset[1].data.push(dayData.filter(w => w.signal >= -130 && w.signal < -120).length);
@@ -51,6 +57,9 @@ class RSSIChart extends React.Component {
       chartDataset[3].data.push(dayData.filter(w => w.signal >= -110 && w.signal < -100).length);
       chartDataset[4].data.push(dayData.filter(w => w.signal >= -100 && w.signal < -90).length);
       chartDataset[5].data.push(dayData.filter(w => w.signal >= -90).length);
+
+      const dayReward = earningsData.reduce((p, c) => p + c);
+      chartDataset[6].data.push(dayReward / 100000000);
 
       return day;
     });
@@ -60,42 +69,13 @@ class RSSIChart extends React.Component {
 
   generateChartDataset () {
     return [
-      {
-        label: 'RSSI < -130',
-        backgroundColor: '#fd7f6f',
-        stack: 'Stack 0',
-        data: []
-      },
-      {
-        label: '-130 ⋜ RSSI < -120',
-        backgroundColor: '#ffb55a',
-        stack: 'Stack 0',
-        data: []
-      },
-      {
-        label: '-120 ⋜ RSSI < -110',
-        backgroundColor: '#ffee65',
-        stack: 'Stack 0',
-        data: []
-      },
-      {
-        label: '-110 ⋜ RSSI < -100',
-        backgroundColor: '#7eb0d5',
-        stack: 'Stack 0',
-        data: []
-      },
-      {
-        label: '-100 ⋜ RSSI < -90',
-        backgroundColor: '#8bd3c7',
-        stack: 'Stack 0',
-        data: []
-      },
-      {
-        label: 'RSSI ⋝ -90',
-        backgroundColor: '#b2e061',
-        stack: 'Stack 0',
-        data: []
-      }
+      { label: 'RSSI < -130', backgroundColor: '#fd7f6f', stack: 'Stack 0', data: [], order: 1, yAxisID: 'dataAxis' },
+      { label: '-130 ⋜ RSSI < -120', backgroundColor: '#ffb55a', stack: 'Stack 0', data: [], order: 1, yAxisID: 'dataAxis' },
+      { label: '-120 ⋜ RSSI < -110', backgroundColor: '#ffee65', stack: 'Stack 0', data: [], order: 1, yAxisID: 'dataAxis' },
+      { label: '-110 ⋜ RSSI < -100', backgroundColor: '#7eb0d5', stack: 'Stack 0', data: [], order: 1, yAxisID: 'dataAxis' },
+      { label: '-100 ⋜ RSSI < -90', backgroundColor: '#8bd3c7', stack: 'Stack 0', data: [], order: 1, yAxisID: 'dataAxis' },
+      { label: 'RSSI ⋝ -90', backgroundColor: '#b2e061', stack: 'Stack 0', data: [], order: 1, yAxisID: 'dataAxis' },
+      { label: 'Earnings', backgroundColor: '#a9dfd8', borderColor: '#a9dfd8', data: [], type: 'line', order: 0, yAxisID: 'earningsAxis' }
     ];
   }
 
@@ -125,7 +105,8 @@ RSSIChart.propTypes = {
   data: PropTypes.array,
   config: PropTypes.object,
   hsList: PropTypes.array,
-  currentHS: PropTypes.number
+  currentHS: PropTypes.number,
+  earnings: PropTypes.array
 };
 
 export default RSSIChart;

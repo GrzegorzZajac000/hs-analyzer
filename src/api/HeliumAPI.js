@@ -453,13 +453,34 @@ const HeliumAPI = {
     return instance.get(url);
   },
 
-  getRewardsForHotspot: (address, config = {}) => {
+  getRewardsForHotspot: (address, loadingStateUpdate, config = {}) => {
     if (!address) {
       throw new Error('HeliumAPI.getRewardsForHotspot - address is required');
     }
 
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/hotspots/${address}/rewards`, config);
-    return instance.get(url);
+    const data = [];
+
+    let url = URLBuilder(`${instance.defaults.baseURL}/v1/hotspots/${address}/rewards`, config);
+    return instance.get(url)
+      .then(async res => {
+        data.push(res.data.data);
+
+        if (loadingStateUpdate && typeof loadingStateUpdate === 'function') {
+          loadingStateUpdate(data.flat().length);
+        }
+
+        while (res.data.cursor) {
+          url = URLBuilder(`${instance.defaults.baseURL}/v1/hotspots/${address}/rewards?cursor=${res.data.cursor}`, config);
+          res = await instance.get(url);
+          data.push(res.data.data);
+
+          if (loadingStateUpdate && typeof loadingStateUpdate === 'function') {
+            loadingStateUpdate(data.flat().length);
+          }
+        }
+
+        return data.flat();
+      });
   },
 
   getRewardsInRewardsBlockForHotspot: (address, block) => {
@@ -470,7 +491,7 @@ const HeliumAPI = {
     return instance.get(`/v1/hotspots/${address}/rewards/${block}`);
   },
 
-  getTotalRewardForHotspot: (address, config = {}) => {
+  getTotalRewardsForHotspot: (address, config = {}) => {
     if (!address) {
       throw new Error('HeliumAPI.getTotalRewardForHotspot - address is required');
     }

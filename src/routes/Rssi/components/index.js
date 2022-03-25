@@ -25,6 +25,7 @@ class Rssi extends React.Component {
       sentBeacon: [],
       witnessedBeacon: [],
       dataLoadingLength: 0,
+      earnings: [],
       config: {
         min_time: new Date(minTime).toISOString(),
         max_time: new Date(maxTime).toISOString(),
@@ -33,17 +34,58 @@ class Rssi extends React.Component {
     };
 
     this.getHSActivity = this.getHSActivity.bind(this);
+    this.getEarnings = this.getEarnings.bind(this);
     this.handleDataLoadingUpdate = this.handleDataLoadingUpdate.bind(this);
   }
 
   componentDidMount () {
-    this.getHSActivity();
+    Promise.all([
+      this.getHSActivity(),
+      this.getEarnings()
+    ])
+      .then(res => {
+        return this.setState({
+          ...this.state,
+          sentBeacon: res[0].sentBeacon,
+          witnessedBeacon: res[0].witnessedBeacon,
+          activityData: res[0].activityData,
+          earnings: res[1],
+          loaded: true
+        });
+      })
+      .catch(err => {
+        console.error(err);
+
+        toast.error('Something went wrong with Helium API. Try one more time', {
+          theme: 'dark'
+        });
+      });
   }
 
   componentDidUpdate (prevProps, prevState, snapshot) {
     if (prevProps.currentHS !== this.props.currentHS) {
       this.setState({ ...this.state, loaded: false, activityBeacon: [], witnessedBeacon: [], dataLoadingLength: 0 }, () => {
-        this.getHSActivity();
+        Promise.all([
+          this.getHSActivity(),
+          this.getEarnings()
+        ])
+          .then(res => {
+            return this.setState({
+              ...this.state,
+              sentBeacon: res[0].sentBeacon,
+              witnessedBeacon: res[0].witnessedBeacon,
+              activityData: res[0].activityData,
+              earnings: res[1],
+              loaded: true
+            });
+          })
+          .catch(err => {
+            console.error(err);
+
+            toast.error('Something went wrong with Helium API. Try one more time', {
+              theme: 'dark'
+            });
+          });
       });
     }
   }
@@ -83,15 +125,19 @@ class Rssi extends React.Component {
           return action;
         });
 
-        return this.setState({ ...this.state, sentBeacon, witnessedBeacon, activityData: res, loaded: true });
-      })
-      .catch(err => {
-        console.error(err);
-
-        toast.error('Something went wrong with Helium API. Try one more time', {
-          theme: 'dark'
-        });
+        return {
+          sentBeacon,
+          witnessedBeacon,
+          activityData: res
+        };
       });
+  }
+
+  getEarnings () {
+    const eConfig = this.state.config;
+    delete eConfig.filter_types;
+
+    return HeliumAPI.getRewardsForHotspot(this.props.hsList[this.props.currentHS].data.address, () => {}, eConfig).then(earnings => earnings);
   }
 
   handleDataLoadingUpdate (dataLoadingLength) {
@@ -124,7 +170,7 @@ class Rssi extends React.Component {
               <WitnessInvalids data={this.state.sentBeacon} />
             </div>
             <div className='col-6'>
-              <RSSIChart data={this.state.witnessedBeacon} config={this.state.config} />
+              <RSSIChart data={this.state.witnessedBeacon} earnings={this.state.earnings} config={this.state.config} />
             </div>
             <div className='col-6'>
               <BeaconsChart data={this.state.sentBeacon} config={this.state.config} />
