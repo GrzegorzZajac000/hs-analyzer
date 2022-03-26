@@ -19,7 +19,7 @@ const updateHSData = (hsList, hsInfo, updateHSInfo) => {
   return hsList.map(hs => {
     console.log(hs);
 
-    return HeliumAPI.getHotspotActivityAllData(hs.value, () => {}, config)
+    return HeliumAPI.getHotspotActivity(hs.value, () => {}, config)
       .then(res => {
         console.log(res);
       });

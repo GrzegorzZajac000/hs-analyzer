@@ -1,13 +1,12 @@
 import axios from 'axios';
 import URLBuilder from '../utilities/URLBuilder';
 import * as rax from 'retry-axios';
+import cursorData from './cursorData';
 
 const instance = axios.create({
   baseURL: process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:3000/api' : 'https://api.helium.io',
   timeout: 120000,
-  headers: {
-    'Cache-Control': 'max-age=60'
-  }
+  headers: { 'Cache-Control': 'max-age=60' }
 });
 
 instance.defaults.raxConfig = {
@@ -38,9 +37,8 @@ const HeliumAPI = {
     return instance.get('/v1/blocks/stats');
   },
 
-  getBLockDescriptions: (config = {}) => {
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/blocks`, config);
-    return instance.get(url);
+  getBLockDescriptions: (loadingStateUpdate, config = {}) => {
+    return cursorData(instance, '/v1/blocks', loadingStateUpdate, config);
   },
 
   getBlockAtHeight: height => {
@@ -51,13 +49,12 @@ const HeliumAPI = {
     return instance.get(`/v1/blocks/${height}`);
   },
 
-  getBlockAtHeightTransactions: (height, config = {}) => {
+  getBlockAtHeightTransactions: (height, loadingStateUpdate, config = {}) => {
     if (!height) {
       throw new Error('HeliumAPI.getBlockAtHeightTransactions - height is required');
     }
 
-    const url = URLBuilder(`/v1/blocks/${height}/transactions`, config);
-    return instance.get(url);
+    return cursorData(instance, `/v1/blocks/${height}/transactions`, loadingStateUpdate, config);
   },
 
   getBlockAtHash: hash => {
@@ -68,19 +65,17 @@ const HeliumAPI = {
     return instance.get(`/v1/blocks/hash/${hash}`);
   },
 
-  getBlockAtHashTransactions: (hash, config = {}) => {
+  getBlockAtHashTransactions: (hash, loadingStateUpdate, config = {}) => {
     if (!hash) {
       throw new Error('HeliumAPI.getBlockAtHashTransactions - hash is required');
     }
 
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/blocks/hash/${hash}/transactions`, config);
-    return instance.get(url);
+    return cursorData(instance, `/v1/blocks/hash/${hash}/transactions`, loadingStateUpdate, config);
   },
 
   // Accounts
-  getAccounts: (config = {}) => {
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/accounts`, config);
-    return instance.get(url);
+  getAccounts: (loadingStateUpdate, config = {}) => {
+    return cursorData(instance, '/v1/accounts', loadingStateUpdate, config);
   },
 
   getRichestAccounts: (config = {}) => {
@@ -96,31 +91,28 @@ const HeliumAPI = {
     return instance.get(`/v1/accounts/${address}`);
   },
 
-  getHotspotsForAccount: (address, config = {}) => {
+  getHotspotsForAccount: (address, loadingStateUpdate, config = {}) => {
     if (!address) {
       throw new Error('HeliumAPI.getHotspotsForAccount - address is required');
     }
 
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/accounts/${address}/hotspots`, config);
-    return instance.get(url);
+    return cursorData(instance, `/v1/accounts/${address}/hotspots`, loadingStateUpdate, config);
   },
 
-  getValidatorsForAccount: (address, config = {}) => {
+  getValidatorsForAccount: (address, loadingStateUpdate, config = {}) => {
     if (!address) {
       throw new Error('HeliumAPI.getValidatorsForAccount - address is required');
     }
 
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/accounts/${address}/validators`, config);
-    return instance.get(url);
+    return cursorData(instance, `/v1/accounts/${address}/validators`, loadingStateUpdate, config);
   },
 
-  getOUIsForAccount: (address, config = {}) => {
+  getOUIsForAccount: (address, loadingStateUpdate, config = {}) => {
     if (!address) {
       throw new Error('HeliumAPI.getOUIsForAccount - address is required');
     }
 
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/accounts/${address}/ouis`, config);
-    return instance.get(url);
+    return cursorData(instance, `/v1/accounts/${address}/ouis`, loadingStateUpdate, config);
   },
 
   getActivityForAccount: (address, config = {}) => {
@@ -132,43 +124,12 @@ const HeliumAPI = {
     return instance.get(url);
   },
 
-  getActivityCountsForAccount: (address, config = {}) => {
-    if (!address) {
-      throw new Error('HeliumAPI.getActivityCountsForAccount - address is required');
-    }
-
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/accounts/${address}/activity/count`, config);
-    return instance.get(url);
-  },
-
   getRolesForAccount: (address, loadingStateUpdate, config = {}) => {
     if (!address) {
       throw new Error('HeliumAPI.getRolesForAccount - address is required');
     }
 
-    let url = URLBuilder(`${instance.defaults.baseURL}/v1/accounts/${address}/roles`, config);
-    const data = [];
-
-    return instance.get(url)
-      .then(async res => {
-        data.push(res.data.data);
-
-        if (loadingStateUpdate && typeof loadingStateUpdate === 'function') {
-          loadingStateUpdate(data.flat().length);
-        }
-
-        while (res.data.cursor) {
-          url = URLBuilder(`${instance.defaults.baseURL}/v1/accounts/${address}/roles?cursor=${res.data.cursor}`, config);
-          res = await instance.get(url);
-          data.push(res.data.data);
-
-          if (loadingStateUpdate && typeof loadingStateUpdate === 'function') {
-            loadingStateUpdate(data.flat().length);
-          }
-        }
-
-        return data.flat();
-      });
+    return cursorData(instance, `/v1/accounts/${address}/roles`, loadingStateUpdate, config);
   },
 
   getRolesCountsForAccount: (address, config = {}) => {
@@ -198,22 +159,20 @@ const HeliumAPI = {
     return instance.get(url);
   },
 
-  getPendingTransactionsForAccount: (address, config = {}) => {
+  getPendingTransactionsForAccount: (address, loadingStateUpdate, config = {}) => {
     if (!address) {
       throw new Error('HeliumAPI.getPendingTransactionsForAccount - address is required');
     }
 
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/accounts/${address}/pending_transactions`, config);
-    return instance.get(url);
+    return cursorData(instance, `/v1/accounts/${address}/pending-transactions`, loadingStateUpdate, config);
   },
 
-  getRewardsForAnAccount: (address, config = {}) => {
+  getRewardsForAnAccount: (address, loadingStateUpdate, config = {}) => {
     if (!address) {
       throw new Error('HeliumAPI.getRewardsForAnAccount - address is required');
     }
 
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/accounts/${address}/rewards`, config);
-    return instance.get(url);
+    return cursorData(instance, `/v1/accounts/${address}/rewards`, loadingStateUpdate, config);
   },
 
   getRewardsInRewardsBlockForAnAccount: (address, block) => {
@@ -270,21 +229,28 @@ const HeliumAPI = {
     return instance.get(`/v1/validators/name?search=${search}`);
   },
 
-  getValidatorActivity: (address, config = {}) => {
+  getValidatorActivity: (address, loadingStateUpdate, config = {}) => {
     if (!address) {
       throw new Error('HeliumAPI.getValidatorActivity - address is required');
     }
 
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/validators/${address}/activity`, config);
-    return instance.get(url);
+    return cursorData(instance, `/v1/validators/${address}/activity`, loadingStateUpdate, config);
   },
 
-  getValidatorActivityCounts: (address, config = {}) => {
+  getValidatorRoles: (address, loadingStateUpdate, config = {}) => {
     if (!address) {
-      throw new Error('HeliumAPI.getValidatorActivityCounts - address is required');
+      throw new Error('HeliumAPI.getValidatorRoles - address is required');
     }
 
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/validators/${address}/activity/count`, config);
+    return cursorData(instance, `/v1/validators/${address}/roles`, loadingStateUpdate, config);
+  },
+
+  getValidatorRolesCounts: (address, config = {}) => {
+    if (!address) {
+      throw new Error('HeliumAPI.getValidatorRolesCounts - address is required');
+    }
+
+    const url = URLBuilder(`${instance.defaults.baseURL}/v1/validators/${address}/roles/count`, config);
     return instance.get(url);
   },
 
@@ -312,13 +278,12 @@ const HeliumAPI = {
     return instance.get(`/v1/validators/elected/hash/${hash}`);
   },
 
-  getRewardsForValidator: (address, config = {}) => {
+  getRewardsForValidator: (address, loadingStateUpdate, config = {}) => {
     if (!address) {
       throw new Error('HeliumAPI.getRewardsForValidator - address is required');
     }
 
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/validators/${address}/rewards`, config);
-    return instance.get(url);
+    return cursorData(instance, `/v1/validators/${address}/rewards`, loadingStateUpdate, config);
   },
 
   getRewardTotalForValidator: (address, config = {}) => {
@@ -336,9 +301,8 @@ const HeliumAPI = {
   // }
 
   // Hotspots
-  getListHotspots: (config = {}) => {
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/hotspots`, config);
-    return instance.get(url);
+  getListHotspots: (loadingStateUpdate, config = {}) => {
+    return cursorData(instance, '/v1/hotspots', loadingStateUpdate, config);
   },
 
   getHotspotForAddress: address => {
@@ -383,74 +347,49 @@ const HeliumAPI = {
     return instance.get(`/v1/hotspots/hex/${h3index}`);
   },
 
-  getHotspotActivity: (address, config = {}) => {
+  getHotspotActivity: (address, loadingStateUpdate, config = {}) => {
     if (!address) {
       throw new Error('HeliumAPI.getHotspotActivity - address is required');
     }
 
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/hotspots/${address}/activity`, config);
+    return cursorData(instance, `/v1/hotspots/${address}/activity`, loadingStateUpdate, config);
+  },
+
+  getHotspotRoles: (address, loadingStateUpdate, config = {}) => {
+    if (!address) {
+      throw new Error('HeliumAPI.getHotspotRoles - address is required');
+    }
+
+    return cursorData(instance, `/v1/hotspots/${address}/roles`, loadingStateUpdate, config);
+  },
+
+  getHotspotRolesCount: (address, config = {}) => {
+    if (!address) {
+      throw new Error('HeliumAPI.getHotspotRolesCount - address is required');
+    }
+
+    const url = URLBuilder(`${instance.defaults.baseURL}/v1/hotspots/${address}/roles/count`, config);
     return instance.get(url);
   },
 
-  getHotspotActivityAllData: (address, loadingStateUpdate, config = {}) => {
-    if (!address) {
-      throw new Error('HeliumAPI.getHotspotActivity - address is required');
-    }
-
-    const data = [];
-    let url = URLBuilder(`${instance.defaults.baseURL}/v1/hotspots/${address}/activity`, config);
-
-    return instance.get(url)
-      .then(async res => {
-        data.push(res.data.data);
-
-        if (loadingStateUpdate && typeof loadingStateUpdate === 'function') {
-          loadingStateUpdate(data.flat().length);
-        }
-
-        while (res.data.cursor) {
-          url = URLBuilder(`${instance.defaults.baseURL}/v1/hotspots/${address}/activity?cursor=${res.data.cursor}`, config);
-          res = await instance.get(url);
-          data.push(res.data.data);
-
-          if (loadingStateUpdate && typeof loadingStateUpdate === 'function') {
-            loadingStateUpdate(data.flat().length);
-          }
-        }
-
-        return data.flat();
-      });
-  },
-
-  getHotspotActivityCounts: (address, config = {}) => {
-    if (!address) {
-      throw new Error('HeliumAPI.getHotspotActivityCounts - address is required');
-    }
-
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/hotspots/${address}/activity/count`, config);
-    return instance.get(url);
-  },
-
-  getHotspotElections: (address, config = {}) => {
+  getHotspotElections: (address, loadingStateUpdate, config = {}) => {
     if (!address) {
       throw new Error('HeliumAPI.getHotspotElections - address is required');
     }
 
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/hotspots/${address}/elections`, config);
-    return instance.get(url);
+    return cursorData(instance, `/v1/hotspots/${address}/elections`, loadingStateUpdate, config);
   },
 
   getCurrentlyElectedHotspots: () => {
     return instance.get('/v1/hotspots/elected');
   },
 
-  getHotspotChallenges: (address, config = {}) => {
+  getHotspotChallenges: (address, loadingStateUpdate, config = {}) => {
     if (!address) {
       throw new Error('HeliumAPI.getHotspotChallenges - address is required');
     }
 
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/hotspots/${address}/challenges`, config);
-    return instance.get(url);
+    return cursorData(instance, `/v1/hotspots/${address}/challenges`, loadingStateUpdate, config);
   },
 
   getRewardsForHotspot: (address, loadingStateUpdate, config = {}) => {
@@ -458,29 +397,7 @@ const HeliumAPI = {
       throw new Error('HeliumAPI.getRewardsForHotspot - address is required');
     }
 
-    const data = [];
-
-    let url = URLBuilder(`${instance.defaults.baseURL}/v1/hotspots/${address}/rewards`, config);
-    return instance.get(url)
-      .then(async res => {
-        data.push(res.data.data);
-
-        if (loadingStateUpdate && typeof loadingStateUpdate === 'function') {
-          loadingStateUpdate(data.flat().length);
-        }
-
-        while (res.data.cursor) {
-          url = URLBuilder(`${instance.defaults.baseURL}/v1/hotspots/${address}/rewards?cursor=${res.data.cursor}`, config);
-          res = await instance.get(url);
-          data.push(res.data.data);
-
-          if (loadingStateUpdate && typeof loadingStateUpdate === 'function') {
-            loadingStateUpdate(data.flat().length);
-          }
-        }
-
-        return data.flat();
-      });
+    return cursorData(instance, `/v1/hotspots/${address}/rewards`, loadingStateUpdate, config);
   },
 
   getRewardsInRewardsBlockForHotspot: (address, block) => {
@@ -517,9 +434,8 @@ const HeliumAPI = {
   },
 
   // Cities
-  getHotspotCities: (config = {}) => {
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/cities`, config);
-    return instance.get(url);
+  getHotspotCities: (loadingStateUpdate, config = {}) => {
+    return cursorData(instance, '/v1/hotspots/cities', loadingStateUpdate, config);
   },
 
   getCityForCityID: cityID => {
@@ -530,13 +446,12 @@ const HeliumAPI = {
     return instance.get(`/v1/cities/${cityID}`);
   },
 
-  getHotspotForCity: (cityID, config = {}) => {
+  getHotspotForCity: (cityID, loadingStateUpdate, config = {}) => {
     if (!cityID) {
       throw new Error('HeliumAPI.getHotspotForCity - cityID is required');
     }
 
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/cities/${cityID}/hotspots`, config);
-    return instance.get(url);
+    return cursorData(instance, `/v1/cities/${cityID}/hotspots`, loadingStateUpdate, config);
   },
 
   // Locations
@@ -576,9 +491,8 @@ const HeliumAPI = {
     return instance.get('/v1/oracle/prices/current');
   },
 
-  getCurrentAndHistoricalOraclePrices: (config = {}) => {
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/oracle/prices`, config);
-    return instance.get(url);
+  getCurrentAndHistoricalOraclePrices: (loadingStateUpdate, config = {}) => {
+    return cursorData(instance, '/v1/oracle/prices', loadingStateUpdate, config);
   },
 
   getOraclePriceStats: (config = {}) => {
@@ -594,18 +508,16 @@ const HeliumAPI = {
     return instance.get(`/v1/oracle/prices/${block}`);
   },
 
-  getListOracleActivity: (config = {}) => {
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/oracle/activity`, config);
-    return instance.get(url);
+  getListOracleActivity: (loadingStateUpdate, config = {}) => {
+    return cursorData(instance, '/v1/oracle/activity', loadingStateUpdate, config);
   },
 
-  getListActivityForSpecificOracle: (address, config = {}) => {
+  getListActivityForSpecificOracle: (address, loadingStateUpdate, config = {}) => {
     if (!address) {
       throw new Error('HeliumAPI.getListActivityForSpecificOracle - address is required');
     }
 
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/oracle/${address}/activity`, config);
-    return instance.get(url);
+    return cursorData(instance, `/v1/oracle/activity/${address}`, loadingStateUpdate, config);
   },
 
   getPredictedHNTOraclePrices: () => {
@@ -632,9 +544,8 @@ const HeliumAPI = {
   },
 
   // OUIs
-  getListOUIs: (config = {}) => {
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/ouis`, config);
-    return instance.get(url);
+  getListOUIs: (loadingStateUpdate, config = {}) => {
+    return cursorData(instance, '/v1/ouis', loadingStateUpdate, config);
   },
 
   getOUI: oui => {
@@ -669,33 +580,28 @@ const HeliumAPI = {
     return instance.get('/v1/dc_burns/stats');
   },
 
-  getDCBurnEvents: (config = {}) => {
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/dc_burns`, config);
-    return instance.get(url);
+  getDCBurnEvents: (loadingStateUpdate, config = {}) => {
+    return cursorData(instance, '/v1/dc_burns', loadingStateUpdate, config);
   },
 
   // Challenges
-  getListChallengeReceipts: (config = {}) => {
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/challenges`, config);
-    return instance.get(url);
+  getListChallengeReceipts: (loadingStateUpdate, config = {}) => {
+    return cursorData(instance, '/v1/challenges', loadingStateUpdate, config);
   },
 
   // Elections
-  getListElections: (config = {}) => {
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/elections`, config);
-    return instance.get(url);
+  getListElections: (loadingStateUpdate, config = {}) => {
+    return cursorData(instance, '/v1/elections', loadingStateUpdate, config);
   },
 
   // State Channels
-  getStateChannelCloses: (config = {}) => {
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/state_channels`, config);
-    return instance.get(url);
+  getStateChannelCloses: (loadingStateUpdate, config = {}) => {
+    return cursorData(instance, '/v1/state_channel_closes', loadingStateUpdate, config);
   },
 
   // Assert Locations
-  getListAssertLocations: (config = {}) => {
-    const url = URLBuilder(`${instance.defaults.baseURL}/v1/assert_locations`, config);
-    return instance.get(url);
+  getListAssertLocations: (loadingStateUpdate, config = {}) => {
+    return cursorData(instance, '/v1/assert_locations', loadingStateUpdate, config);
   }
 };
 

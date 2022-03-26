@@ -53,7 +53,7 @@ class Activity extends React.Component {
   }
 
   getHSActivity () {
-    return HeliumAPI.getHotspotActivityAllData(
+    return HeliumAPI.getHotspotActivity(
       this.props.hsList[this.props.currentHS].data.address,
       this.handleDataLoadingUpdate,
       this.state.config
