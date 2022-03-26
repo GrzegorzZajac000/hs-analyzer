@@ -1,4 +1,6 @@
-const chartOptions = onClick => {
+const chartOptions = (onClick, config = {
+  earnings: true
+}) => {
   return {
     plugins: {
       tooltip: {
@@ -7,10 +9,13 @@ const chartOptions = onClick => {
           label: function (context) {
             let datasets = context.chart.config._config.data.datasets;
             datasets = datasets.map(dataset => dataset.data);
-            datasets.pop();
 
-            if (context.datasetIndex === datasets.length) {
-              return ` ${context.formattedValue} HNT`;
+            if (config.earnings) {
+              datasets.pop();
+
+              if (context.datasetIndex === datasets.length) {
+                return ` ${context.formattedValue} HNT`;
+              }
             }
 
             let total = datasets.map(dataset => dataset[context.dataIndex]);
@@ -42,7 +47,7 @@ const chartOptions = onClick => {
       },
       earningsAxis: {
         beginAtZero: true,
-        display: true,
+        display: config.earnings,
         position: 'right',
         type: 'linear',
         grid: {
@@ -57,8 +62,3 @@ const chartOptions = onClick => {
 };
 
 export default chartOptions;
-
-// tooltip
-// itemSort: function(a, b) {
-//   return b.datasetIndex - a.datasetIndex
-// },

@@ -2,6 +2,7 @@ import AddressForm from './AddressForm';
 import BeaconsChart from './BeaconsChart';
 import BeaconsValidChart from './BeaconsValidChart';
 import ConfirmModal from './ConfirmModal';
+import DayModal from './DayModal';
 import DonateAddress from './DonateAddress';
 import HSInfoModal from './HSInfoModal';
 import HSModal from './HSModal';
@@ -18,6 +19,7 @@ export {
   BeaconsChart,
   BeaconsValidChart,
   ConfirmModal,
+  DayModal,
   DonateAddress,
   HSInfoModal,
   HSModal,

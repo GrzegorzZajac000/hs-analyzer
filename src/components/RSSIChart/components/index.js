@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { chartOptions, dateUtility, generateLegend, generateLabels } from '../../../utilities';
 import { toast } from 'react-toastify';
 import { Bar } from 'react-chartjs-2';
+import DayModal from '../../DayModal';
 
 class RSSIChart extends React.Component {
   constructor (props) {
@@ -12,10 +13,14 @@ class RSSIChart extends React.Component {
     this.state = {
       labels: [],
       data: [],
-      loaded: false
+      daysDataset: [],
+      loaded: false,
+      dayModalShow: false,
+      dayModalData: []
     };
 
     this.generateData = this.generateData.bind(this);
+    this.handleDayModalHide = this.handleDayModalHide.bind(this);
   }
 
   componentDidMount () {
@@ -47,9 +52,10 @@ class RSSIChart extends React.Component {
       return reward;
     });
 
-    labels.map(day => {
+    const daysDataset = labels.map(day => {
       const dayData = data.filter(action => action.date === day);
       const earningsData = earnings.filter(r => r.date === day).map(r => r.amount);
+      let dayReward;
 
       chartDataset[0].data.push(dayData.filter(w => w.signal < -130).length);
       chartDataset[1].data.push(dayData.filter(w => w.signal >= -130 && w.signal < -120).length);
@@ -58,13 +64,18 @@ class RSSIChart extends React.Component {
       chartDataset[4].data.push(dayData.filter(w => w.signal >= -100 && w.signal < -90).length);
       chartDataset[5].data.push(dayData.filter(w => w.signal >= -90).length);
 
-      const dayReward = earningsData.reduce((p, c) => p + c);
+      try {
+        dayReward = earningsData.reduce((p, c) => p + c);
+      } catch (e) {
+        dayReward = 0;
+      }
+
       chartDataset[6].data.push(dayReward / 100000000);
 
-      return day;
+      return dayData;
     });
 
-    this.setState({ ...this.state, labels, data: chartDataset, loaded: true });
+    this.setState({ ...this.state, labels, data: chartDataset, daysDataset, loaded: true });
   }
 
   generateChartDataset () {
@@ -79,24 +90,35 @@ class RSSIChart extends React.Component {
     ];
   }
 
+  handleDayModalHide () {
+    this.setState({ ...this.state, dayModalShow: false });
+  }
+
   render () {
     if (!this.state.loaded) {
       return null;
     }
 
     return (
-      <div className='rssi-box'>
-        <h2>RSSI Chart</h2>
+      <React.Fragment>
+        <div className='rssi-box'>
+          <h2>RSSI Chart</h2>
 
-        <Bar
-          options={chartOptions(() => {})}
-          data={{ labels: this.state.labels, datasets: this.state.data }}
-        />
+          <Bar
+            options={chartOptions((e, elements) => {
+              const dayData = this.state.daysDataset[elements[0].index];
+              this.setState({ ...this.state, dayModalShow: true, dayModalData: dayData });
+            })}
+            data={{ labels: this.state.labels, datasets: this.state.data }}
+          />
 
-        <div className='rssi-box-legend space'>
-          {generateLegend(this.state.data)}
+          <div className='rssi-box-legend space'>
+            {generateLegend(this.state.data)}
+          </div>
         </div>
-      </div>
+
+        <DayModal show={this.state.dayModalShow} data={this.state.dayModalData} onHide={this.handleDayModalHide} />
+      </React.Fragment>
     );
   }
 }
