@@ -48,6 +48,7 @@ class BeaconsValidChart extends React.Component {
       const earningsData = earnings.filter(r => r.date === day).map(r => r.amount);
       let invalid = 0;
       let valid = 0;
+      let dayReward;
 
       if (!Array.isArray(dayData) || dayData.length <= 0) {
         chartDataset[0].data.push(0);
@@ -69,7 +70,12 @@ class BeaconsValidChart extends React.Component {
       chartDataset[0].data.push(invalid);
       chartDataset[1].data.push(valid);
 
-      const dayReward = earningsData.reduce((p, c) => p + c);
+      try {
+        dayReward = earningsData.reduce((p, c) => p + c);
+      } catch (e) {
+        dayReward = 0;
+      }
+
       chartDataset[2].data.push(dayReward / 100000000);
 
       return day;

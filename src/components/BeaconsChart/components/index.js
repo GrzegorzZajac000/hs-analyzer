@@ -47,6 +47,7 @@ class BeaconsChart extends React.Component {
       const dayData = data.filter(action => action.date === day);
       const earningsData = earnings.filter(r => r.date === day).map(r => r.amount);
       let amount = 0;
+      let dayReward = 0;
 
       if (!Array.isArray(dayData) || dayData.length <= 0) {
         chartDataset[0].data.push(0);
@@ -64,7 +65,12 @@ class BeaconsChart extends React.Component {
 
       chartDataset[0].data.push(amount);
 
-      const dayReward = earningsData.reduce((p, c) => p + c);
+      try {
+        dayReward = earningsData.reduce((p, c) => p + c);
+      } catch (e) {
+        dayReward = 0;
+      }
+
       chartDataset[1].data.push(dayReward / 100000000);
 
       return day;
