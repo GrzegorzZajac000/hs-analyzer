@@ -44,7 +44,10 @@ const chartOptions = onClick => {
         beginAtZero: true,
         display: true,
         position: 'right',
-        type: 'linear'
+        type: 'linear',
+        grid: {
+          display: false
+        }
       }
     },
     responsive: true,
