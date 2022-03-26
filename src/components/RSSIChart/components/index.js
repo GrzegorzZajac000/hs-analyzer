@@ -106,8 +106,10 @@ class RSSIChart extends React.Component {
 
           <Bar
             options={chartOptions((e, elements) => {
-              const dayData = this.state.daysDataset[elements[0].index];
-              this.setState({ ...this.state, dayModalShow: true, dayModalData: dayData });
+              try {
+                const dayData = this.state.daysDataset[elements[0].index];
+                this.setState({ ...this.state, dayModalShow: true, dayModalData: dayData });
+              } catch (e) {}
             })}
             data={{ labels: this.state.labels, datasets: this.state.data }}
           />
@@ -117,7 +119,7 @@ class RSSIChart extends React.Component {
           </div>
         </div>
 
-        <DayModal show={this.state.dayModalShow} data={this.state.dayModalData} onHide={this.handleDayModalHide} />
+        <DayModal mode='rssi' show={this.state.dayModalShow} data={this.state.dayModalData} onHide={this.handleDayModalHide} />
       </React.Fragment>
     );
   }
