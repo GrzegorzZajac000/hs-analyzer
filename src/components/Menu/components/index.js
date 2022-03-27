@@ -18,6 +18,9 @@ class Menu extends BaseComponent {
           <li>
             <MenuLink to='/'>General info</MenuLink>
           </li>
+          <li>
+            <MenuLink to='/chain-variables'>Chain Variables</MenuLink>
+          </li>
           <li className={(Number.isInteger(this.props.currentHS) && this.props.currentHS >= 0) ? '' : 'disabled'}>
             <MenuLink to='/activity'>Latest activity</MenuLink>
           </li>
