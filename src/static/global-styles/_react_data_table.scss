@@ -1,0 +1,70 @@
+@import "variables";
+@import "functions";
+
+/* stylelint-disable selector-class-pattern */
+.rdt_Table {
+  background-color: transparent !important;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  overflow: hidden;
+
+  .rdt_TableHead {
+    font-size: px-to-rem(14);
+    font-weight: 700;
+
+    .rdt_TableHeadRow {
+      background-color: $box-bg;
+      color: $light-font-color;
+    }
+  }
+
+  .rdt_TableBody {
+    background-color: transparent;
+
+    .rdt_TableRow {
+      background-color: transparent;
+
+      .rdt_TableCell {
+        background-color: $light-bg;
+        color: $light-font-color;
+
+        a {
+          transition: color .25s ease-in-out;
+
+          &:hover,
+          &:focus,
+          &:active {
+            color: $decor-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+.rdt_Pagination {
+  background-color: $box-bg !important;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  color: $light-font-color !important;
+  overflow: hidden;
+
+  button {
+    &[disabled] {
+      svg {
+        fill: $font-color;
+      }
+    }
+
+    &:not(:disabled) {
+      &:hover {
+        background-color: rgba($decor-color, .5);
+      }
+    }
+
+    svg {
+      fill: $light-font-color;
+    }
+  }
+}
+/* stylelint-enable */
