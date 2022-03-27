@@ -9,6 +9,10 @@ $json-bg: #2b303b;
     border-radius: 16px;
     margin-top: 20px;
     padding: 16px;
+
+    .variable-value {
+      word-break: break-all;
+    }
   }
 
   h2 {
