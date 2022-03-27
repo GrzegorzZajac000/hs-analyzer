@@ -201,7 +201,7 @@ class Donate extends React.Component {
             </div>
             <div className='col-6'>
               <div className='donate-info'>
-                <h3>Thank to donators from last 30 days</h3>
+                <h3>Thanks to donors from last 30 days</h3>
                 <div className='donate-history'>
                   {this.generateDonatesArray()}
                 </div>
