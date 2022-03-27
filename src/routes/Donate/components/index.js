@@ -56,7 +56,6 @@ class Donate extends React.Component {
         donatesArr = donates;
         return donates.map(donate => HeliumAPI.getHotspotsForAccount(donate.payer));
       }).then(promises => Promise.all(promises))
-      .then(hotspots => hotspots.map(hs => hs.data.data))
       .then(hotspots => hotspots.map(hs => (hs[0] && hs[0].geocode && hs[0].geocode.short_country && hs[0].geocode.long_country) ? { long_country: hs[0].geocode.long_country, short_country: hs[0].geocode.short_country } : 'Unknown'))
       .then(countries => countries.map((geocode, i) => {
         donatesArr[i].country = geocode.short_country;
