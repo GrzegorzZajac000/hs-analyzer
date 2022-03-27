@@ -1,12 +1,12 @@
 import React from 'react';
 import '../styles/BeaconsChart.scss';
 import PropTypes from 'prop-types';
-import { chartOptions, dateUtility, generateLegend, generateLabels } from '../../../utilities';
+import { BaseComponent, chartOptions, dateUtility, generateLegend, generateLabels } from '../../../utilities';
 import { toast } from 'react-toastify';
 import { Bar } from 'react-chartjs-2';
 import DayModal from '../../DayModal';
 
-class BeaconsChart extends React.Component {
+class BeaconsChart extends BaseComponent {
   constructor (props) {
     super(props);
 
@@ -81,7 +81,7 @@ class BeaconsChart extends React.Component {
       return dayData;
     });
 
-    this.setState({ ...this.state, labels, data: chartDataset, daysDataset, loaded: true });
+    this.updateState({ labels, data: chartDataset, daysDataset, loaded: true });
   }
 
   generateChartDataset () {
@@ -92,7 +92,7 @@ class BeaconsChart extends React.Component {
   }
 
   handleDayModalHide () {
-    this.setState({ ...this.state, dayModalShow: false });
+    this.updateState({ dayModalShow: false });
   }
 
   render () {
@@ -110,7 +110,7 @@ class BeaconsChart extends React.Component {
               try {
                 const dayData = this.state.daysDataset[elements[0].index];
                 console.log(this.state);
-                this.setState({ ...this.state, dayModalShow: true, dayModalData: dayData });
+                this.updateState({ dayModalShow: true, dayModalData: dayData });
               } catch (e) {}
             })}
             data={{ labels: this.state.labels, datasets: this.state.data }}

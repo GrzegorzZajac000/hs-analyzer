@@ -2,8 +2,9 @@ import React from 'react';
 import '../styles/DonateAddress.scss';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { toast } from 'react-toastify';
+import { BaseComponent } from '../../../utilities';
 
-class DonateAddress extends React.Component {
+class DonateAddress extends BaseComponent {
   constructor (props) {
     super(props);
 

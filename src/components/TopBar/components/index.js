@@ -3,9 +3,9 @@ import '../styles/TopBar.scss';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { ConfirmModal, HSInfoModal } from '../../index';
-import { isCurrentHS, getOptionLabel } from '../../../utilities';
+import { BaseComponent, isCurrentHS, getOptionLabel } from '../../../utilities';
 
-class TopBar extends React.Component {
+class TopBar extends BaseComponent {
   constructor (props) {
     super(props);
 
@@ -47,19 +47,19 @@ class TopBar extends React.Component {
   }
 
   handleHSInfoClick () {
-    this.setState({ ...this.state, hsInfoModalShow: true });
+    this.updateState({ hsInfoModalShow: true });
   }
 
   handleHSInfoHide () {
-    this.setState({ ...this.state, hsInfoModalShow: false });
+    this.updateState({ hsInfoModalShow: false });
   }
 
   handleHSRemoveClick () {
-    this.setState({ ...this.state, removeModalShow: true });
+    this.updateState({ removeModalShow: true });
   }
 
   handleHSRemoveHide () {
-    this.setState({ ...this.state, removeModalShow: false });
+    this.updateState({ removeModalShow: false });
   }
 
   handleHSRemoveConfirm () {

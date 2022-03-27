@@ -2,8 +2,9 @@ import React from 'react';
 import '../styles/ConfirmModal.scss';
 import Modal from 'react-bootstrap/Modal';
 import PropTypes from 'prop-types';
+import { BaseComponent } from '../../../utilities';
 
-class HSInfoModal extends React.Component {
+class HSInfoModal extends BaseComponent {
   render () {
     return (
       <Modal

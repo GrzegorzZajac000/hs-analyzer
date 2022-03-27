@@ -4,8 +4,9 @@ import HeliumAPI from '../../../api/HeliumAPI';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { BeaconsChart, BeaconsValidChart, RSSIChart, WitnessInvalids } from '../../../components';
+import { BaseComponent } from '../../../utilities';
 
-class Rssi extends React.Component {
+class Rssi extends BaseComponent {
   constructor (props) {
     super(props);
 
@@ -44,8 +45,7 @@ class Rssi extends React.Component {
       this.getEarnings()
     ])
       .then(res => {
-        return this.setState({
-          ...this.state,
+        return this.updateState({
           sentBeacon: res[0].sentBeacon,
           witnessedBeacon: res[0].witnessedBeacon,
           activityData: res[0].activityData,
@@ -64,14 +64,13 @@ class Rssi extends React.Component {
 
   componentDidUpdate (prevProps, prevState, snapshot) {
     if (prevProps.currentHS !== this.props.currentHS) {
-      this.setState({ ...this.state, loaded: false, activityBeacon: [], witnessedBeacon: [], dataLoadingLength: 0 }, () => {
+      this.updateState({ loaded: false, activityBeacon: [], witnessedBeacon: [], dataLoadingLength: 0 }, () => {
         Promise.all([
           this.getHSActivity(),
           this.getEarnings()
         ])
           .then(res => {
-            return this.setState({
-              ...this.state,
+            return this.updateState({
               sentBeacon: res[0].sentBeacon,
               witnessedBeacon: res[0].witnessedBeacon,
               activityData: res[0].activityData,
@@ -141,7 +140,7 @@ class Rssi extends React.Component {
   }
 
   handleDataLoadingUpdate (dataLoadingLength) {
-    this.setState({ ...this.state, dataLoadingLength });
+    this.updateState({ dataLoadingLength });
   }
 
   render () {

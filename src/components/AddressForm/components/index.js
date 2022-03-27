@@ -4,9 +4,9 @@ import { Form, Field } from 'react-final-form';
 import HeliumAPI from '../../../api/HeliumAPI';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
-import HSName from '../../../utilities/HSName';
+import { BaseComponent, HSName } from '../../../utilities';
 
-class AddressForm extends React.Component {
+class AddressForm extends BaseComponent {
   constructor (props) {
     super(props);
 

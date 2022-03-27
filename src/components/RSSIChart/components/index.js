@@ -1,12 +1,12 @@
 import React from 'react';
 import '../styles/RSSIChart.scss';
 import PropTypes from 'prop-types';
-import { chartOptions, dateUtility, generateLegend, generateLabels } from '../../../utilities';
+import { BaseComponent, chartOptions, dateUtility, generateLegend, generateLabels } from '../../../utilities';
 import { toast } from 'react-toastify';
 import { Bar } from 'react-chartjs-2';
 import DayModal from '../../DayModal';
 
-class RSSIChart extends React.Component {
+class RSSIChart extends BaseComponent {
   constructor (props) {
     super(props);
 
@@ -75,7 +75,7 @@ class RSSIChart extends React.Component {
       return dayData;
     });
 
-    this.setState({ ...this.state, labels, data: chartDataset, daysDataset, loaded: true });
+    this.updateState({ labels, data: chartDataset, daysDataset, loaded: true });
   }
 
   generateChartDataset () {
@@ -91,7 +91,7 @@ class RSSIChart extends React.Component {
   }
 
   handleDayModalHide () {
-    this.setState({ ...this.state, dayModalShow: false });
+    this.updateState({ dayModalShow: false });
   }
 
   render () {
@@ -108,7 +108,7 @@ class RSSIChart extends React.Component {
             options={chartOptions((e, elements) => {
               try {
                 const dayData = this.state.daysDataset[elements[0].index];
-                this.setState({ ...this.state, dayModalShow: true, dayModalData: dayData });
+                this.updateState({ dayModalShow: true, dayModalData: dayData });
               } catch (e) {}
             })}
             data={{ labels: this.state.labels, datasets: this.state.data }}

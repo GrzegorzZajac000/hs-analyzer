@@ -2,8 +2,9 @@ import React from 'react';
 import '../styles/InfoBlock.scss';
 import PropTypes from 'prop-types';
 import CountUp from 'react-countup';
+import { BaseComponent } from '../../../utilities';
 
-class InfoBlock extends React.Component {
+class InfoBlock extends BaseComponent {
   render () {
     return (
       <div className={'info-block' + (this.props.className ? ` ${this.props.className}` : '')}>

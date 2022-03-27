@@ -4,9 +4,9 @@ import { Form, Field } from 'react-final-form';
 import AsyncSelect from 'react-select/async';
 import HeliumAPI from '../../../api/HeliumAPI';
 import PropTypes from 'prop-types';
-import { HSName, getOptionLabel } from '../../../utilities';
+import { BaseComponent, HSName, getOptionLabel } from '../../../utilities';
 
-class NameForm extends React.Component {
+class NameForm extends BaseComponent {
   constructor (props) {
     super(props);
 

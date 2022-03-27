@@ -3,8 +3,9 @@ import '../styles/HSModal.scss';
 import { AddressForm, NameForm, WalletForm } from '../../../components';
 import Modal from 'react-bootstrap/Modal';
 import PropTypes from 'prop-types';
+import { BaseComponent } from '../../../utilities';
 
-class HSModal extends React.Component {
+class HSModal extends BaseComponent {
   constructor (props) {
     super(props);
     this.props.hideHSModal();

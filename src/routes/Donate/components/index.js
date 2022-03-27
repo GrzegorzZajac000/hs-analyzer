@@ -6,9 +6,9 @@ import HeliumAPI from '../../../api/HeliumAPI';
 import { toast } from 'react-toastify';
 import Flag from 'react-world-flags';
 import { Pie } from 'react-chartjs-2';
-import { arrayUnique } from '../../../utilities';
+import { arrayUnique, BaseComponent } from '../../../utilities';
 
-class Donate extends React.Component {
+class Donate extends BaseComponent {
   constructor (props) {
     super(props);
 
@@ -63,7 +63,7 @@ class Donate extends React.Component {
         return geocode;
       }))
       .then(() => {
-        this.setState({ ...this.state, donates: donatesArr });
+        this.updateState({ donates: donatesArr });
       })
       .catch(err => {
         console.error(err);
@@ -78,7 +78,7 @@ class Donate extends React.Component {
     const qr = this.state.qr;
     qr.amount = e.target.value;
 
-    this.setState({ ...this.state, qr });
+    this.updateState({ qr });
   }
 
   generateDonatesArray () {

@@ -3,9 +3,9 @@ import '../styles/HSInfoModal.scss';
 import Modal from 'react-bootstrap/Modal';
 import PropTypes from 'prop-types';
 import { X } from 'react-bootstrap-icons';
-import { HSName, isCurrentHS } from '../../../utilities';
+import { BaseComponent, HSName, isCurrentHS } from '../../../utilities';
 
-class HSInfoModal extends React.Component {
+class HSInfoModal extends BaseComponent {
   renderLocation (hsInfo) {
     if (!hsInfo || !hsInfo.geocode || !hsInfo.geocode.long_city || !hsInfo.geocode.long_country || !hsInfo.geocode.long_street) {
       return '-';

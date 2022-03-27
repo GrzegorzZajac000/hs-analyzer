@@ -3,10 +3,10 @@ import '../styles/DayModal.scss';
 import Modal from 'react-bootstrap/Modal';
 import PropTypes from 'prop-types';
 import { X } from 'react-bootstrap-icons';
-import { chartOptions } from '../../../utilities';
+import { BaseComponent, chartOptions } from '../../../utilities';
 import { Bar } from 'react-chartjs-2';
 
-class DayModal extends React.Component {
+class DayModal extends BaseComponent {
   constructor (props) {
     super(props);
 

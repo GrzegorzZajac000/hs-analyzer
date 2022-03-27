@@ -4,8 +4,9 @@ import { InfoBlock } from '../../../components';
 import HeliumAPI from '../../../api/HeliumAPI';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
+import { BaseComponent } from '../../../utilities';
 
-class Info extends React.Component {
+class Info extends BaseComponent {
   constructor (props) {
     super(props);
 
@@ -39,7 +40,7 @@ class Info extends React.Component {
 
       return this.props.setGeneralInfo(generalInfo);
     }).then(() => {
-      this.setState({ ...this.state, loaded: true });
+      this.updateState({ loaded: true });
     }).catch(err => {
       console.error(err);
 

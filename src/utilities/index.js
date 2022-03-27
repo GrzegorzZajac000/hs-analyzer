@@ -1,4 +1,5 @@
 import arrayUnique from './arrayUnique';
+import BaseComponent from './BaseComponent';
 import chartOptions from './chartOptions';
 import chartWatermark from './chartWatermark';
 import dateUtility from './dateUtility';
@@ -13,6 +14,7 @@ import URLBuilder from './URLBuilder';
 
 export {
   arrayUnique,
+  BaseComponent,
   chartOptions,
   chartWatermark,
   dateUtility,

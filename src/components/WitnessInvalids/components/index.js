@@ -2,8 +2,9 @@ import React from 'react';
 import '../styles/WitnessInvalids.scss';
 import PropTypes from 'prop-types';
 import CountUp from 'react-countup';
+import { BaseComponent } from '../../../utilities';
 
-class WitnessInvalids extends React.Component {
+class WitnessInvalids extends BaseComponent {
   constructor (props) {
     super(props);
 
@@ -52,7 +53,7 @@ class WitnessInvalids extends React.Component {
       total: vData.reduce((a, b) => a + b, 0)
     };
 
-    this.setState({ ...this.state, witnesses, invalids, rssiGroups, rssiTotal, loaded: true });
+    this.updateState({ witnesses, invalids, rssiGroups, rssiTotal, loaded: true });
   }
 
   render () {

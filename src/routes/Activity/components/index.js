@@ -2,13 +2,13 @@ import React from 'react';
 import '../styles/Activity.scss';
 import HeliumAPI from '../../../api/HeliumAPI';
 import PropTypes from 'prop-types';
-import GetTimeAgo from '../../../utilities/GetTimeAgo';
+import { BaseComponent, GetTimeAgo } from '../../../utilities';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { toast } from 'react-toastify';
 import { getDistance } from 'geolib';
 import { CashCoin, Eye, Send, BroadcastPin, Truck, ConeStriped } from 'react-bootstrap-icons';
 
-class Activity extends React.Component {
+class Activity extends BaseComponent {
   constructor (props) {
     super(props);
 
@@ -42,14 +42,14 @@ class Activity extends React.Component {
 
   componentDidUpdate (prevProps, prevState, snapshot) {
     if (prevProps.currentHS !== this.props.currentHS) {
-      this.setState({ ...this.state, loaded: false, activityData: [], dataLoadingLength: 0 }, () => {
+      this.updateState({ loaded: false, activityData: [], dataLoadingLength: 0 }, () => {
         this.getHSActivity();
       });
     }
   }
 
   handleDataLoadingUpdate (dataLoadingLength) {
-    this.setState({ ...this.state, dataLoadingLength });
+    this.updateState({ dataLoadingLength });
   }
 
   getHSActivity () {
@@ -60,7 +60,7 @@ class Activity extends React.Component {
     )
       .then(res => {
         const arr = this.state.activityData.concat(res);
-        return this.setState({ ...this.state, activityData: arr, loaded: true });
+        return this.updateState({ activityData: arr, loaded: true });
       })
       .then(() => {
         let minTime = new Date(this.state.config.min_time);
@@ -74,7 +74,7 @@ class Activity extends React.Component {
           max_time: this.state.config.min_time
         };
 
-        this.setState({ ...this.state, config });
+        this.updateState({ config });
       })
       .catch(err => {
         console.error(err);

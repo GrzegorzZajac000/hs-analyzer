@@ -1,11 +1,12 @@
 import React from 'react';
 import '../styles/Connectivity.scss';
+import { BaseComponent } from '../../../utilities';
 
 // WARNING
 // Can't be done without Node server
 // @todo future
 
-class Connectivity extends React.Component {
+class Connectivity extends BaseComponent {
   constructor (props) {
     super(props);
 

@@ -4,8 +4,9 @@ import MenuLink from '../../../utilities/MenuLink';
 import { Link } from 'react-router-dom';
 // import { WindowPlus } from 'react-bootstrap-icons';
 import PropTypes from 'prop-types';
+import { BaseComponent } from '../../../utilities';
 
-class Menu extends React.Component {
+class Menu extends BaseComponent {
   render () {
     return (
       <nav className='menu'>
