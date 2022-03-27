@@ -3,7 +3,6 @@ import '../styles/Info.scss';
 import { InfoBlock } from '../../../components';
 import HeliumAPI from '../../../api/HeliumAPI';
 import { toast } from 'react-toastify';
-import PropTypes from 'prop-types';
 import { BaseComponent } from '../../../utilities';
 import DataTable from 'react-data-table-component';
 import NumberFormat from 'react-number-format';
@@ -13,6 +12,7 @@ class Info extends BaseComponent {
     super(props);
 
     this.state = {
+      data: [],
       loaded: false
     };
 
@@ -41,9 +41,7 @@ class Info extends BaseComponent {
       HeliumAPI.getRichestAccounts(),
       HeliumAPI.getStatsForValidators()
     ]).then(res => {
-      console.log(res[1].data.data);
-
-      const generalInfo = {
+      const data = {
         hotspots: {
           total: res[0].data.data.counts.hotspots,
           online: res[0].data.data.counts.hotspots_online,
@@ -63,9 +61,7 @@ class Info extends BaseComponent {
         }
       };
 
-      return this.props.setGeneralInfo(generalInfo);
-    }).then(() => {
-      this.updateState({ loaded: true });
+      return this.updateState({ data, loaded: true });
     }).catch(err => {
       console.error(err);
 
@@ -76,6 +72,19 @@ class Info extends BaseComponent {
   }
 
   render () {
+    if (!this.state.loaded) {
+      return (
+        <section className='info route-section'>
+          <div className='preload show-preloader'>
+            <div className='preload-circle'>
+              <div />
+              <div />
+            </div>
+          </div>
+        </section>
+      );
+    }
+
     return (
       <section className='info route-section'>
         <div className='container-fluid'>
@@ -84,16 +93,16 @@ class Info extends BaseComponent {
           </div>
           <div className='row'>
             <div className='col-2'>
-              <InfoBlock className='decor' title='Block height' number={this.props.generalInfo.blockHeight} />
+              <InfoBlock className='decor' title='Block height' number={this.state.data.blockHeight} />
             </div>
             <div className='col-2'>
-              <InfoBlock title='Hotspots total' number={this.props.generalInfo.hotspots.total} />
+              <InfoBlock title='Hotspots total' number={this.state.data.hotspots.total} />
             </div>
             <div className='col-2'>
-              <InfoBlock title='Hotspots online' number={this.props.generalInfo.hotspots.online} />
+              <InfoBlock title='Hotspots online' number={this.state.data.hotspots.online} />
             </div>
             <div className='col-2'>
-              <InfoBlock title='Hotspots dataonly' number={this.props.generalInfo.hotspots.dataonly} />
+              <InfoBlock title='Hotspots dataonly' number={this.state.data.hotspots.dataonly} />
             </div>
           </div>
           <div className='row'>
@@ -101,10 +110,10 @@ class Info extends BaseComponent {
           </div>
           <div className='row'>
             <div className='col-2'>
-              <InfoBlock title='Countries' number={this.props.generalInfo.geolocation.countries} />
+              <InfoBlock title='Countries' number={this.state.data.geolocation.countries} />
             </div>
             <div className='col-2'>
-              <InfoBlock title='Cities' number={this.props.generalInfo.geolocation.cities} />
+              <InfoBlock title='Cities' number={this.state.data.geolocation.cities} />
             </div>
           </div>
           <div className='row'>
@@ -112,19 +121,19 @@ class Info extends BaseComponent {
           </div>
           <div className='row'>
             <div className='col-2'>
-              <InfoBlock title='Active validators' number={this.props.generalInfo.validators.active} />
+              <InfoBlock title='Active validators' number={this.state.data.validators.active} />
             </div>
             <div className='col-2'>
-              <InfoBlock title='Staked validators' number={this.props.generalInfo.validators.staked.count} />
+              <InfoBlock title='Staked validators' number={this.state.data.validators.staked.count} />
             </div>
             <div className='col-2'>
-              <InfoBlock title='Staked validators amount' number={this.props.generalInfo.validators.staked.amount / 1000000} suffix='M HNT' decimals={2} />
+              <InfoBlock title='Staked validators amount' number={this.state.data.validators.staked.amount / 1000000} suffix='M HNT' decimals={2} />
             </div>
             <div className='col-2'>
-              <InfoBlock title='Unstaked validators' number={this.props.generalInfo.validators.unstaked.count} />
+              <InfoBlock title='Unstaked validators' number={this.state.data.validators.unstaked.count} />
             </div>
             <div className='col-2'>
-              <InfoBlock title='Unstaked validators amount' number={this.props.generalInfo.validators.unstaked.amount} />
+              <InfoBlock title='Unstaked validators amount' number={this.state.data.validators.unstaked.amount} />
             </div>
           </div>
           <div className='row'>
@@ -133,7 +142,7 @@ class Info extends BaseComponent {
           <div className='row'>
             <DataTable
               columns={this.columns}
-              data={this.props.generalInfo.richestAccounts}
+              data={this.state.data.richestAccounts}
               pagination
               responsive
               striped
@@ -144,10 +153,5 @@ class Info extends BaseComponent {
     );
   }
 }
-
-Info.propTypes = {
-  generalInfo: PropTypes.object,
-  setGeneralInfo: PropTypes.func
-};
 
 export default Info;
