@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { BaseComponent } from '../../../utilities';
 import DataTable from 'react-data-table-component';
+import NumberFormat from 'react-number-format';
 
 class Info extends BaseComponent {
   constructor (props) {
@@ -16,9 +17,21 @@ class Info extends BaseComponent {
     };
 
     this.columns = [
-      { name: 'Address', selector: row => row.address, format: row => <a href={`https://explorer.helium.com/accounts/${row.address}`} target='_blank' rel='noreferrer noopener'>{row.address}</a> },
-      { name: 'Balance', selector: row => row.balance, sortable: true },
-      { name: 'Staked balance', selector: row => row.staked_balance, sortable: true }
+      {
+        name: 'Address',
+        selector: row => row.address,
+        format: row => <a href={`https://explorer.helium.com/accounts/${row.address}`} target='_blank' rel='noreferrer noopener'>{row.address}</a>
+      },
+      {
+        name: 'Balance',
+        selector: row => <NumberFormat value={row.balance} displayType='text' thousandSeparator=' ' suffix=' HNT' />,
+        sortable: true
+      },
+      {
+        name: 'Staked balance',
+        selector: row => <NumberFormat value={row.staked_balance} displayType='text' thousandSeparator=' ' suffix=' HNT' />,
+        sortable: true
+      }
     ];
   }
 

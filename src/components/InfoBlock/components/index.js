@@ -17,6 +17,7 @@ class InfoBlock extends BaseComponent {
             suffix={this.props.suffix || ''}
             duration={1}
             decimals={this.props.decimals || 0}
+            separator={' '}
           />
         </p>
       </div>
