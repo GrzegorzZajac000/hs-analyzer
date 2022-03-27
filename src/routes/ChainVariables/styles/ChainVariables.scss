@@ -1,0 +1,19 @@
+@import "../../../static/global-styles/variables";
+
+// VARIABLES
+$json-bg: #2b303b;
+
+.chain-variables {
+  &-object {
+    background-color: $json-bg;
+    border-radius: 16px;
+    margin-top: 20px;
+    padding: 16px;
+  }
+
+  h2 {
+    color: $light-font-color;
+    font-size: 26px;
+    font-weight: 700;
+  }
+}
