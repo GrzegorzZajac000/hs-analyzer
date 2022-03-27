@@ -13,7 +13,10 @@ class InfoBlock extends BaseComponent {
           <CountUp
             start={0}
             end={this.props.number}
+            prefix={this.props.prefix || ''}
+            suffix={this.props.suffix || ''}
             duration={1}
+            decimals={this.props.decimals || 0}
           />
         </p>
       </div>
@@ -24,7 +27,10 @@ class InfoBlock extends BaseComponent {
 InfoBlock.propTypes = {
   className: PropTypes.string,
   title: PropTypes.string,
-  number: PropTypes.number
+  number: PropTypes.number,
+  prefix: PropTypes.string,
+  suffix: PropTypes.string,
+  decimals: PropTypes.number
 };
 
 export default InfoBlock;

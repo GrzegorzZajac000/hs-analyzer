@@ -18,13 +18,14 @@
 
   h3 {
     color: $light-font-color;
-    font-size: px-to-rem(16);
+    font-size: px-to-rem(14);
     font-weight: 700;
     margin-bottom: 10px;
+    text-align: right;
   }
 
   p {
-    font-size: 32px;
+    font-size: px-to-rem(28);
     letter-spacing: .5px;
     text-align: right;
   }

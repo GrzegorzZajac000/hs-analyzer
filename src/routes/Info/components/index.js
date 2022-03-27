@@ -5,6 +5,7 @@ import HeliumAPI from '../../../api/HeliumAPI';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { BaseComponent } from '../../../utilities';
+import DataTable from 'react-data-table-component';
 
 class Info extends BaseComponent {
   constructor (props) {
@@ -13,16 +14,21 @@ class Info extends BaseComponent {
     this.state = {
       loaded: false
     };
+
+    this.columns = [
+      { name: 'Address', selector: row => row.address, format: row => <a href={`https://explorer.helium.com/accounts/${row.address}`} target='_blank' rel='noreferrer noopener'>{row.address}</a> },
+      { name: 'Balance', selector: row => row.balance, sortable: true },
+      { name: 'Staked balance', selector: row => row.staked_balance, sortable: true }
+    ];
   }
 
   componentDidMount () {
     return Promise.all([
-      HeliumAPI.getBlockchainStats()
-      // HeliumAPI.getRichestAccounts(),
-      // HeliumAPI.getRewardsTotal(),
-      // HeliumAPI.getDCBurnsTotal()
+      HeliumAPI.getBlockchainStats(),
+      HeliumAPI.getRichestAccounts(),
+      HeliumAPI.getStatsForValidators()
     ]).then(res => {
-      console.log(res);
+      console.log(res[1].data.data);
 
       const generalInfo = {
         hotspots: {
@@ -30,11 +36,17 @@ class Info extends BaseComponent {
           online: res[0].data.data.counts.hotspots_online,
           dataonly: res[0].data.data.counts.hotspots_dataonly
         },
-        validators: res[0].data.data.counts.validators,
         blockHeight: res[0].data.data.counts.blocks,
         geolocation: {
           countries: res[0].data.data.counts.countries,
           cities: res[0].data.data.counts.cities
+        },
+        richestAccounts: res[1].data.data,
+        validators: {
+          active: res[2].data.data.active,
+          cooldown: res[2].data.data.cooldown,
+          staked: res[2].data.data.staked,
+          unstaked: res[2].data.data.unstaked
         }
       };
 
@@ -59,6 +71,9 @@ class Info extends BaseComponent {
           </div>
           <div className='row'>
             <div className='col-2'>
+              <InfoBlock className='decor' title='Block height' number={this.props.generalInfo.blockHeight} />
+            </div>
+            <div className='col-2'>
               <InfoBlock title='Hotspots total' number={this.props.generalInfo.hotspots.total} />
             </div>
             <div className='col-2'>
@@ -66,12 +81,6 @@ class Info extends BaseComponent {
             </div>
             <div className='col-2'>
               <InfoBlock title='Hotspots dataonly' number={this.props.generalInfo.hotspots.dataonly} />
-            </div>
-            <div className='col-2'>
-              <InfoBlock title='Validators total' number={this.props.generalInfo.validators} />
-            </div>
-            <div className='col-2'>
-              <InfoBlock className='decor' title='Block height' number={this.props.generalInfo.blockHeight} />
             </div>
           </div>
           <div className='row'>
@@ -85,12 +94,38 @@ class Info extends BaseComponent {
               <InfoBlock title='Cities' number={this.props.generalInfo.geolocation.cities} />
             </div>
           </div>
-
-          {/*
-            Richest accounts
-            30 days rewards
-            30 days DC Burns
-           */}
+          <div className='row'>
+            <h2>Validators stats</h2>
+          </div>
+          <div className='row'>
+            <div className='col-2'>
+              <InfoBlock title='Active validators' number={this.props.generalInfo.validators.active} />
+            </div>
+            <div className='col-2'>
+              <InfoBlock title='Staked validators' number={this.props.generalInfo.validators.staked.count} />
+            </div>
+            <div className='col-2'>
+              <InfoBlock title='Staked validators amount' number={this.props.generalInfo.validators.staked.amount / 1000000} suffix='M HNT' decimals={2} />
+            </div>
+            <div className='col-2'>
+              <InfoBlock title='Unstaked validators' number={this.props.generalInfo.validators.unstaked.count} />
+            </div>
+            <div className='col-2'>
+              <InfoBlock title='Unstaked validators amount' number={this.props.generalInfo.validators.unstaked.amount} />
+            </div>
+          </div>
+          <div className='row'>
+            <h2>Richest accounts</h2>
+          </div>
+          <div className='row'>
+            <DataTable
+              columns={this.columns}
+              data={this.props.generalInfo.richestAccounts}
+              pagination
+              responsive
+              striped
+            />
+          </div>
         </div>
       </section>
     );
