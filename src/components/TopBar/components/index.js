@@ -42,6 +42,7 @@ class TopBar extends BaseComponent {
         <a className='dropdown-item' href={`https://app.hotspotty.net/hotspots/${this.props.hsList[this.props.currentHS].data.address}/status`} target='_blank' rel='noreferrer noopener'>Hotspotty</a>
         <a className='dropdown-item' href={`https://www.heliumtracker.io/hotspots/${this.props.hsList[this.props.currentHS].data.address}`} target='_blank' rel='noreferrer noopener'>HeliumTracker</a>
         <a className='dropdown-item' href={`https://etl.dewi.org/dashboard/7-hotspot-details?hotspot_address=${this.props.hsList[this.props.currentHS].data.address}&days=30`} target='_blank' rel='noreferrer noopener'>ETL dewi</a>
+        <a className='dropdown-item' href='https://dashboard.helium.com/' target='_blank' rel='noreferrer noopener'>Helium dashboard</a>
       </React.Fragment>
     );
   }
