@@ -1,7 +1,7 @@
 import axios from 'axios';
 import URLBuilder from '../utilities/URLBuilder';
-import * as rax from 'retry-axios';
 import cursorData from './cursorData';
+import retry from 'axios-retry-after';
 
 const instance = axios.create({
   baseURL: process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:3000/api' : 'https://api.helium.io',
@@ -9,13 +9,15 @@ const instance = axios.create({
   headers: { 'Cache-Control': 'max-age=60' }
 });
 
-instance.defaults.raxConfig = {
-  instance,
-  retry: 3,
-  retryDelay: 300000,
-  statusCodesToRetry: [[100, 199], [429, 429], [500, 599]]
-};
-rax.attach(instance);
+instance.interceptors.response.use(null, retry(instance, {
+  isRetryable (error) {
+    return (error.response && error.response.status === 429);
+  },
+
+  wait (error) {
+    return new Promise(resolve => setTimeout(resolve, error.response.data.come_back_in_ms / 100));
+  }
+}));
 
 const HeliumAPI = {
   // Stats
