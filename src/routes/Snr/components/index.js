@@ -74,6 +74,22 @@ class Snr extends BaseComponent {
       });
   }
 
+  componentDidUpdate (prevProps, prevState, snapshot) {
+    if (prevProps.currentHS !== this.props.currentHS) {
+      this.updateState({ loaded: false, data: [], dataLoadingLength: 0 }, () => {
+        this.getHSActivity()
+          .then(() => {})
+          .catch(err => {
+            console.error(err);
+
+            toast.error('Something went wrong with Helium API. Try one more time', {
+              theme: 'dark'
+            });
+          });
+      });
+    }
+  }
+
   getHSActivity () {
     return HeliumAPI.getHotspotActivity(
       this.props.hsList[this.props.currentHS].data.address,
