@@ -33,6 +33,9 @@
 
 /* stylelint-disable selector-class-pattern */
 .react-select {
+  position: relative;
+  z-index: 10001;
+
   .rs {
     &__control {
       background-color: $light-bg;
