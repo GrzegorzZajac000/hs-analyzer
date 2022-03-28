@@ -1,12 +1,44 @@
 import React from 'react';
 import '../styles/Snr.scss';
-import { BaseComponent } from '../../../utilities';
+import { BaseComponent, GetTimeAgo } from '../../../utilities';
 import PropTypes from 'prop-types';
 import HeliumAPI from '../../../api/HeliumAPI';
 import { toast } from 'react-toastify';
+import { getDistance } from 'geolib';
 import DataTable from 'react-data-table-component';
 
-const ExpandedComponent = ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>;
+const ExpandedComponent = ({ data }) => {
+  const rows = data.witnesses.map((w, i) => {
+    return (
+      <tr key={i}>
+        <td>{w.frequency}</td>
+        <td>{w.channel}</td>
+        <td>{w.signal}</td>
+        <td>{w.snr}</td>
+        <td>{w.signal - w.snr}</td>
+        <td>{GetTimeAgo(w.timestamp / 1000000)}</td>
+      </tr>
+    );
+  });
+
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>Frequency</th>
+          <th>Channel</th>
+          <th>Signal</th>
+          <th>SNR</th>
+          <th>Noise</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows}
+      </tbody>
+    </table>
+  );
+}
 
 ExpandedComponent.propTypes = {
   data: PropTypes.object
@@ -40,8 +72,25 @@ class Snr extends BaseComponent {
     this.columns = [
       {
         name: 'Address',
-        selector: row => row.address,
-        format: row => <a href={`https://explorer.helium.com/accounts/${row.address}`} target='_blank' rel='noreferrer noopener'>{row.address}</a>
+        selector: row => row.address
+      },
+      {
+        name: 'Distance',
+        selector: row => row,
+        format: row => {
+          const distance = getDistance(
+            { latitude: this.props.hsList[this.props.currentHS].data.lat, longitude: this.props.hsList[this.props.currentHS].data.lng },
+            { latitude: row.lat, longitude: row.lon }
+          );
+
+          return `~${(distance / 1000).toFixed(2)}km`;
+        }
+      },
+      {
+        name: 'Amount',
+        selector: row => row.witnesses,
+        format: row => row.witnesses.length,
+        sortable: true
       }
     ];
 
@@ -143,15 +192,23 @@ class Snr extends BaseComponent {
 
     return (
       <section className='snr route-section'>
-        <DataTable
-          columns={this.columns}
-          data={this.state.data}
-          pagination
-          responsive
-          striped
-          expandableRows
-          expandableRowsComponent={ExpandedComponent}
-        />
+        <div className='container-fluid'>
+          <div className='row'>
+            <div className='col-12'>
+              <h2>SNR Data</h2>
+              <DataTable
+                columns={this.columns}
+                data={this.state.data}
+                pagination
+                responsive
+                striped
+                sortable
+                expandableRows
+                expandableRowsComponent={ExpandedComponent}
+              />
+            </div>
+          </div>
+        </div>
       </section>
     );
   }

@@ -1,0 +1,11 @@
+@import "../../../static/global-styles/variables";
+@import "../../../static/global-styles/functions";
+
+.snr {
+  h2 {
+    color: $light-font-color;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+}

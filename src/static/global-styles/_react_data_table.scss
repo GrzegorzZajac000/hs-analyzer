@@ -1,3 +1,4 @@
+@use "sass:color";
 @import "variables";
 @import "functions";
 
@@ -24,6 +25,19 @@
     .rdt_TableRow {
       background-color: transparent;
 
+      > div {
+        > button {
+          background-color: $box-bg;
+          border-radius: 0;
+          color: $light-font-color;
+          transition: background-color .2s ease-in-out;
+
+          &:hover {
+            background-color: $decor-color;
+          }
+        }
+      }
+
       .rdt_TableCell {
         background-color: $light-bg;
         color: $light-font-color;
@@ -36,6 +50,46 @@
           &:active {
             color: $decor-color;
           }
+        }
+      }
+    }
+
+    .rdt_ExpanderRow {
+      background-color: $box-bg;
+      color: $light-font-color;
+      padding: 20px 20px 20px 50px;
+
+      table {
+        width: 100%;
+
+        tr {
+          &:last-of-type {
+            td {
+              border-bottom: 0;
+            }
+          }
+        }
+
+        th,
+        td {
+          padding: 5px;
+
+          &:first-of-type {
+            padding-left: 0;
+          }
+
+          &:last-of-type {
+            padding-right: 0;
+          }
+        }
+
+        th {
+          font-size: px-to-rem(16);
+        }
+
+        td {
+          border-bottom: 1px solid color.adjust($box-bg, $lightness: 10%);
+          font-size: px-to-rem(14);
         }
       }
     }
