@@ -67,7 +67,12 @@ class TopBar extends BaseComponent {
     this.handleHSRemoveHide();
 
     this.props.removeHSFromList(this.props.currentHS);
-    this.props.useHS(null);
+
+    if (this.props.hsList.length > 0) {
+      this.props.useHS(0);
+    } else {
+      this.props.useHS(null);
+    }
   }
 
   render () {
