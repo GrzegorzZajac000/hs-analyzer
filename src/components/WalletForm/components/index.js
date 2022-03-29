@@ -14,9 +14,9 @@ class WalletForm extends BaseComponent {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  validate (values) {
+  async validate (values) {
     const addressExp = /^[a-zA-Z0-9]{40,60}$/;
-    const errors = {};
+    let errors = {};
 
     if (!values.wallet) {
       errors.wallet = 'Ooops! Your wallet is required';
@@ -25,65 +25,55 @@ class WalletForm extends BaseComponent {
       errors.wallet = 'Your wallet address is wrong. Check it one more time';
       return errors;
     } else {
-      return HeliumAPI.getAccountForAddress(values.wallet)
-        .then(account => {
-          if (!account || !account.data || !account.data.data || !account.data.data.address || account.data.data.address !== values.wallet) {
-            errors.wallet = 'Your wallet address is wrong. Check it one more time';
-          }
-
-          return HeliumAPI.getHotspotsForAccount(values.wallet);
-        })
+      errors = await HeliumAPI.getHotspotsForAccount(values.wallet)
         .then(hses => {
-          if (!hses || !hses.data || !hses.data.data || hses.data.data.length < 1) {
+          if (!hses || hses.length < 1) {
             errors.wallet = 'There are no hotspots on this wallet';
           }
 
           return errors;
         })
-        .catch(err => {
-          console.error(err);
-
-          toast.error('Something went wrong with Helium API. Try one more time', {
-            theme: 'dark'
-          });
+        .catch(() => {
+          errors.wallet = 'Something went wrong with Helium API. Try one more time';
+          return errors;
         });
     }
   }
 
   handleSubmit (values) {
     return HeliumAPI.getHotspotsForAccount(values.wallet)
-      .then(hses => hses.data.data.map(res => {
-        const hs = {};
-
-        if (!res || !res.address) {
-          toast.error('HS from list doesn\'t have an hotspot address. Helium API Error', { theme: 'dark' });
-
-          return false;
+      .then(hses => {
+        if (!hses || hses.length <= 0) {
+          toast.error('This wallet doesn\'t have any connected hotspots', { theme: 'dark' });
+          return Promise.reject(new Error('This wallet doesn\'t have any connected hotspots'));
         }
 
-        let hsList = this.props.hsList;
-        hsList = hsList.filter(hs => hs.value === res.address);
+        return hses.map(res => {
+          const hs = {};
 
-        if (hsList.length > 0) {
-          toast.error(`Ooops! Hotspot ${hsList[0].label} is on the list`, { theme: 'dark' });
-          return false;
-        }
+          if (!res || !res.address) {
+            toast.error('HS from list doesn\'t have an hotspot address. Helium API Error', { theme: 'dark' });
+            return Promise.reject(new Error('HS from list doesn\'t have an hotspot address. Helium API Error'));
+          }
 
-        hs.value = res.address;
-        hs.label = HSName.toView(res.name);
-        hs.data = res;
+          let hsList = this.props.hsList;
+          hsList = hsList.filter(hs => hs.value === res.address);
 
-        return this.props.addHSToList(hs);
-      }))
+          if (hsList.length > 0) {
+            toast.error(`Ooops! Hotspot ${hsList[0].label} is on the list`, { theme: 'dark' });
+            return Promise.reject(new Error(`Ooops! Hotspot ${hsList[0].label} is on the list`));
+          }
+
+          hs.value = res.address;
+          hs.label = HSName.toView(res.name);
+          hs.data = res;
+
+          return this.props.addHSToList(hs);
+        });
+      })
       .then(() => this.props.hideHSModal())
       .then(() => this.props.useHS(this.props.hsList.length - 1))
-      .catch(err => {
-        console.error(err);
-
-        toast.error('Something went wrong with Helium API. Try one more time', {
-          theme: 'dark'
-        });
-      });
+      .catch(() => {});
   }
 
   render () {
