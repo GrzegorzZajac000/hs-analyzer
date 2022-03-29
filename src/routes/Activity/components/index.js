@@ -108,7 +108,7 @@ class Activity extends BaseComponent {
         return (
           <div className='activity-item-desc-block' key={i}>
             <p>{rewardTitle}</p>
-            <h6>{reward.amount / 10000000} HNT</h6>
+            <h6>{reward.amount / 100000000} HNT</h6>
           </div>
         );
       })
