@@ -14,7 +14,11 @@ $preload-color: #cef;
   transition: opacity .4s ease-in-out, visibility 0s .4s;
   visibility: hidden;
   width: 100vw;
-  z-index: 10000;
+  z-index: 9996;
+
+  &.app-preload {
+    z-index: 9999;
+  }
 
   &.show-preloader {
     opacity: 1;

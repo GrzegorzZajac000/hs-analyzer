@@ -2,6 +2,8 @@
 @import "./functions";
 
 .modal {
+  z-index: 9998;
+
   &-content {
     background-color: $light-bg;
     border: 0;
