@@ -30,6 +30,9 @@ class Menu extends BaseComponent {
           <li className={(Number.isInteger(this.props.currentHS) && this.props.currentHS >= 0) ? '' : 'disabled'}>
             <MenuLink to='/snr'>SNR Data</MenuLink>
           </li>
+          <li className={(Number.isInteger(this.props.currentHS) && this.props.currentHS >= 0) ? '' : 'disabled'}>
+            <MenuLink to='/connectivity'>Connectivity</MenuLink>
+          </li>
           <li>
             <MenuLink to='/donate'>Donate</MenuLink>
           </li>
