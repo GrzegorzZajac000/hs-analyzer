@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { ConfirmModal, HSInfoModal } from '../../index';
 import { BaseComponent, isCurrentHS, getOptionLabel } from '../../../utilities';
+import { toast } from 'react-toastify';
 
 class TopBar extends BaseComponent {
   constructor (props) {
@@ -73,6 +74,8 @@ class TopBar extends BaseComponent {
     } else {
       this.props.useHS(null);
     }
+
+    toast.success('HS removed!', { theme: 'dark' });
   }
 
   render () {

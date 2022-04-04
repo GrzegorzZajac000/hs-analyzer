@@ -46,11 +46,7 @@ class Connectivity extends BaseComponent {
         })
         .catch(err => {
           console.error(err);
-
-          toast.error('Something went wrong with Helium API. Try one more time', {
-            theme: 'dark'
-          });
-
+          toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
           this.updateState({ loading: false });
         });
     });
@@ -72,11 +68,7 @@ class Connectivity extends BaseComponent {
         })
         .catch(err => {
           console.error(err);
-
-          toast.error('Something went wrong with Helium API. Try one more time', {
-            theme: 'dark'
-          });
-
+          toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
           this.updateState({ loading: false });
         });
     });
@@ -107,10 +99,7 @@ class Connectivity extends BaseComponent {
         .catch(err => {
           console.error(err);
           this.updateState({ loading: false });
-
-          toast.error('Something went wrong with Helium API. Try one more time', {
-            theme: 'dark'
-          });
+          toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
         });
     });
   }

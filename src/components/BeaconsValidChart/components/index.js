@@ -28,10 +28,7 @@ class BeaconsValidChart extends BaseComponent {
       .then(this.generateData)
       .catch(err => {
         console.error(err);
-
-        toast.error('Something went wrong with Helium API. Try one more time', {
-          theme: 'dark'
-        });
+        toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
       })
   }
 

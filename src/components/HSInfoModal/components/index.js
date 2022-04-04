@@ -33,14 +33,13 @@ class HSInfoModal extends BaseComponent {
         })
         .then(() => {
           this.updateState({ refreshing: false });
+          toast.success('HS info updated!', { theme: 'dark' });
         })
         .catch(err => {
           console.error(err);
           this.updateState({ refreshing: false });
 
-          toast.error('Something went wrong with Helium API. Try one more time', {
-            theme: 'dark'
-          });
+          toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
         });
     });
   }
