@@ -50,7 +50,7 @@ class App extends React.Component {
               </div>
 
               <ToastContainer
-                position='top-right'
+                position='bottom-right'
                 autoClose={5000}
                 newestOnTop
                 closeOnClick
