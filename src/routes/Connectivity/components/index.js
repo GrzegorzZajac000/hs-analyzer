@@ -1,8 +1,10 @@
 import React from 'react';
 import '../styles/Connectivity.scss';
-import { BaseComponent } from '../../../utilities';
+import { BaseComponent, HSName } from '../../../utilities';
 import ConnectivityAPI from '../../../api/ConnectivityAPI';
 import { toast } from 'react-toastify';
+import HeliumAPI from '../../../api/HeliumAPI';
+import PropTypes from 'prop-types';
 
 class Connectivity extends BaseComponent {
   constructor (props) {
@@ -18,6 +20,7 @@ class Connectivity extends BaseComponent {
     this.generateListenAddresses = this.generateListenAddresses.bind(this);
     this.checkPortState = this.checkPortState.bind(this);
     this.ping = this.ping.bind(this);
+    this.refreshInfo = this.refreshInfo.bind(this);
   }
 
   checkPortState (host, port) {
@@ -72,6 +75,39 @@ class Connectivity extends BaseComponent {
     });
   }
 
+  refreshInfo () {
+    const hs = this.props.hsList[this.props.currentHS];
+
+    this.updateState({
+      loading: true,
+      textarea: `${this.state.textarea}\r\n${new Date().toISOString().substring(0, 19).replace('T', ' ')} Refreshing info for ${HSName.toView(hs.data.name)}...`
+    }, () => {
+      return HeliumAPI.getHotspotForAddress(hs.value)
+        .then(res => {
+          const hsObj = {};
+          hsObj.value = res.data.data.address;
+          hsObj.label = HSName.toView(res.data.data.name);
+          hsObj.data = res.data.data;
+
+          return this.props.updateHS(hsObj, this.props.currentHS);
+        })
+        .then(() => {
+          this.updateState({
+            loading: false,
+            textarea: `${this.state.textarea}\r\n${new Date().toISOString().substring(0, 19).replace('T', ' ')} Refreshing info done for ${HSName.toView(hs.data.name)}`
+          });
+        })
+        .catch(err => {
+          console.error(err);
+          this.updateState({ loading: false });
+
+          toast.error('Something went wrong with Helium API. Try one more time', {
+            theme: 'dark'
+          });
+        });
+    });
+  }
+
   generateListenAddresses () {
     const listenAddressRegex = /^\/ip4\/(.*)\/tcp\/(.*)/;
 
@@ -97,6 +133,7 @@ class Connectivity extends BaseComponent {
               <div className='col-6 connectivity-address-buttons'>
                 <button className='btn btn-decor btn-lg' onClick={() => this.checkPortState(ip, port)} disabled={this.state.loading}>Check port state</button>
                 <button className='btn btn-decor btn-lg' onClick={() => this.ping(ip)} disabled={this.state.loading}>Ping</button>
+                <button className='btn btn-warning btn-lg' onClick={() => this.refreshInfo()} disabled={this.state.loading}>Refresh Hotspot Info</button>
               </div>
             </div>
           </div>
@@ -118,5 +155,9 @@ class Connectivity extends BaseComponent {
     );
   }
 }
+
+Connectivity.propTypes = {
+  updateHS: PropTypes.func
+};
 
 export default Connectivity;

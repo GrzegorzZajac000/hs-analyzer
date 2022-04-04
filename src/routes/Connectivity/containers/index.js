@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Connectivity from '../components';
+import { updateHS } from '../../../modules/siteReducer';
 
 class ConnectivityContainer extends Component {
   render () {
@@ -10,7 +11,9 @@ class ConnectivityContainer extends Component {
   }
 }
 
-const mapActionCreators = {};
+const mapActionCreators = {
+  updateHS
+};
 
 const mapStateToProps = state => {
   return {
