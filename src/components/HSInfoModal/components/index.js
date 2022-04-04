@@ -4,8 +4,47 @@ import Modal from 'react-bootstrap/Modal';
 import PropTypes from 'prop-types';
 import { X } from 'react-bootstrap-icons';
 import { BaseComponent, HSName, isCurrentHS } from '../../../utilities';
+import HeliumAPI from '../../../api/HeliumAPI';
+import { toast } from 'react-toastify';
 
 class HSInfoModal extends BaseComponent {
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      refreshing: false
+    };
+
+    this.refreshInfo = this.refreshInfo.bind(this);
+  }
+
+  refreshInfo () {
+    const hs = this.props.hsList[this.props.currentHS];
+
+    this.updateState({ refreshing: true }, () => {
+      return HeliumAPI.getHotspotForAddress(hs.value)
+        .then(res => {
+          const hsObj = {};
+          hsObj.value = res.data.data.address;
+          hsObj.label = HSName.toView(res.data.data.name);
+          hsObj.data = res.data.data;
+
+          return this.props.updateHS(hsObj, this.props.currentHS);
+        })
+        .then(() => {
+          this.updateState({ refreshing: false });
+        })
+        .catch(err => {
+          console.error(err);
+          this.updateState({ refreshing: false });
+
+          toast.error('Something went wrong with Helium API. Try one more time', {
+            theme: 'dark'
+          });
+        });
+    });
+  }
+
   renderLocation (hsInfo) {
     if (!hsInfo || !hsInfo.geocode || !hsInfo.geocode.long_city || !hsInfo.geocode.long_country || !hsInfo.geocode.long_street) {
       return '-';
@@ -46,6 +85,10 @@ class HSInfoModal extends BaseComponent {
 
         <h2>{HSName.toView(hsInfo.name)}</h2>
         <h3>{hsInfo.address}</h3>
+
+        <div className='hs-info-modal-refresh'>
+          <button className='btn btn-warning btn-sm' onClick={() => this.refreshInfo()} disabled={this.state.refreshing}>Refresh HS Info</button>
+        </div>
 
         <table>
           <tbody>
@@ -104,7 +147,8 @@ HSInfoModal.propTypes = {
   show: PropTypes.bool,
   onHide: PropTypes.func,
   hsList: PropTypes.array,
-  currentHS: PropTypes.number
+  currentHS: PropTypes.number,
+  updateHS: PropTypes.func
 };
 
 export default HSInfoModal;
