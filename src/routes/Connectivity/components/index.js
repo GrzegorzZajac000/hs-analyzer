@@ -11,6 +11,7 @@ class Connectivity extends BaseComponent {
     super(props);
 
     this.state = {
+      correctIPAddress: false,
       loading: false,
       textarea: 'Ready for connectivity test...\r\n=========================================================='
     };
@@ -21,6 +22,12 @@ class Connectivity extends BaseComponent {
     this.checkPortState = this.checkPortState.bind(this);
     this.ping = this.ping.bind(this);
     this.refreshInfo = this.refreshInfo.bind(this);
+  }
+
+  componentDidUpdate (prevProps, prevState, snapshot) {
+    if (prevProps.currentHS !== this.props.currentHS) {
+      this.updateState({ textarea: 'Ready for connectivity test...\r\n==========================================================' });
+    }
   }
 
   checkPortState (host, port) {
@@ -111,9 +118,19 @@ class Connectivity extends BaseComponent {
   generateListenAddresses () {
     const listenAddressRegex = /^\/ip4\/(.*)\/tcp\/(.*)/;
 
-    return this.props.hsList[this.props.currentHS].data.status.listen_addrs.filter(la => {
+    const ipAdresses = this.props.hsList[this.props.currentHS].data.status.listen_addrs.filter(la => {
       return listenAddressRegex.test(la);
-    }).map((addr, i) => {
+    });
+
+    if (ipAdresses.length <= 0) {
+      return (
+        <div className='alert alert-danger'>
+          <strong>No IPv4 listen addresses found</strong>
+        </div>
+      );
+    }
+
+    return ipAdresses.map((addr, i) => {
       const [, ip, port] = listenAddressRegex.exec(addr);
 
       return (
