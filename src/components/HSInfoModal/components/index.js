@@ -6,6 +6,7 @@ import { X } from 'react-bootstrap-icons';
 import { BaseComponent, HSName, isCurrentHS } from '../../../utilities';
 import HeliumAPI from '../../../api/HeliumAPI';
 import { toast } from 'react-toastify';
+import { FormButton } from '../../';
 
 class HSInfoModal extends BaseComponent {
   constructor (props) {
@@ -86,7 +87,7 @@ class HSInfoModal extends BaseComponent {
         <h3>{hsInfo.address}</h3>
 
         <div className='hs-info-modal-refresh'>
-          <button className='btn btn-warning btn-sm' onClick={() => this.refreshInfo()} disabled={this.state.refreshing}>Refresh HS Info</button>
+          <FormButton className='btn btn-warning btn-sm' onClick={() => this.refreshInfo()} disabled={this.state.refreshing}>Refresh HS Info</FormButton>
         </div>
 
         <table>

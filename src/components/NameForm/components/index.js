@@ -5,6 +5,7 @@ import AsyncSelect from 'react-select/async';
 import HeliumAPI from '../../../api/HeliumAPI';
 import PropTypes from 'prop-types';
 import { BaseComponent, HSName, getOptionLabel } from '../../../utilities';
+import { FormButton } from '../../';
 
 class NameForm extends BaseComponent {
   constructor (props) {
@@ -96,13 +97,13 @@ class NameForm extends BaseComponent {
               </Field>
             </div>
             <div className='config-form-submit'>
-              <button
+              <FormButton
                 className='btn btn-md btn-decor'
                 type='submit'
                 disabled={submitting}
               >
                 Submit
-              </button>
+              </FormButton>
             </div>
           </form>
         )}

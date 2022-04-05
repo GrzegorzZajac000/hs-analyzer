@@ -1,0 +1,155 @@
+@import "../../../static/global-styles/variables";
+@import "../../../static/global-styles/functions";
+
+.form-button {
+  position: relative;
+
+  &.btn-sm {
+    .form-button-loader-spinner {
+      height: 28px;
+
+      div {
+        top: 9px;
+      }
+    }
+  }
+
+  &.btn-md {
+    .form-button-loader-spinner {
+      height: 38px;
+
+      div {
+        top: 14px;
+      }
+    }
+  }
+
+  &.btn-lg {
+    .form-button-loader-spinner {
+      height: 48px;
+
+      div {
+        top: 19px;
+      }
+    }
+  }
+
+  &.btn-xl {
+    .form-button-loader-spinner {
+      height: 56px;
+
+      div {
+        top: 23px;
+      }
+    }
+  }
+
+  &.btn-decor {
+    .form-button-loader-spinner {
+      div {
+        background: $dark-decor-color;
+        box-shadow: rgba($dark-decor-color, .5) 2px 2px 2px 0;
+      }
+    }
+  }
+
+  &.btn-warning {
+    .form-button-loader-spinner {
+      div {
+        background: $dark-warning;
+        box-shadow: rgba($dark-warning, .5) 2px 2px 2px 0;
+      }
+    }
+  }
+
+  &.btn-danger {
+    .form-button-loader-spinner {
+      div {
+        background: $dark-danger;
+        box-shadow: rgba($dark-danger, .5) 2px 2px 2px 0;
+      }
+    }
+  }
+
+  &-children {
+    display: inline;
+  }
+
+  &-loader {
+    display: none;
+  }
+
+  &[disabled] {
+    .form-button-children {
+      display: none;
+    }
+
+    .form-button-loader {
+      display: inline;
+
+      .form-button-loader-spinner {
+        display: inline-block;
+        position: relative;
+        width: 80px;
+
+        div {
+          position: absolute;
+          width: 13px;
+          height: 13px;
+          border-radius: 50%;
+          animation-timing-function: cubic-bezier(0, 1, 1, 0);
+
+          &:nth-child(1) {
+            left: 8px;
+            animation: form-button-loader-spinner1 .6s infinite;
+          }
+
+          &:nth-child(2) {
+            left: 8px;
+            animation: form-button-loader-spinner2 .6s infinite;
+          }
+
+          &:nth-child(3) {
+            left: 32px;
+            animation: form-button-loader-spinner2 .6s infinite;
+          }
+
+          &:nth-child(4) {
+            left: 56px;
+            animation: form-button-loader-spinner3 .6s infinite;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes form-button-loader-spinner1 {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes form-button-loader-spinner3 {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes form-button-loader-spinner2 {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(24px, 0);
+  }
+}

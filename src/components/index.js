@@ -4,6 +4,7 @@ import BeaconsValidChart from './BeaconsValidChart';
 import ConfirmModal from './ConfirmModal';
 import DayModal from './DayModal';
 import DonateAddress from './DonateAddress';
+import FormButton from './FormButton';
 import HSInfoModal from './HSInfoModal';
 import HSModal from './HSModal';
 import InfoBlock from './InfoBlock';
@@ -21,6 +22,7 @@ export {
   ConfirmModal,
   DayModal,
   DonateAddress,
+  FormButton,
   HSInfoModal,
   HSModal,
   InfoBlock,

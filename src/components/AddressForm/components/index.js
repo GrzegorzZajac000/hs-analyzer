@@ -5,6 +5,7 @@ import HeliumAPI from '../../../api/HeliumAPI';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { BaseComponent, HSName } from '../../../utilities';
+import { FormButton } from '../../';
 
 class AddressForm extends BaseComponent {
   constructor (props) {
@@ -69,13 +70,13 @@ class AddressForm extends BaseComponent {
               </Field>
             </div>
             <div className='config-form-submit'>
-              <button
+              <FormButton
                 className='btn btn-md btn-decor'
                 type='submit'
                 disabled={submitting}
               >
                 Submit
-              </button>
+              </FormButton>
             </div>
           </form>
         )}
