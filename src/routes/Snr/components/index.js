@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { getDistance } from 'geolib';
 import DataTable from 'react-data-table-component';
 import ExpandedComponent from './ExpandedComponent';
+import { Navigate } from 'react-router-dom';
 
 class Snr extends BaseComponent {
   constructor (props) {
@@ -72,7 +73,9 @@ class Snr extends BaseComponent {
   }
 
   componentDidUpdate (prevProps, prevState, snapshot) {
-    if (prevProps.currentHS !== this.props.currentHS) {
+    if (prevProps.currentHS !== this.props.currentHS && this.props.currentHS === null) {
+      this.updateState({ loaded: false, data: [], dataLoadingLength: 0 });
+    } else if (prevProps.currentHS !== this.props.currentHS && !!this.props.currentHS) {
       this.updateState({ loaded: false, data: [], dataLoadingLength: 0 }, () => {
         this.getHSActivity()
           .then(() => {})
@@ -162,6 +165,10 @@ class Snr extends BaseComponent {
           </div>
         </section>
       );
+    }
+
+    if (this.props.currentHS === null) {
+      return <Navigate to='/' />;
     }
 
     return (

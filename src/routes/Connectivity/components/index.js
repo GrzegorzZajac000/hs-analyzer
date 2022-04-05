@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import HeliumAPI from '../../../api/HeliumAPI';
 import PropTypes from 'prop-types';
 import { FormButton } from '../../../components';
+import { Navigate } from 'react-router-dom';
 
 class Connectivity extends BaseComponent {
   constructor (props) {
@@ -26,7 +27,9 @@ class Connectivity extends BaseComponent {
   }
 
   componentDidUpdate (prevProps, prevState, snapshot) {
-    if (prevProps.currentHS !== this.props.currentHS) {
+    if (prevProps.currentHS !== this.props.currentHS && this.props.currentHS === null) {
+      this.updateState({ textarea: 'Ready for connectivity test...\r\n==========================================================' });
+    } else if (prevProps.currentHS !== this.props.currentHS && !!this.props.currentHS) {
       this.updateState({ textarea: 'Ready for connectivity test...\r\n==========================================================' });
     }
   }
@@ -150,6 +153,10 @@ class Connectivity extends BaseComponent {
   }
 
   render () {
+    if (this.props.currentHS === null) {
+      return <Navigate to='/' />;
+    }
+
     return (
       <section className='connectivity route-section'>
         {this.generateListenAddresses()}
@@ -164,7 +171,9 @@ class Connectivity extends BaseComponent {
 }
 
 Connectivity.propTypes = {
-  updateHS: PropTypes.func
+  updateHS: PropTypes.func,
+  hsList: PropTypes.array,
+  currentHS: PropTypes.number
 };
 
 export default Connectivity;

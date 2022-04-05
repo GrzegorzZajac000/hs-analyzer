@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { BeaconsChart, BeaconsValidChart, RSSIChart, WitnessInvalids } from '../../../components';
 import { BaseComponent } from '../../../utilities';
+import { Navigate } from 'react-router-dom';
 
 class Rssi extends BaseComponent {
   constructor (props) {
@@ -60,7 +61,9 @@ class Rssi extends BaseComponent {
   }
 
   componentDidUpdate (prevProps, prevState, snapshot) {
-    if (prevProps.currentHS !== this.props.currentHS) {
+    if (prevProps.currentHS !== this.props.currentHS && this.props.currentHS === null) {
+      this.updateState({ loaded: false, activityBeacon: [], witnessedBeacon: [], dataLoadingLength: 0 });
+    } else if (prevProps.currentHS !== this.props.currentHS && !!this.props.currentHS) {
       this.updateState({ loaded: false, activityBeacon: [], witnessedBeacon: [], dataLoadingLength: 0 }, () => {
         Promise.all([
           this.getHSActivity(),
@@ -153,6 +156,10 @@ class Rssi extends BaseComponent {
           </div>
         </section>
       );
+    }
+
+    if (this.props.currentHS === null) {
+      return <Navigate to='/' />;
     }
 
     return (

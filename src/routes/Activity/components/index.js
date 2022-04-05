@@ -7,6 +7,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { toast } from 'react-toastify';
 import { getDistance } from 'geolib';
 import { CashCoin, Eye, Send, BroadcastPin, Truck, ConeStriped } from 'react-bootstrap-icons';
+import { Navigate } from 'react-router-dom';
 
 class Activity extends BaseComponent {
   constructor (props) {
@@ -41,7 +42,9 @@ class Activity extends BaseComponent {
   }
 
   componentDidUpdate (prevProps, prevState, snapshot) {
-    if (prevProps.currentHS !== this.props.currentHS) {
+    if (prevProps.currentHS !== this.props.currentHS && this.props.currentHS === null) {
+      this.updateState({ loaded: false, activityData: [], dataLoadingLength: 0 });
+    } else if (prevProps.currentHS !== this.props.currentHS && !!this.props.currentHS) {
       this.updateState({ loaded: false, activityData: [], dataLoadingLength: 0 }, () => {
         this.getHSActivity();
       });
@@ -282,6 +285,10 @@ class Activity extends BaseComponent {
           </div>
         </section>
       );
+    }
+
+    if (this.props.currentHS === null) {
+      return <Navigate to='/' />;
     }
 
     return (
