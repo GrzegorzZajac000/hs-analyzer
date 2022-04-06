@@ -2,6 +2,7 @@ import AddressForm from './AddressForm';
 import BeaconsChart from './BeaconsChart';
 import BeaconsValidChart from './BeaconsValidChart';
 import ConfirmModal from './ConfirmModal';
+import DateConfigModal from './DateConfigModal';
 import DayModal from './DayModal';
 import DonateAddress from './DonateAddress';
 import FormButton from './FormButton';
@@ -20,6 +21,7 @@ export {
   BeaconsChart,
   BeaconsValidChart,
   ConfirmModal,
+  DateConfigModal,
   DayModal,
   DonateAddress,
   FormButton,

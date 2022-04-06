@@ -2,7 +2,7 @@ import React from 'react';
 import '../styles/TopBar.scss';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
-import { ConfirmModal, HSInfoModal } from '../../index';
+import { ConfirmModal, HSInfoModal, DateConfigModal } from '../../index';
 import { BaseComponent, isCurrentHS, getOptionLabel } from '../../../utilities';
 import { toast } from 'react-toastify';
 
@@ -12,11 +12,14 @@ class TopBar extends BaseComponent {
 
     this.state = {
       hsInfoModalShow: false,
-      removeModalShow: false
+      removeModalShow: false,
+      configDateModalShow: false
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.generateDropdown = this.generateDropdown.bind(this);
+    this.handleDateConfigClick = this.handleDateConfigClick.bind(this);
+    this.handleDateConfigHide = this.handleDateConfigHide.bind(this);
     this.handleHSInfoClick = this.handleHSInfoClick.bind(this);
     this.handleHSInfoHide = this.handleHSInfoHide.bind(this);
     this.handleHSRemoveClick = this.handleHSRemoveClick.bind(this);
@@ -46,6 +49,14 @@ class TopBar extends BaseComponent {
         <a className='dropdown-item' href='https://dashboard.helium.com/' target='_blank' rel='noreferrer noopener'>Helium dashboard</a>
       </React.Fragment>
     );
+  }
+
+  handleDateConfigClick () {
+    this.updateState({ configDateModalShow: true });
+  }
+
+  handleDateConfigHide () {
+    this.updateState({ configDateModalShow: false });
   }
 
   handleHSInfoClick () {
@@ -94,6 +105,7 @@ class TopBar extends BaseComponent {
             />
             <div className={'top-bar-left-hs-buttons' + (isCurrentHS(this.props.currentHS) ? '' : ' hidden')}>
               <button className='btn btn-sm btn-decor' onClick={this.handleHSInfoClick}>HS Info</button>
+              <button className='btn btn-sm btn-warning' onClick={this.handleDateConfigClick}>Date config</button>
               <button className='btn btn-sm btn-danger' onClick={this.handleHSRemoveClick}>Remove HS from list</button>
             </div>
           </div>
@@ -120,6 +132,7 @@ class TopBar extends BaseComponent {
         </section>
 
         <HSInfoModal show={this.state.hsInfoModalShow} onHide={this.handleHSInfoHide} />
+        <DateConfigModal show={this.state.configDateModalShow} onHide={this.handleDateConfigHide} />
         <ConfirmModal
           show={this.state.removeModalShow}
           onConfirm={this.handleHSRemoveConfirm}

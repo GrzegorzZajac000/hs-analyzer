@@ -1,0 +1,49 @@
+@import "../../../static/global-styles/variables";
+@import "../../../static/global-styles/functions";
+
+.date-config-modal {
+  .date-config-form {
+    &-days {
+      &-buttons {
+        display: flex;
+        flex-flow: wrap row;
+
+        .input-radio-button {
+          margin-right: 10px;
+
+          &:last-of-type {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+
+    &-days-custom {
+      margin-top: 5px;
+    }
+
+    &-buttons {
+      text-align: right;
+
+      button {
+        margin-left: 10px;
+
+        &:first-of-type {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+  h2 {
+    color: $light-font-color;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    color: $light-font-color;
+    font-size: px-to-rem(16);
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+}

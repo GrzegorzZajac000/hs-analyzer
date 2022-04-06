@@ -7,6 +7,9 @@ const UPDATE_HS = 'UPDATE_HS';
 const USE_HS = 'USE_HS';
 const SHOW_HS_MODAL = 'SHOW_HS_MODAL';
 const HIDE_HS_MODAL = 'HIDE_HS_MODAL';
+const SET_DATE_MODE = 'SET_DATE_MODE';
+const SET_MIN_TIME = 'SET_MIN_TIME';
+const SET_MAX_TIME = 'SET_MAX_TIME';
 
 export const setMobileMenuOpened = () => ({ type: SET_MOBILE_MENU_OPENED });
 export const setMobileMenuClosed = () => ({ type: SET_MOBILE_MENU_CLOSED });
@@ -17,13 +20,19 @@ export const updateHS = (hsObject, hsIndex) => ({ type: UPDATE_HS, hsObject, hsI
 export const useHS = hsIndex => ({ type: USE_HS, hsIndex });
 export const showHSModal = () => ({ type: SHOW_HS_MODAL });
 export const hideHSModal = () => ({ type: HIDE_HS_MODAL });
+export const setDateMode = dateMode => ({ type: SET_DATE_MODE, dateMode });
+export const setMinTime = minTime => ({ type: SET_MIN_TIME, minTime });
+export const setMaxTime = maxTime => ({ type: SET_MAX_TIME, maxTime });
 
 const initialState = {
   mobileMenuOpened: false,
   hsInfo: [],
   hsList: [],
   currentHS: null,
-  hsModal: false
+  hsModal: false,
+  dateMode: '7',
+  minTime: null,
+  maxTime: null
 };
 
 export default function counter (state = initialState, action) {
@@ -66,6 +75,15 @@ export default function counter (state = initialState, action) {
 
   case HIDE_HS_MODAL:
     return { ...state, hsModal: false };
+
+  case SET_DATE_MODE:
+    return { ...state, dateMode: action.dateMode };
+
+  case SET_MIN_TIME:
+    return { ...state, minTime: action.minTime };
+
+  case SET_MAX_TIME:
+    return { ...state, maxTime: action.maxTime };
 
   default:
     return state;
