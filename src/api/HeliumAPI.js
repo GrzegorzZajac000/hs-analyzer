@@ -15,7 +15,7 @@ instance.interceptors.response.use(null, retry(instance, {
   },
 
   wait (error) {
-    return new Promise(resolve => setTimeout(resolve, error.response.data.come_back_in_ms / 100));
+    return new Promise(resolve => setTimeout(resolve, error.response.data.come_back_in_ms / 50));
   }
 }));
 
