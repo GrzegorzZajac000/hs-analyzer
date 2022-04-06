@@ -11,16 +11,6 @@ class Rssi extends BaseComponent {
   constructor (props) {
     super(props);
 
-    let minTime = new Date().setDate(new Date().getDate() - 5);
-    minTime = new Date(minTime).setMinutes(0);
-    minTime = new Date(minTime).setSeconds(0);
-    minTime = new Date(minTime).setMilliseconds(0);
-
-    let maxTime = new Date().setHours(new Date().getHours() + 1);
-    maxTime = new Date(maxTime).setMinutes(0);
-    maxTime = new Date(maxTime).setSeconds(0);
-    maxTime = new Date(maxTime).setMilliseconds(0);
-
     this.state = {
       loaded: false,
       activityData: [],
@@ -29,8 +19,7 @@ class Rssi extends BaseComponent {
       dataLoadingLength: 0,
       earnings: [],
       config: {
-        min_time: new Date(minTime).toISOString(),
-        max_time: new Date(maxTime).toISOString(),
+        ...this.generateDateConfig(),
         filter_types: 'poc_receipts_v1'
       }
     };
@@ -38,6 +27,7 @@ class Rssi extends BaseComponent {
     this.getHSActivity = this.getHSActivity.bind(this);
     this.getEarnings = this.getEarnings.bind(this);
     this.handleDataLoadingUpdate = this.handleDataLoadingUpdate.bind(this);
+    this.generateDateConfig = this.generateDateConfig.bind(this);
   }
 
   componentDidMount () {
@@ -61,6 +51,32 @@ class Rssi extends BaseComponent {
   }
 
   componentDidUpdate (prevProps, prevState, snapshot) {
+    if (
+      prevProps.dateMode !== this.props.dateMode ||
+      prevProps.minTime !== this.props.minTime ||
+      prevProps.maxTime !== this.props.maxTime
+    ) {
+      this.updateState({ loaded: false, activityBeacon: [], witnessedBeacon: [], dataLoadingLength: 0, config: { ...this.generateDateConfig(), filter_types: 'poc_receipts_v1' } }, () => {
+        Promise.all([
+          this.getHSActivity(),
+          this.getEarnings()
+        ])
+          .then(res => {
+            return this.updateState({
+              sentBeacon: res[0].sentBeacon,
+              witnessedBeacon: res[0].witnessedBeacon,
+              activityData: res[0].activityData,
+              earnings: res[1],
+              loaded: true
+            });
+          })
+          .catch(err => {
+            console.error(err);
+            toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
+          });
+      });
+    }
+
     if (prevProps.currentHS !== this.props.currentHS && this.props.currentHS === null) {
       this.updateState({ loaded: false, activityBeacon: [], witnessedBeacon: [], dataLoadingLength: 0 });
     } else if (prevProps.currentHS !== this.props.currentHS && !!this.props.currentHS) {
@@ -84,6 +100,33 @@ class Rssi extends BaseComponent {
           });
       });
     }
+  }
+
+  generateDateConfig () {
+    let minTime, maxTime;
+
+    if (this.props.dateMode !== 'custom') {
+      const dateMode = parseInt(this.props.dateMode);
+
+      minTime = new Date().setDate(new Date().getDate() - dateMode - 1);
+      maxTime = new Date().setHours(new Date().getHours() + 1);
+    } else {
+      minTime = new Date(this.props.minTime).setMinutes(0);
+      maxTime = new Date(this.props.maxTime).setHours(new Date(this.props.maxTime).getHours() + 1);
+    }
+
+    minTime = new Date(minTime).setMinutes(0);
+    minTime = new Date(minTime).setSeconds(0);
+    minTime = new Date(minTime).setMilliseconds(0);
+
+    maxTime = new Date(maxTime).setMinutes(0);
+    maxTime = new Date(maxTime).setSeconds(0);
+    maxTime = new Date(maxTime).setMilliseconds(0);
+
+    return {
+      min_time: new Date(minTime).toISOString(),
+      max_time: new Date(maxTime).toISOString()
+    };
   }
 
   getHSActivity () {
@@ -187,7 +230,10 @@ class Rssi extends BaseComponent {
 
 Rssi.propTypes = {
   hsList: PropTypes.array,
-  currentHS: PropTypes.number
+  currentHS: PropTypes.number,
+  dateMode: PropTypes.string,
+  minTime: PropTypes.string,
+  maxTime: PropTypes.string
 };
 
 export default Rssi;

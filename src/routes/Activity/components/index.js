@@ -13,28 +13,16 @@ class Activity extends BaseComponent {
   constructor (props) {
     super(props);
 
-    let minTime = new Date().setDate(new Date().getDate() - 5);
-    minTime = new Date(minTime).setMinutes(0);
-    minTime = new Date(minTime).setSeconds(0);
-    minTime = new Date(minTime).setMilliseconds(0);
-
-    let maxTime = new Date().setHours(new Date().getHours() + 1);
-    maxTime = new Date(maxTime).setMinutes(0);
-    maxTime = new Date(maxTime).setSeconds(0);
-    maxTime = new Date(maxTime).setMilliseconds(0);
-
     this.state = {
       loaded: false,
       activityData: [],
       dataLoadingLength: 0,
-      config: {
-        min_time: new Date(minTime).toISOString(),
-        max_time: new Date(maxTime).toISOString()
-      }
+      config: this.generateDateConfig()
     };
 
     this.getHSActivity = this.getHSActivity.bind(this);
     this.handleDataLoadingUpdate = this.handleDataLoadingUpdate.bind(this);
+    this.generateDateConfig = this.generateDateConfig.bind(this);
   }
 
   componentDidMount () {
@@ -42,6 +30,16 @@ class Activity extends BaseComponent {
   }
 
   componentDidUpdate (prevProps, prevState, snapshot) {
+    if (
+      prevProps.dateMode !== this.props.dateMode ||
+      prevProps.minTime !== this.props.minTime ||
+      prevProps.maxTime !== this.props.maxTime
+    ) {
+      this.updateState({ loaded: false, activityData: [], dataLoadingLength: 0, config: this.generateDateConfig() }, () => {
+        this.getHSActivity();
+      });
+    }
+
     if (prevProps.currentHS !== this.props.currentHS && this.props.currentHS === null) {
       this.updateState({ loaded: false, activityData: [], dataLoadingLength: 0 });
     } else if (prevProps.currentHS !== this.props.currentHS && !!this.props.currentHS) {
@@ -49,6 +47,33 @@ class Activity extends BaseComponent {
         this.getHSActivity();
       });
     }
+  }
+
+  generateDateConfig () {
+    let minTime, maxTime;
+
+    if (this.props.dateMode !== 'custom') {
+      const dateMode = parseInt(this.props.dateMode);
+
+      minTime = new Date().setDate(new Date().getDate() - dateMode - 1);
+      maxTime = new Date().setHours(new Date().getHours() + 1);
+    } else {
+      minTime = new Date(this.props.minTime).setMinutes(0);
+      maxTime = new Date(this.props.maxTime).setHours(new Date(this.props.maxTime).getHours() + 1);
+    }
+
+    minTime = new Date(minTime).setMinutes(0);
+    minTime = new Date(minTime).setSeconds(0);
+    minTime = new Date(minTime).setMilliseconds(0);
+
+    maxTime = new Date(maxTime).setMinutes(0);
+    maxTime = new Date(maxTime).setSeconds(0);
+    maxTime = new Date(maxTime).setMilliseconds(0);
+
+    return {
+      min_time: new Date(minTime).toISOString(),
+      max_time: new Date(maxTime).toISOString()
+    };
   }
 
   handleDataLoadingUpdate (dataLoadingLength) {
@@ -317,7 +342,10 @@ class Activity extends BaseComponent {
 
 Activity.propTypes = {
   hsList: PropTypes.array,
-  currentHS: PropTypes.number
+  currentHS: PropTypes.number,
+  dateMode: PropTypes.string,
+  minTime: PropTypes.string,
+  maxTime: PropTypes.string
 };
 
 export default Activity;

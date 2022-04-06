@@ -15,7 +15,10 @@ const mapActionCreators = {};
 const mapStateToProps = state => {
   return {
     hsList: state.site.hsList,
-    currentHS: state.site.currentHS
+    currentHS: state.site.currentHS,
+    dateMode: state.site.dateMode,
+    minTime: state.site.minTime,
+    maxTime: state.site.maxTime
   };
 };
 
