@@ -10,7 +10,7 @@
   }
 
   &.active {
-    background-color: color.adjust($decor-color, $lightness: -20%);
+    background-color: color.adjust($decor-color, $lightness: -35%);
   }
 
   &:disabled {
