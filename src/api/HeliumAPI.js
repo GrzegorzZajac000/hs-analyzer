@@ -5,7 +5,7 @@ import retry from 'axios-retry-after';
 import rateLimit from 'axios-rate-limit';
 
 const instance = rateLimit(axios.create({
-  baseURL: process.env.NODE_ENV === 'development' ? 'https://api.hs-analyzer.com/api' : 'https://api.helium.io',
+  baseURL: process.env.NODE_ENV === 'development' ? 'http://127.0.0.1/api' : 'https://api.hs-analyzer.com/api',
   timeout: 120000,
   headers: {
     'Cache-Control': 'max-age=60',
@@ -14,7 +14,7 @@ const instance = rateLimit(axios.create({
     'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
     'Content-Type': 'application/json'
   }
-}), { maxRequests: 100, perMilliseconds: 60000 });
+}), { maxRequests: 1, perMilliseconds: 1001 });
 
 instance.interceptors.response.use(null, retry(instance, {
   isRetryable (error) {
@@ -23,7 +23,7 @@ instance.interceptors.response.use(null, retry(instance, {
   },
 
   wait (error) {
-    return new Promise(resolve => setTimeout(resolve, error.response.data.come_back_in_ms / 50 || 5000));
+    return new Promise(resolve => setTimeout(resolve, error.response.data.come_back_in_ms / 50 || 1001));
   }
 }));
 

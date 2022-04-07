@@ -6,6 +6,9 @@ import { toast } from 'react-toastify';
 import { BaseComponent } from '../../../utilities';
 import DataTable from 'react-data-table-component';
 import NumberFormat from 'react-number-format';
+import pLimit from 'p-limit';
+
+const limit = pLimit(1);
 
 class Info extends BaseComponent {
   constructor (props) {
@@ -37,9 +40,9 @@ class Info extends BaseComponent {
 
   componentDidMount () {
     return Promise.all([
-      HeliumAPI.getBlockchainStats(),
-      HeliumAPI.getRichestAccounts(),
-      HeliumAPI.getStatsForValidators()
+      limit(() => HeliumAPI.getBlockchainStats()),
+      limit(() => HeliumAPI.getRichestAccounts()),
+      limit(() => HeliumAPI.getStatsForValidators())
     ]).then(res => {
       const data = {
         hotspots: {

@@ -6,6 +6,9 @@ import PropTypes from 'prop-types';
 import { BeaconsChart, BeaconsValidChart, RSSIChart, WitnessInvalids } from '../../../components';
 import { BaseComponent } from '../../../utilities';
 import { Navigate } from 'react-router-dom';
+import pLimit from 'p-limit';
+
+const limit = pLimit(1);
 
 class Rssi extends BaseComponent {
   constructor (props) {
@@ -31,10 +34,12 @@ class Rssi extends BaseComponent {
   }
 
   componentDidMount () {
-    Promise.all([
-      this.getHSActivity(),
-      this.getEarnings()
-    ])
+    const promises = [
+      limit(() => this.getHSActivity()),
+      limit(() => this.getEarnings())
+    ];
+
+    Promise.all(promises)
       .then(res => {
         return this.updateState({
           sentBeacon: res[0].sentBeacon,
@@ -57,10 +62,12 @@ class Rssi extends BaseComponent {
       prevProps.maxTime !== this.props.maxTime
     ) {
       this.updateState({ loaded: false, activityBeacon: [], witnessedBeacon: [], dataLoadingLength: 0, config: { ...this.generateDateConfig(), filter_types: 'poc_receipts_v1' } }, () => {
-        Promise.all([
-          this.getHSActivity(),
-          this.getEarnings()
-        ])
+        const promises = [
+          limit(() => this.getHSActivity()),
+          limit(() => this.getEarnings())
+        ];
+
+        Promise.all(promises)
           .then(res => {
             return this.updateState({
               sentBeacon: res[0].sentBeacon,
@@ -81,10 +88,12 @@ class Rssi extends BaseComponent {
       this.updateState({ loaded: false, activityBeacon: [], witnessedBeacon: [], dataLoadingLength: 0 });
     } else if (prevProps.currentHS !== this.props.currentHS && !!this.props.currentHS) {
       this.updateState({ loaded: false, activityBeacon: [], witnessedBeacon: [], dataLoadingLength: 0 }, () => {
-        Promise.all([
-          this.getHSActivity(),
-          this.getEarnings()
-        ])
+        const promises = [
+          limit(() => this.getHSActivity()),
+          limit(() => this.getEarnings())
+        ];
+
+        Promise.all(promises)
           .then(res => {
             return this.updateState({
               sentBeacon: res[0].sentBeacon,

@@ -7,6 +7,9 @@ import { toast } from 'react-toastify';
 import Flag from 'react-world-flags';
 import { Pie } from 'react-chartjs-2';
 import { arrayUnique, BaseComponent } from '../../../utilities';
+import pLimit from 'p-limit';
+
+const limit = pLimit(1);
 
 class Donate extends BaseComponent {
   constructor (props) {
@@ -49,12 +52,12 @@ class Donate extends BaseComponent {
       '14aJz2XEweHeLW4PLddJuumBuDfVW9XwRZemn35PYu3GUBiuJcc',
       () => {},
       this.state.config
-    ).then(donates => donates.map(donate => HeliumAPI.getTransactionForHash(donate.hash)))
+    ).then(donates => donates.map(donate => limit(() => HeliumAPI.getTransactionForHash(donate.hash))))
       .then(promises => Promise.all(promises))
       .then(donates => donates.map(donate => donate.data.data))
       .then(donates => {
         donatesArr = donates;
-        return donates.map(donate => HeliumAPI.getHotspotsForAccount(donate.payer));
+        return donates.map(donate => limit(() => HeliumAPI.getHotspotsForAccount(donate.payer)));
       }).then(promises => Promise.all(promises))
       .then(hotspots => hotspots.map(hs => (hs[0] && hs[0].geocode && hs[0].geocode.short_country && hs[0].geocode.long_country) ? { long_country: hs[0].geocode.long_country, short_country: hs[0].geocode.short_country } : 'Unknown'))
       .then(countries => countries.map((geocode, i) => {
