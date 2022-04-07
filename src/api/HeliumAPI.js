@@ -19,11 +19,14 @@ const instance = rateLimit(axios.create({
 instance.interceptors.response.use(null, retry(instance, {
   isRetryable (error) {
     console.dir(error);
-    return (error.response && error.response.status === 429);
+    return (
+      (error.response && error.response.status === 429) ||
+      (error.response && error.response.status === 503 && error.response.data && error.response.data.error && error.response.data.error === 'Too Busy')
+    );
   },
 
   wait (error) {
-    return new Promise(resolve => setTimeout(resolve, error.response.data.come_back_in_ms / 50 || 1001));
+    return new Promise(resolve => setTimeout(resolve, error.response.data.come_back_in_ms / 50 || 1500));
   }
 }));
 
