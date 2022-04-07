@@ -4,9 +4,15 @@ import cursorData from './cursorData';
 import retry from 'axios-retry-after';
 
 const instance = axios.create({
-  baseURL: process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:3000/api' : 'https://api.helium.io',
+  baseURL: process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:3000/api' : 'https://api.hs-analyzer.com/api',
   timeout: 120000,
-  headers: { 'Cache-Control': 'max-age=60' }
+  headers: {
+    'Cache-Control': 'max-age=60',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'DELETE, POST, GET, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
+    'Content-Type': 'application/json'
+  }
 });
 
 instance.interceptors.response.use(null, retry(instance, {
