@@ -2,9 +2,10 @@ import axios from 'axios';
 import URLBuilder from '../utilities/URLBuilder';
 import cursorData from './cursorData';
 import retry from 'axios-retry-after';
+import rateLimit from 'axios-rate-limit';
 
-const instance = axios.create({
-  baseURL: process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:3000/api' : 'https://api.hs-analyzer.com/api',
+const instance = rateLimit(axios.create({
+  baseURL: process.env.NODE_ENV === 'development' ? 'https://api.hs-analyzer.com/api' : 'https://api.helium.io',
   timeout: 120000,
   headers: {
     'Cache-Control': 'max-age=60',
@@ -13,15 +14,16 @@ const instance = axios.create({
     'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
     'Content-Type': 'application/json'
   }
-});
+}), { maxRequests: 100, perMilliseconds: 60000 });
 
 instance.interceptors.response.use(null, retry(instance, {
   isRetryable (error) {
+    console.dir(error);
     return (error.response && error.response.status === 429);
   },
 
   wait (error) {
-    return new Promise(resolve => setTimeout(resolve, error.response.data.come_back_in_ms / 50));
+    return new Promise(resolve => setTimeout(resolve, error.response.data.come_back_in_ms / 50 || 5000));
   }
 }));
 
