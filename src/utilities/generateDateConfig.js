@@ -4,7 +4,7 @@ const generateDateConfig = (dM, min, max) => {
   if (dM !== 'custom') {
     const dateMode = parseInt(dM);
 
-    minTime = new Date().setDate(new Date().getDate() - dateMode - 1);
+    minTime = new Date().setDate(new Date().getDate() - dateMode + 1);
     maxTime = new Date().setHours(new Date().getHours() + 1);
   } else {
     minTime = new Date(min).setMinutes(0);
