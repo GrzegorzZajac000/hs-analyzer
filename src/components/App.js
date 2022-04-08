@@ -54,6 +54,7 @@ class App extends React.Component {
                 autoClose={5000}
                 newestOnTop
                 closeOnClick
+                hideProgressBar
               />
             </div>
           </BrowserRouter>
