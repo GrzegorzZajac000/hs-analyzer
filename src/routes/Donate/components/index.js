@@ -164,6 +164,14 @@ class Donate extends BaseComponent {
     const options = {
       responsive: true,
       plugins: {
+        tooltip: {
+          enabled: true,
+          callbacks: {
+            label: function (tooltipItem) {
+              return `${tooltipItem.formattedValue} HNT`;
+            }
+          }
+        },
         legend: {
           display: false
         },
