@@ -32,7 +32,8 @@ const chartOptions = (onClick, config = {
       },
       legend: {
         display: false
-      }
+      },
+      chartWatermark: true
     },
     scales: {
       dataAxis: {

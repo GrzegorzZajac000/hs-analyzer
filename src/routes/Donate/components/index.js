@@ -166,7 +166,8 @@ class Donate extends BaseComponent {
       plugins: {
         legend: {
           display: false
-        }
+        },
+        chartWatermark: false
       }
     };
 
