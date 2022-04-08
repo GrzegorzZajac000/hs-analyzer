@@ -3,6 +3,7 @@ import BaseComponent from './BaseComponent';
 import chartOptions from './chartOptions';
 import chartWatermark from './chartWatermark';
 import dateUtility from './dateUtility';
+import generateDateConfig from './generateDateConfig';
 import generateLabels from './generateLabels';
 import generateLegend from './generateLegend';
 import getOptionLabel from './getOptionLabel';
@@ -18,6 +19,7 @@ export {
   chartOptions,
   chartWatermark,
   dateUtility,
+  generateDateConfig,
   generateLabels,
   generateLegend,
   getOptionLabel,

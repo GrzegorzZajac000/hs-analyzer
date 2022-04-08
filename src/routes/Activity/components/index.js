@@ -2,7 +2,7 @@ import React from 'react';
 import '../styles/Activity.scss';
 import HeliumAPI from '../../../api/HeliumAPI';
 import PropTypes from 'prop-types';
-import { BaseComponent, GetTimeAgo } from '../../../utilities';
+import { BaseComponent, generateDateConfig, GetTimeAgo } from '../../../utilities';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { toast } from 'react-toastify';
 import { getDistance } from 'geolib';
@@ -17,12 +17,11 @@ class Activity extends BaseComponent {
       loaded: false,
       activityData: [],
       dataLoadingLength: 0,
-      config: this.generateDateConfig()
+      config: generateDateConfig(this.props.dateMode, this.props.minTime, this.props.maxTime)
     };
 
     this.getHSActivity = this.getHSActivity.bind(this);
     this.handleDataLoadingUpdate = this.handleDataLoadingUpdate.bind(this);
-    this.generateDateConfig = this.generateDateConfig.bind(this);
   }
 
   componentDidMount () {
@@ -35,7 +34,7 @@ class Activity extends BaseComponent {
       prevProps.minTime !== this.props.minTime ||
       prevProps.maxTime !== this.props.maxTime
     ) {
-      this.updateState({ loaded: false, activityData: [], dataLoadingLength: 0, config: this.generateDateConfig() }, () => {
+      this.updateState({ loaded: false, activityData: [], dataLoadingLength: 0, config: generateDateConfig(this.props.dateMode, this.props.minTime, this.props.maxTime) }, () => {
         this.getHSActivity();
       });
     }
@@ -47,33 +46,6 @@ class Activity extends BaseComponent {
         this.getHSActivity();
       });
     }
-  }
-
-  generateDateConfig () {
-    let minTime, maxTime;
-
-    if (this.props.dateMode !== 'custom') {
-      const dateMode = parseInt(this.props.dateMode);
-
-      minTime = new Date().setDate(new Date().getDate() - dateMode - 1);
-      maxTime = new Date().setHours(new Date().getHours() + 1);
-    } else {
-      minTime = new Date(this.props.minTime).setMinutes(0);
-      maxTime = new Date(this.props.maxTime).setHours(new Date(this.props.maxTime).getHours() + 1);
-    }
-
-    minTime = new Date(minTime).setMinutes(0);
-    minTime = new Date(minTime).setSeconds(0);
-    minTime = new Date(minTime).setMilliseconds(0);
-
-    maxTime = new Date(maxTime).setMinutes(0);
-    maxTime = new Date(maxTime).setSeconds(0);
-    maxTime = new Date(maxTime).setMilliseconds(0);
-
-    return {
-      min_time: new Date(minTime).toISOString(),
-      max_time: new Date(maxTime).toISOString()
-    };
   }
 
   handleDataLoadingUpdate (dataLoadingLength) {

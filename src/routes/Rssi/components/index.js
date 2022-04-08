@@ -4,7 +4,7 @@ import HeliumAPI from '../../../api/HeliumAPI';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { BeaconsChart, BeaconsValidChart, RSSIChart, WitnessInvalids } from '../../../components';
-import { BaseComponent } from '../../../utilities';
+import { BaseComponent, generateDateConfig } from '../../../utilities';
 import { Navigate } from 'react-router-dom';
 import pLimit from 'p-limit';
 
@@ -22,7 +22,7 @@ class Rssi extends BaseComponent {
       dataLoadingLength: 0,
       earnings: [],
       config: {
-        ...this.generateDateConfig(),
+        ...generateDateConfig(this.props.dateMode, this.props.minTime, this.props.maxTime),
         filter_types: 'poc_receipts_v1'
       }
     };
@@ -30,7 +30,6 @@ class Rssi extends BaseComponent {
     this.getHSActivity = this.getHSActivity.bind(this);
     this.getEarnings = this.getEarnings.bind(this);
     this.handleDataLoadingUpdate = this.handleDataLoadingUpdate.bind(this);
-    this.generateDateConfig = this.generateDateConfig.bind(this);
   }
 
   componentDidMount () {
@@ -61,7 +60,7 @@ class Rssi extends BaseComponent {
       prevProps.minTime !== this.props.minTime ||
       prevProps.maxTime !== this.props.maxTime
     ) {
-      this.updateState({ loaded: false, activityBeacon: [], witnessedBeacon: [], dataLoadingLength: 0, config: { ...this.generateDateConfig(), filter_types: 'poc_receipts_v1' } }, () => {
+      this.updateState({ loaded: false, activityBeacon: [], witnessedBeacon: [], dataLoadingLength: 0, config: { ...generateDateConfig(this.props.dateMode, this.props.minTime, this.props.maxTime), filter_types: 'poc_receipts_v1' } }, () => {
         const promises = [
           limit(() => this.getHSActivity()),
           limit(() => this.getEarnings())
@@ -109,33 +108,6 @@ class Rssi extends BaseComponent {
           });
       });
     }
-  }
-
-  generateDateConfig () {
-    let minTime, maxTime;
-
-    if (this.props.dateMode !== 'custom') {
-      const dateMode = parseInt(this.props.dateMode);
-
-      minTime = new Date().setDate(new Date().getDate() - dateMode - 1);
-      maxTime = new Date().setHours(new Date().getHours() + 1);
-    } else {
-      minTime = new Date(this.props.minTime).setMinutes(0);
-      maxTime = new Date(this.props.maxTime).setHours(new Date(this.props.maxTime).getHours() + 1);
-    }
-
-    minTime = new Date(minTime).setMinutes(0);
-    minTime = new Date(minTime).setSeconds(0);
-    minTime = new Date(minTime).setMilliseconds(0);
-
-    maxTime = new Date(maxTime).setMinutes(0);
-    maxTime = new Date(maxTime).setSeconds(0);
-    maxTime = new Date(maxTime).setMilliseconds(0);
-
-    return {
-      min_time: new Date(minTime).toISOString(),
-      max_time: new Date(maxTime).toISOString()
-    };
   }
 
   getHSActivity () {
