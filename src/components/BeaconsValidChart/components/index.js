@@ -90,7 +90,7 @@ class BeaconsValidChart extends BaseComponent {
     return [
       { label: 'Invalid', backgroundColor: '#fd7f6f', stack: 'Stack 0', data: [], order: 1, yAxisID: 'dataAxis' },
       { label: 'Valid', backgroundColor: '#b2e061', stack: 'Stack 0', data: [], order: 1, yAxisID: 'dataAxis' },
-      { label: 'Earnings', backgroundColor: '#a9dfd8', borderColor: '#a9dfd8', data: [], type: 'line', order: 0, yAxisID: 'earningsAxis' }
+      { label: 'Earnings', backgroundColor: '#24564e', borderColor: '#a9dfd8', data: [], type: 'line', order: 0, yAxisID: 'earningsAxis' }
     ]
   }
 

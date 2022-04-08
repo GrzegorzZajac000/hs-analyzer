@@ -83,8 +83,8 @@ class BeaconsChart extends BaseComponent {
 
   generateChartDataset () {
     return [
-      { label: 'Amount', backgroundColor: '#b2e061', data: [], order: 1, yAxisID: 'dataAxis' },
-      { label: 'Earnings', backgroundColor: '#a9dfd8', borderColor: '#a9dfd8', data: [], type: 'line', order: 0, yAxisID: 'earningsAxis' }
+      { label: 'Amount', backgroundColor: '#7eb0d5', data: [], order: 1, yAxisID: 'dataAxis' },
+      { label: 'Earnings', backgroundColor: '#24564e', borderColor: '#a9dfd8', data: [], type: 'line', fill: '+1', order: 0, yAxisID: 'earningsAxis' }
     ];
   }
 
@@ -100,7 +100,7 @@ class BeaconsChart extends BaseComponent {
     return (
       <React.Fragment>
         <div className='rssi-box'>
-          <h2>Beacons Amount Chart</h2>
+          <h2>Beacons Witnesses Amount Chart</h2>
 
           <Bar
             options={chartOptions((e, elements) => {
