@@ -29,20 +29,26 @@ class Activity extends BaseComponent {
   }
 
   componentDidUpdate (prevProps, prevState, snapshot) {
-    if (
-      prevProps.dateMode !== this.props.dateMode ||
-      prevProps.minTime !== this.props.minTime ||
-      prevProps.maxTime !== this.props.maxTime
-    ) {
-      this.updateState({ loaded: false, activityData: [], dataLoadingLength: 0, config: generateDateConfig(this.props.dateMode, this.props.minTime, this.props.maxTime) }, () => {
-        this.getHSActivity();
-      });
-    }
-
     if (prevProps.currentHS !== this.props.currentHS && this.props.currentHS === null) {
       this.updateState({ loaded: false, activityData: [], dataLoadingLength: 0 });
-    } else if (prevProps.currentHS !== this.props.currentHS && !!this.props.currentHS) {
-      this.updateState({ loaded: false, activityData: [], dataLoadingLength: 0 }, () => {
+    }
+    
+    if (
+      (
+        prevProps.dateMode !== this.props.dateMode ||
+        prevProps.minTime !== this.props.minTime ||
+        prevProps.maxTime !== this.props.maxTime
+      ) || (
+        prevProps.currentHS !== this.props.currentHS &&
+        this.props.currentHS !== null
+      )
+    ) {
+      this.updateState({
+        loaded: false,
+        activityData: [],
+        dataLoadingLength: 0,
+        config: generateDateConfig(this.props.dateMode, this.props.minTime, this.props.maxTime)
+      }, () => {
         this.getHSActivity();
       });
     }
