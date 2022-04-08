@@ -26,14 +26,19 @@ class Info extends BaseComponent {
         format: row => <a href={`https://explorer.helium.com/accounts/${row.address}`} target='_blank' rel='noreferrer noopener'>{row.address}</a>
       },
       {
+        id: 'balance',
         name: 'Balance',
-        selector: row => <NumberFormat value={row.balance} displayType='text' thousandSeparator=' ' suffix=' HNT' />,
-        sortable: true
+        selector: row => row.balance,
+        format: row => <NumberFormat value={row.balance} displayType='text' thousandSeparator=' ' suffix=' HNT' />,
+        sortable: true,
+        right: true
       },
       {
         name: 'Staked balance',
-        selector: row => <NumberFormat value={row.staked_balance} displayType='text' thousandSeparator=' ' suffix=' HNT' />,
-        sortable: true
+        selector: row => row.staked_balance,
+        format: row => <NumberFormat value={row.staked_balance} displayType='text' thousandSeparator=' ' suffix=' HNT' />,
+        sortable: true,
+        right: true
       }
     ];
   }
@@ -146,6 +151,8 @@ class Info extends BaseComponent {
               pagination
               responsive
               striped
+              defaultSortFieldId='balance'
+              defaultSortAsc={false}
             />
           </div>
         </div>
