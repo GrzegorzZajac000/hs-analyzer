@@ -29,16 +29,49 @@ class Rssi extends BaseComponent {
 
     this.getHSActivity = this.getHSActivity.bind(this);
     this.getEarnings = this.getEarnings.bind(this);
+    this.getData = this.getData.bind(this);
     this.handleDataLoadingUpdate = this.handleDataLoadingUpdate.bind(this);
   }
 
   componentDidMount () {
-    const promises = [
+    this.getData().then(() => {});
+  }
+
+  componentDidUpdate (prevProps, prevState, snapshot) {
+    if (prevProps.currentHS !== this.props.currentHS && this.props.currentHS === null) {
+      this.updateState({ loaded: false, activityBeacon: [], witnessedBeacon: [], dataLoadingLength: 0 });
+    }
+
+    if (
+      (
+        prevProps.dateMode !== this.props.dateMode ||
+        prevProps.minTime !== this.props.minTime ||
+        prevProps.maxTime !== this.props.maxTime
+      ) || (
+        prevProps.currentHS !== this.props.currentHS &&
+        this.props.currentHS !== null
+      )
+    ) {
+      this.updateState({
+        loaded: false,
+        activityBeacon: [],
+        witnessedBeacon: [],
+        dataLoadingLength: 0,
+        config: {
+          ...generateDateConfig(this.props.dateMode, this.props.minTime, this.props.maxTime),
+          filter_types: 'poc_receipts_v1'
+        }
+      }, () => {
+        this.getData().then(() => {});
+      });
+    }
+  }
+
+  getData () {
+    return Promise.all([
       limit(() => this.getHSActivity()),
       limit(() => this.getEarnings())
-    ];
-
-    Promise.all(promises)
+    ])
       .then(res => {
         return this.updateState({
           sentBeacon: res[0].sentBeacon,
@@ -52,62 +85,6 @@ class Rssi extends BaseComponent {
         console.error(err);
         toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
       });
-  }
-
-  componentDidUpdate (prevProps, prevState, snapshot) {
-    if (
-      prevProps.dateMode !== this.props.dateMode ||
-      prevProps.minTime !== this.props.minTime ||
-      prevProps.maxTime !== this.props.maxTime
-    ) {
-      this.updateState({ loaded: false, activityBeacon: [], witnessedBeacon: [], dataLoadingLength: 0, config: { ...generateDateConfig(this.props.dateMode, this.props.minTime, this.props.maxTime), filter_types: 'poc_receipts_v1' } }, () => {
-        const promises = [
-          limit(() => this.getHSActivity()),
-          limit(() => this.getEarnings())
-        ];
-
-        Promise.all(promises)
-          .then(res => {
-            return this.updateState({
-              sentBeacon: res[0].sentBeacon,
-              witnessedBeacon: res[0].witnessedBeacon,
-              activityData: res[0].activityData,
-              earnings: res[1],
-              loaded: true
-            });
-          })
-          .catch(err => {
-            console.error(err);
-            toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
-          });
-      });
-    }
-
-    if (prevProps.currentHS !== this.props.currentHS && this.props.currentHS === null) {
-      this.updateState({ loaded: false, activityBeacon: [], witnessedBeacon: [], dataLoadingLength: 0 });
-    } else if (prevProps.currentHS !== this.props.currentHS && !!this.props.currentHS) {
-      this.updateState({ loaded: false, activityBeacon: [], witnessedBeacon: [], dataLoadingLength: 0 }, () => {
-        const promises = [
-          limit(() => this.getHSActivity()),
-          limit(() => this.getEarnings())
-        ];
-
-        Promise.all(promises)
-          .then(res => {
-            return this.updateState({
-              sentBeacon: res[0].sentBeacon,
-              witnessedBeacon: res[0].witnessedBeacon,
-              activityData: res[0].activityData,
-              earnings: res[1],
-              loaded: true
-            });
-          })
-          .catch(err => {
-            console.error(err);
-            toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
-          });
-      });
-    }
   }
 
   getHSActivity () {
