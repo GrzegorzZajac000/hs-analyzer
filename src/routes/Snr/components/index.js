@@ -71,6 +71,9 @@ class Snr extends BaseComponent {
       ) || (
         prevProps.currentHS !== this.props.currentHS &&
         this.props.currentHS !== null
+      ) || (
+        prevProps.hsList.length !== this.props.hsList.length &&
+        this.props.currentHS !== null
       )
     ) {
       this.updateState({

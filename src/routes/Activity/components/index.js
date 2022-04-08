@@ -32,7 +32,7 @@ class Activity extends BaseComponent {
     if (prevProps.currentHS !== this.props.currentHS && this.props.currentHS === null) {
       this.updateState({ loaded: false, activityData: [], dataLoadingLength: 0 });
     }
-    
+
     if (
       (
         prevProps.dateMode !== this.props.dateMode ||
@@ -40,6 +40,9 @@ class Activity extends BaseComponent {
         prevProps.maxTime !== this.props.maxTime
       ) || (
         prevProps.currentHS !== this.props.currentHS &&
+        this.props.currentHS !== null
+      ) || (
+        prevProps.hsList.length !== this.props.hsList.length &&
         this.props.currentHS !== null
       )
     ) {
