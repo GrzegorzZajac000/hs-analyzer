@@ -55,34 +55,34 @@ class Snr extends BaseComponent {
 
   componentDidMount () {
     this.getHSActivity()
-      .then(() => {})
-      .catch(err => {
-        console.error(err);
-        toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
-      });
+      .then(() => {});
   }
 
   componentDidUpdate (prevProps, prevState, snapshot) {
-    if (
-      prevProps.dateMode !== this.props.dateMode ||
-      prevProps.minTime !== this.props.minTime ||
-      prevProps.maxTime !== this.props.maxTime
-    ) {
-      this.updateState({ loaded: false, data: [], dataLoadingLength: 0, config: { ...generateDateConfig(this.props.dateMode, this.props.minTime, this.props.maxTime), filter_types: 'poc_receipts_v1' } }, () => {
-        this.getHSActivity();
-      });
-    }
-
     if (prevProps.currentHS !== this.props.currentHS && this.props.currentHS === null) {
       this.updateState({ loaded: false, data: [], dataLoadingLength: 0 });
-    } else if (prevProps.currentHS !== this.props.currentHS && !!this.props.currentHS) {
-      this.updateState({ loaded: false, data: [], dataLoadingLength: 0 }, () => {
-        this.getHSActivity()
-          .then(() => {})
-          .catch(err => {
-            console.error(err);
-            toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
-          });
+    }
+
+    if (
+      (
+        prevProps.dateMode !== this.props.dateMode ||
+        prevProps.minTime !== this.props.minTime ||
+        prevProps.maxTime !== this.props.maxTime
+      ) || (
+        prevProps.currentHS !== this.props.currentHS &&
+        this.props.currentHS !== null
+      )
+    ) {
+      this.updateState({
+        loaded: false,
+        data: [],
+        dataLoadingLength: 0,
+        config: {
+          ...generateDateConfig(this.props.dateMode, this.props.minTime, this.props.maxTime),
+          filter_types: 'poc_receipts_v1'
+        }
+      }, () => {
+        this.getHSActivity().then(() => {});
       });
     }
   }
@@ -142,6 +142,9 @@ class Snr extends BaseComponent {
       });
 
       this.updateState({ data, loaded: true });
+    }).catch(err => {
+      console.error(err);
+      toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
     });
   }
 
