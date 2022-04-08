@@ -48,6 +48,13 @@ class DateConfigModal extends BaseComponent {
     return true;
   }
 
+  generateCustomDates () {
+    const minTime = this.props.minTime ? new Date(this.props.minTime) : new Date();
+    const maxTime = this.props.maxTime ? new Date(this.props.maxTime) : new Date();
+
+    return [minTime, maxTime];
+  }
+
   render () {
     return (
       <Modal
@@ -63,7 +70,7 @@ class DateConfigModal extends BaseComponent {
           <h2>Date config</h2>
 
           <div className='date-config-form'>
-            <Form initialValues={{ days: this.props.dateMode, 'custom-dates-calendar': [new Date(this.props.minTime), new Date(this.props.maxTime)] }} onSubmit={values => this.handleSubmit(values)} validate={this.validate} render={({ handleSubmit, form, submitting, pristine, invalid, values }) => (
+            <Form initialValues={{ days: this.props.dateMode, 'custom-dates-calendar': this.generateCustomDates() }} onSubmit={values => this.handleSubmit(values)} validate={this.validate} render={({ handleSubmit, form, submitting, pristine, invalid, values }) => (
               <form onSubmit={values => handleSubmit(values)}>
                 <div className='date-config-form-days'>
                   <h3>Date range</h3>
