@@ -9,10 +9,28 @@
 
     table {
       width: 100%;
+
+      @media all and (max-width: 660px) {
+        display: block;
+      }
+
+      tbody {
+        @media all and (max-width: 660px) {
+          display: flex;
+          flex-flow: row wrap;
+        }
+      }
     }
   }
 
   &-item {
+    @media all and (max-width: 660px) {
+      display: flex;
+      flex-direction: column;
+      margin-right: 15px;
+      width: calc(49% - 7.5px);
+    }
+
     &.activity-reward {
       .activity-item-icon {
         > div {
@@ -64,6 +82,10 @@
     &-icon {
       width: 32px;
 
+      @media all and (max-width: $screen-md-max) {
+        width: 28px;
+      }
+
       > div {
         align-items: center;
         color: $light-font-color;
@@ -73,8 +95,17 @@
         justify-content: center;
         width: 32px;
 
+        @media all and (max-width: $screen-md-max) {
+          height: 28px;
+          width: 28px;
+        }
+
         svg {
           vertical-align: unset;
+
+          @media all and (max-width: $screen-md-max) {
+            transform: scale(.9);
+          }
         }
       }
     }
@@ -83,6 +114,10 @@
       color: $light-font-color;
       font-size: px-to-rem(15);
       font-weight: 700;
+
+      @media all and (max-width: $screen-md-max) {
+        font-size: px-to-rem(14);
+      }
     }
 
     &-desc {
@@ -94,11 +129,16 @@
         p {
           color: $light-font-color;
           font-size: px-to-rem(12);
+          font-weight: 700;
         }
 
         h6 {
           color: $font-color;
           font-size: px-to-rem(16);
+
+          @media all and (max-width: $screen-md-max) {
+            font-size: px-to-rem(12);
+          }
         }
       }
     }
@@ -107,11 +147,16 @@
       &-header {
         color: $light-font-color;
         font-size: px-to-rem(12);
+        font-weight: 700;
       }
 
       &-content {
         color: $font-color;
         font-size: px-to-rem(16);
+
+        @media all and (max-width: $screen-md-max) {
+          font-size: px-to-rem(12);
+        }
       }
     }
 
@@ -119,11 +164,28 @@
       font-size: px-to-rem(12);
       text-align: right;
       width: 120px;
+
+      @media all and (max-width: 660px) {
+        text-align: left;
+      }
     }
 
     td {
       background-color: $box-bg;
       padding: 7px 16px;
+
+      @media all and (max-width: $screen-md-max) {
+        padding: 5px 10px;
+      }
+
+      @media all and (max-width: $screen-sm-max) {
+        padding: 5px;
+      }
+
+      @media all and (max-width: 660px) {
+        display: block;
+        width: 100%;
+      }
 
       &:first-of-type {
         border-bottom-left-radius: 8px;
@@ -139,6 +201,10 @@
 
   &-item-spacer {
     height: 12px;
+
+    @media all and (max-width: 660px) {
+      display: none;
+    }
   }
 
   &-loading {
