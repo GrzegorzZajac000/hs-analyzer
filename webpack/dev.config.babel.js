@@ -51,7 +51,7 @@ module.exports = merge(baseConfig, {
     },
     proxy: {
       '/api': {
-        target: 'https://api.helium.io',
+        target: 'https://api.hs-analyzer.com',
         pathRewrite: {'^/api' : ''}, // In this case we don't pass `api` path
         secure: false,
         changeOrigin: true
