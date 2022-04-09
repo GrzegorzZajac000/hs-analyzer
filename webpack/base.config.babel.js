@@ -10,6 +10,7 @@ const webpack = require('webpack');
 const path = require('path');
 
 // Plugins
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
@@ -71,6 +72,24 @@ module.exports = {
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
       Popper: ['popper.js', 'default']
+    }),
+    new FaviconsWebpackPlugin({
+      logo: config.favicon,
+      prefix: 'favicon/',
+      favicons: {
+        appName: config.title,
+        appShortName: config.shortName,
+        appDescription: 'Helium hotspot tool for analysis',
+        developerName: 'Grzegorz Zając',
+        developerURL: 'grzegorz.zajac000@gmail.com',
+        lang: 'en-US',
+        background: '#fff',
+        theme_color: '#fff',
+        display: 'standalone',
+        orientation: 'portrait',
+        start_url: `https://${config.domain}/`,
+        version: '1.0.0'
+      }
     }),
     new HtmlWebpackPlugin({
       chunks: ['main'],

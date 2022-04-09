@@ -12,17 +12,19 @@
     color: $light-font-color;
     display: block;
     font-weight: 700;
-    height: 60px;
     margin-bottom: 20px;
     padding: 15px 30px;
+    text-align: center;
+
+    img {
+      width: 60%;
+    }
 
     p {
-      font-size: px-to-rem(24);
-      font-weight: 700;
-
       &.menu-logo-version {
         color: $font-color;
         font-size: px-to-rem(13);
+        font-weight: 700;
       }
     }
   }

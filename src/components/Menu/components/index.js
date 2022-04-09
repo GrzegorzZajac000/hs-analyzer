@@ -5,13 +5,14 @@ import { Link } from 'react-router-dom';
 // import { WindowPlus } from 'react-bootstrap-icons';
 import PropTypes from 'prop-types';
 import { BaseComponent } from '../../../utilities';
+import Logo from '../../../static/images/normal/logo-white.svg';
 
 class Menu extends BaseComponent {
   render () {
     return (
       <nav className='menu'>
         <Link to='/' className='menu-logo'>
-          <p>HS Analyzer</p>
+          <img src={Logo} alt='HS-Analyzer' />
           <p className='menu-logo-version'>Beta v0.2.0</p>
         </Link>
         <ul>

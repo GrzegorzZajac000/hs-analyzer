@@ -11,7 +11,6 @@ const path 				= require('path');
 const baseConfig 	= require('./base.config.babel.js');
 
 // Plugins
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
@@ -63,24 +62,6 @@ module.exports = merge(baseConfig, {
     ]
   },
   plugins: [
-    new FaviconsWebpackPlugin({
-      logo: config.favicon,
-      prefix: 'favicon/',
-      favicons: {
-        appName: config.title,
-        appShortName: config.shortName,
-        appDescription: 'Helium hotspot tool for analysis',
-        developerName: 'Grzegorz Zając',
-        developerURL: 'grzegorz.zajac000@gmail.com',
-        lang: 'en-US',
-        background: '#fff',
-        theme_color: '#fff',
-        display: 'standalone',
-        orientation: 'portrait',
-        start_url: `https://${config.domain}/`,
-        version: '1.0.0'
-      }
-    }),
     new MiniCssExtractPlugin({
       filename: `css/[name].${year}_${month}_${day}_${config.buildHash}.css`
     }),
