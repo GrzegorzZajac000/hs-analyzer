@@ -8,6 +8,27 @@
   height: 100%;
   width: 100%;
 
+  @media all and (max-width: 1020px) {
+    height: calc(100% - 60px);
+    left: 0;
+    position: fixed;
+    max-width: 90%;
+    top: 60px;
+    transform: translateX(-100%);
+    transition: transform .25s ease-in-out;
+    width: 400px;
+    z-index: 99999;
+
+    &.mobile-visible {
+      transform: translateX(0);
+    }
+  }
+
+  @media all and (max-width: 660px) {
+    height: calc(100% - 80px);
+    top: 80px;
+  }
+
   &-logo {
     color: $light-font-color;
     display: block;
@@ -18,6 +39,18 @@
 
     img {
       width: 60%;
+
+      @media all and (max-width: 1300px) {
+        width: 80%;
+      }
+
+      @media all and (max-width: $screen-sm-max) {
+        max-width: 200px;
+      }
+
+      @media all and (max-width: 660px) {
+        max-width: 150px;
+      }
     }
 
     p {
@@ -78,5 +111,26 @@
         }
       }
     }
+  }
+}
+
+.menu-toggle {
+  background: none;
+  border: 0;
+  height: 60px;
+  left: 20px;
+  position: absolute;
+  top: 0;
+  width: 60px;
+  z-index: 99999;
+
+  @media all and (max-width: 660px) {
+    left: 10px;
+    height: 80px;
+    top: 0;
+  }
+
+  svg {
+    fill: $light-font-color;
   }
 }

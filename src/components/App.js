@@ -27,10 +27,10 @@ class App extends React.Component {
             <div className='app-content'>
               <div className='container-fluid'>
                 <div className='row'>
-                  <div className='col-2 gx-0'>
+                  <div className='col-3 col-xl-2 gx-0 menu-container'>
                     <Menu />
                   </div>
-                  <div className='col-10 gx-0'>
+                  <div className='col-9 col-xl-10 gx-0 body-container'>
                     <TopBar />
                     <HSModal />
 

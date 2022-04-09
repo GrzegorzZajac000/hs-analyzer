@@ -2,13 +2,20 @@
 @import "../../../static/global-styles/functions";
 
 .info {
-  .row {
-    margin-bottom: 20px;
+  &-blocks-container {
+    display: flex;
+    flex-flow: row wrap;
   }
 
   h2 {
     color: $light-font-color;
-    font-size: 26px;
+    font-size: px-to-rem(26);
     font-weight: 700;
+    margin-bottom: 20px;
+
+    @media all and (max-width: $screen-sm-max) {
+      font-size: px-to-rem(24);
+      margin-bottom: 15px;
+    }
   }
 }

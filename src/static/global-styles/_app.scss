@@ -21,6 +21,23 @@
       }
     }
   }
+
+  .menu-container {
+    @media all and (max-width: 1020px) {
+      width: 0;
+    }
+  }
+
+  .body-container {
+    @media all and (max-width: 1020px) {
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    @media all and (max-width: 660px) {
+      padding: 0 10px;
+    }
+  }
 }
 
 .route-section {
@@ -33,6 +50,10 @@
   padding: 25px 30px;
   position: relative;
   width: 100%;
+
+  @media all and (max-width: 660px) {
+    height: calc(100% - 80px);
+  }
 
   .preload {
     height: 100%;

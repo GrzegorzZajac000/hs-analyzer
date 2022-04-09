@@ -1,5 +1,3 @@
-const SET_MOBILE_MENU_OPENED = 'SET_MOBILE_MENU_OPENED';
-const SET_MOBILE_MENU_CLOSED = 'SET_MOBILE_MENU_CLOSED';
 const SET_HS_INFO = 'SET_HS_INFO';
 const ADD_HS_TO_LIST = 'ADD_HS_TO_LIST';
 const REMOVE_HS_FROM_LIST = 'REMOVE_HS_FROM_LIST';
@@ -11,8 +9,6 @@ const SET_DATE_MODE = 'SET_DATE_MODE';
 const SET_MIN_TIME = 'SET_MIN_TIME';
 const SET_MAX_TIME = 'SET_MAX_TIME';
 
-export const setMobileMenuOpened = () => ({ type: SET_MOBILE_MENU_OPENED });
-export const setMobileMenuClosed = () => ({ type: SET_MOBILE_MENU_CLOSED });
 export const setHsInfo = hsInfo => ({ type: SET_HS_INFO, hsInfo });
 export const addHSToList = hsObject => ({ type: ADD_HS_TO_LIST, hsObject });
 export const removeHSFromList = hsIndex => ({ type: REMOVE_HS_FROM_LIST, hsIndex });
@@ -25,7 +21,6 @@ export const setMinTime = minTime => ({ type: SET_MIN_TIME, minTime });
 export const setMaxTime = maxTime => ({ type: SET_MAX_TIME, maxTime });
 
 const initialState = {
-  mobileMenuOpened: false,
   hsInfo: [],
   hsList: [],
   currentHS: null,
@@ -37,12 +32,6 @@ const initialState = {
 
 export default function counter (state = initialState, action) {
   switch (action.type) {
-  case SET_MOBILE_MENU_OPENED:
-    return { ...state, mobileMenuOpened: true };
-
-  case SET_MOBILE_MENU_CLOSED:
-    return { ...state, mobileMenuOpened: false };
-
   case SET_HS_INFO:
     return { ...state, hsInfo: action.hsInfo };
 

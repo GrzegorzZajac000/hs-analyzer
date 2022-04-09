@@ -105,7 +105,7 @@ class TopBar extends BaseComponent {
             <div className={'top-bar-left-hs-buttons' + (isCurrentHS(this.props.currentHS) ? '' : ' hidden')}>
               <button className='btn btn-sm btn-decor' onClick={this.handleHSInfoClick}>HS Info</button>
               <button className='btn btn-sm btn-warning' onClick={this.handleDateConfigClick}>Date config</button>
-              <button className='btn btn-sm btn-danger' onClick={this.handleHSRemoveClick}>Remove HS from list</button>
+              <button className='btn btn-sm btn-danger' onClick={this.handleHSRemoveClick}>Remove HS</button>
             </div>
           </div>
 

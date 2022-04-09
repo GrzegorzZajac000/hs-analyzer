@@ -42,6 +42,11 @@
       border: 1px solid $bg;
       border-radius: 17px;
 
+      @media all and (max-width: 660px) {
+        height: 30px;
+        min-height: 30px;
+      }
+
       &:hover,
       &:focus,
       &:active,
@@ -51,14 +56,27 @@
       }
     }
 
+    &__value-container {
+      padding: 0 8px;
+    }
+
     &__indicators {
       .rs__indicator {
         &-separator {
           background-color: $bg;
+
+          @media all and (max-width: 660px) {
+            margin-bottom: 5px;
+            margin-top: 5px;
+          }
         }
 
         &.rs__dropdown-indicator {
           color: $font-color;
+
+          @media all and (max-width: 660px) {
+            padding: 0 8px;
+          }
 
           &:hover,
           &:active,
@@ -90,6 +108,10 @@
 
     &__single-value {
       color: $font-color !important;
+
+      span {
+        vertical-align: middle;
+      }
     }
   }
 }

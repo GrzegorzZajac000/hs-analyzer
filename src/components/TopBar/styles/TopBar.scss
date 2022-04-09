@@ -11,6 +11,15 @@
   height: 60px;
   width: 100%;
 
+  @media all and (max-width: 1020px) {
+    padding: 0 20px 0 60px;
+  }
+
+  @media all and (max-width: 660px) {
+    height: 80px;
+    padding: 0 10px 0 60px;
+  }
+
   &-left,
   &-right {
     align-content: center;
@@ -19,6 +28,12 @@
   }
 
   &-left {
+    @media all and (max-width: 660px) {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
     &-hs-buttons {
       align-items: center;
       display: flex;
@@ -50,6 +65,10 @@
     }
 
     .dropdown {
+      @media all and (max-width: $screen-md-max) {
+        display: none;
+      }
+
       &-toggle {
         color: $light-font-color;
         font-size: px-to-rem(12);
@@ -79,5 +98,16 @@
     margin-right: 20px;
     min-width: 400px;
     width: 100%;
+
+    @media all and (max-width: $screen-sm-max) {
+      min-width: auto;
+    }
+
+    @media all and (max-width: 660px) {
+      margin-bottom: 5px;
+      margin-right: 0;
+      min-width: 100%;
+      width: 100%;
+    }
   }
 }
