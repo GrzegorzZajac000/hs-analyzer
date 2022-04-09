@@ -1,4 +1,5 @@
 @import "../../../static/global-styles/variables";
+@import "../../../static/global-styles/functions";
 
 // VARIABLES
 $json-bg: #2b303b;
@@ -10,6 +11,12 @@ $json-bg: #2b303b;
     margin-top: 20px;
     padding: 16px;
 
+    @media all and (max-width: $screen-sm-max) {
+      border-radius: 7px;
+      padding: 15px;
+      margin-right: 15px;
+    }
+
     .variable-value {
       word-break: break-all;
     }
@@ -17,7 +24,12 @@ $json-bg: #2b303b;
 
   h2 {
     color: $light-font-color;
-    font-size: 26px;
+    font-size: px-to-rem(26);
     font-weight: 700;
+
+    @media all and (max-width: $screen-sm-max) {
+      font-size: px-to-rem(24);
+      margin-bottom: 15px;
+    }
   }
 }

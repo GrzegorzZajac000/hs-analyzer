@@ -33,25 +33,25 @@ class Menu extends BaseComponent {
           </Link>
           <ul>
             <li>
-              <MenuLink to='/'>General info</MenuLink>
+              <MenuLink to='/' onClick={this.handleToggle}>General info</MenuLink>
             </li>
             <li>
-              <MenuLink to='/chain-variables'>Chain Variables</MenuLink>
+              <MenuLink to='/chain-variables' onClick={this.handleToggle}>Chain Variables</MenuLink>
             </li>
             <li className={(Number.isInteger(this.props.currentHS) && this.props.currentHS >= 0) ? '' : 'disabled'}>
-              <MenuLink to='/activity'>Latest activity</MenuLink>
+              <MenuLink to='/activity' onClick={this.handleToggle}>Latest activity</MenuLink>
             </li>
             <li className={(Number.isInteger(this.props.currentHS) && this.props.currentHS >= 0) ? '' : 'disabled'}>
-              <MenuLink to='/rssi'>RSSI / Beacon Analysis</MenuLink>
+              <MenuLink to='/rssi' onClick={this.handleToggle}>RSSI / Beacon Analysis</MenuLink>
             </li>
             <li className={(Number.isInteger(this.props.currentHS) && this.props.currentHS >= 0) ? '' : 'disabled'}>
-              <MenuLink to='/snr'>SNR Data</MenuLink>
+              <MenuLink to='/snr' onClick={this.handleToggle}>SNR Data</MenuLink>
             </li>
             <li className={(Number.isInteger(this.props.currentHS) && this.props.currentHS >= 0) ? '' : 'disabled'}>
-              <MenuLink to='/connectivity'>Connectivity</MenuLink>
+              <MenuLink to='/connectivity' onClick={this.handleToggle}>Connectivity</MenuLink>
             </li>
             <li>
-              <MenuLink to='/donate'>Donate</MenuLink>
+              <MenuLink to='/donate' onClick={this.handleToggle}>Donate</MenuLink>
             </li>
             {/* <li> */}
             {/*  <a href='https://github.com/GrzegorzZajac000/hs-analyzer' target='_blank' rel='noreferrer noopener'>GitHub <WindowPlus size={18} /></a> */}

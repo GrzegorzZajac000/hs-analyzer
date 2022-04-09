@@ -17,7 +17,8 @@ function MenuLink ({ children, to, ...props }) {
 
 MenuLink.propTypes = {
   children: PropTypes.oneOfType([
-    PropTypes.string, PropTypes.object
+    PropTypes.string,
+    PropTypes.object
   ]),
   to: PropTypes.string
 };
