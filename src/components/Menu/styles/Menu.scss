@@ -117,12 +117,17 @@
 .menu-toggle {
   background: none;
   border: 0;
+  display: none;
   height: 60px;
   left: 20px;
   position: absolute;
   top: 0;
   width: 60px;
   z-index: 99999;
+
+  @media all and (max-width: 1021px) {
+    display: block;
+  }
 
   @media all and (max-width: 660px) {
     left: 10px;
