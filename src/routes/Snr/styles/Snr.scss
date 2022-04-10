@@ -2,10 +2,61 @@
 @import "../../../static/global-styles/functions";
 
 .snr {
+  table {
+    tbody {
+      @media all and (max-width: $screen-sm-max) {
+        tr {
+          td {
+            &:first-child {
+              &::before {
+                content: "Frequency: ";
+              }
+            }
+
+            &:nth-of-type(2) {
+              &::before {
+                content: "Channel: ";
+              }
+            }
+
+            &:nth-of-type(3) {
+              &::before {
+                content: "Signal: ";
+              }
+            }
+
+            &:nth-of-type(4) {
+              &::before {
+                content: "SNR: ";
+              }
+            }
+
+            &:nth-of-type(5) {
+              &::before {
+                content: "Noise: ";
+              }
+            }
+
+            &:nth-of-type(6) {
+              &::before {
+                content: "Date: ";
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   h2 {
     color: $light-font-color;
-    font-size: 26px;
+    font-size: px-to-rem(26);
     font-weight: 700;
     margin-bottom: 20px;
+
+    @media all and (max-width: $screen-sm-max) {
+      font-size: px-to-rem(24);
+      margin-bottom: 15px;
+    }
   }
 }

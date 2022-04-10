@@ -25,12 +25,20 @@
     .rdt_TableRow {
       background-color: transparent;
 
+      @media all and (max-width: 660px) {
+        min-height: 32px;
+      }
+
       > div {
         > button {
           background-color: $box-bg;
           border-radius: 0;
           color: $light-font-color;
           transition: background-color .2s ease-in-out;
+
+          @media all and (max-width: 660px) {
+            padding: 0;
+          }
 
           &:hover {
             background-color: $decor-color;
@@ -62,7 +70,30 @@
       table {
         width: 100%;
 
+        thead {
+          @media all and (max-width: $screen-sm-max) {
+            display: none;
+          }
+        }
+
+        tbody {
+          @media all and (max-width: $screen-sm-max) {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+          }
+        }
+
         tr {
+          @media all and (max-width: $screen-sm-max) {
+            border-bottom: 1px solid color.adjust($box-bg, $lightness: 10%);
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 5px;
+            padding-bottom: 5px;
+            width: 100%;
+          }
+
           &:last-of-type {
             td {
               border-bottom: 0;
@@ -90,6 +121,11 @@
         td {
           border-bottom: 1px solid color.adjust($box-bg, $lightness: 10%);
           font-size: px-to-rem(14);
+
+          @media all and (max-width: $screen-sm-max) {
+            border-bottom: 0;
+            padding: 6px 0;
+          }
         }
       }
     }
