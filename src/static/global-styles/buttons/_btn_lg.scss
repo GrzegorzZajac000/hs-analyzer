@@ -7,4 +7,11 @@
   height: 48px;
   line-height: 48px;
   padding: 0 40px;
+
+  @media all and (max-width: 660px) {
+    font-size: px-to-rem(14);
+    height: 36px;
+    line-height: 36px;
+    padding: 0 20px;
+  }
 }

@@ -130,11 +130,11 @@ class Connectivity extends BaseComponent {
         <div className='connectivity-address' key={i}>
           <div className='container-fluid'>
             <div className='row connectivity-address-api'>
-              <div className='col-3'>
+              <div className='col-12 col-sm-6 col-md-3'>
                 <h2>Hotspot IP</h2>
                 <h3>{ip}</h3>
               </div>
-              <div className='col-3'>
+              <div className='col-12 col-sm-6 col-md-3'>
                 <h2>Hotspot port</h2>
                 <h3>{port}</h3>
               </div>
@@ -143,7 +143,7 @@ class Connectivity extends BaseComponent {
               <div className='col-6 connectivity-address-buttons'>
                 <FormButton className='btn btn-decor btn-lg' onClick={() => this.checkPortState(ip, port)} disabled={this.state.loading}>Check port state</FormButton>
                 <FormButton className='btn btn-decor btn-lg' onClick={() => this.ping(ip)} disabled={this.state.loading}>Ping</FormButton>
-                <FormButton className='btn btn-warning btn-lg' onClick={() => this.refreshInfo()} disabled={this.state.loading}>Refresh Hotspot Info</FormButton>
+                <FormButton className='btn btn-warning btn-lg' onClick={() => this.refreshInfo()} disabled={this.state.loading}>Refresh HS Info</FormButton>
               </div>
             </div>
           </div>
