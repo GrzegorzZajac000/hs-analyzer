@@ -187,7 +187,7 @@ class Donate extends BaseComponent {
       <section className='donate route-section'>
         <div className='container-fluid'>
           <div className='row'>
-            <div className='col-6'>
+            <div className='col-12 col-lg-6'>
               <h2>Donate</h2>
               <p>Here you can buy me a coffee with a donate in HNT. Scan QR code below or copy wallet address and make donate.</p>
               <p>If you are doing it manually, use comma not dot. There is no minimum amount and donation isn't required to access all the features of this tool.</p>
@@ -208,7 +208,7 @@ class Donate extends BaseComponent {
                 <DonateAddress />
               </div>
             </div>
-            <div className='col-6'>
+            <div className='col-12 col-lg-6'>
               <div className='donate-info'>
                 <h3>Thanks to donors from last 30 days</h3>
                 <div className='donate-history'>

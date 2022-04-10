@@ -46,6 +46,7 @@
 
       th {
         color: $light-font-color;
+        padding: 0 7px;
 
         &:last-of-type {
           text-align: right;
@@ -53,14 +54,26 @@
       }
 
       td {
-        padding: 7px 0;
+        padding: 7px;
 
         &:last-of-type {
           text-align: right;
         }
 
         a {
+          display: inline-block;
           transition: color .2s ease-in-out;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+          @media all and (max-width: 1700px) {
+            width: 250px;
+          }
+
+          @media all and (max-width: $screen-md-max) {
+            width: 150px;
+          }
 
           &:hover {
             color: $decor-color;
@@ -74,8 +87,17 @@
     margin-top: 30px;
 
     &-box {
-      margin: 0 auto;
+      margin: 15px auto 0;
+      max-width: 100%;
       width: 400px;
+
+      @media all and (max-width: 1350px) {
+        width: 300px;
+      }
+
+      canvas {
+        max-width: 100%;
+      }
     }
   }
 
