@@ -24,6 +24,16 @@
     max-width: 60%;
     text-align: center;
 
+    @media all and (max-width: $screen-sm-max) {
+      font-size: px-to-rem(24);
+      max-width: 80%;
+    }
+
+    @media all and (max-width: 660px) {
+      font-size: px-to-rem(22);
+      max-width: 100%;
+    }
+
     strong {
       color: $danger;
     }
