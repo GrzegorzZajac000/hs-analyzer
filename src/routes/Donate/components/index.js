@@ -142,19 +142,7 @@ class Donate extends BaseComponent {
         {
           label: 'HNT',
           data: dataset,
-          backgroundColor: [
-            '#4f6980',
-            '#849db1',
-            '#a2ceaa',
-            '#638b66',
-            '#bfbb60',
-            '#f47942',
-            '#fbb04e',
-            '#b66353',
-            '#d7ce9f',
-            '#b9aa97',
-            '#7e756d'
-          ],
+          backgroundColor: ['#4f6980', '#849db1', '#a2ceaa', '#638b66', '#bfbb60', '#f47942', '#fbb04e', '#b66353', '#d7ce9f', '#b9aa97', '#7e756d'],
           borderColor: '#1b1c26',
           borderWidth: 1
         }
@@ -168,7 +156,7 @@ class Donate extends BaseComponent {
           enabled: true,
           callbacks: {
             label: function (tooltipItem) {
-              return `${tooltipItem.formattedValue} HNT`;
+              return `${tooltipItem.label}: ${tooltipItem.formattedValue} HNT`;
             }
           }
         },
@@ -195,7 +183,7 @@ class Donate extends BaseComponent {
               <div className='donate-content'>
                 <div className='donate-qr'>
                   <div className='donate-qr-box'>
-                    <QRCode value={JSON.stringify(this.state.qr)} size={256} level='L' />
+                    <QRCode value={JSON.stringify(this.state.qr)} size={200} level='L' />
                   </div>
                 </div>
 
