@@ -101,6 +101,7 @@ class TopBar extends BaseComponent {
               onChange={this.handleChange}
               value={isCurrentHS(this.props.currentHS) ? this.props.hsList[this.props.currentHS] : { label: 'Add new hotspot', value: 'new-hs' }}
               getOptionLabel={getOptionLabel}
+              isSearchable={false}
             />
             <div className={'top-bar-left-hs-buttons' + (isCurrentHS(this.props.currentHS) ? '' : ' hidden')}>
               <button className='btn btn-sm btn-decor' onClick={this.handleHSInfoClick}>HS Info</button>
