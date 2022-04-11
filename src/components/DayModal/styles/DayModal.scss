@@ -22,6 +22,10 @@
   h2 {
     font-size: px-to-rem(32);
     font-weight: 700;
+
+    @media all and (max-width: $screen-sm-max) {
+      font-size: px-to-rem(26);
+    }
   }
 
   h3 {
@@ -30,5 +34,9 @@
     margin-bottom: 20px;
     word-break: break-word;
     white-space: pre-wrap;
+
+    @media all and (max-width: $screen-sm-max) {
+      font-size: px-to-rem(12);
+    }
   }
 }

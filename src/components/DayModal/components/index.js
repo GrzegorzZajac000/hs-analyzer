@@ -128,6 +128,7 @@ class DayModal extends BaseComponent {
         <h2>{day}</h2>
 
         <Bar
+          height={200}
           options={chartOptions(() => {}, { earnings: false })}
           data={{ labels, datasets: chartDataset }}
         />
