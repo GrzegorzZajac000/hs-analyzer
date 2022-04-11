@@ -5,18 +5,22 @@ const chartWatermark = {
       return false;
     }
 
+    const text = 'hs-analyzer.com';
+
     const ctx = chart.ctx;
-    const width = chart.chartArea.width;
-    const height = chart.chartArea.height;
+    const width = chart.width;
+    const height = chart.height;
 
-    ctx.globalAlpha = 0.75;
+    ctx.font = 'normal normal 700 36px Lato, sans-serif';
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
 
-    ctx.font = 'normal normal 700 48px Lato, sans-serif';
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
-    ctx.textAlign = 'center';
-    ctx.fillText('hs-analyzer.com', width / 2, height / 2);
+    const textWidth = ctx.measureText(text).width;
 
-    ctx.globalAlpha = 1;
+    ctx.fillText(
+      text,
+      (width / 2) - (textWidth / 2),
+      (height / 2) - (36 / 2)
+    );
   }
 };
 
