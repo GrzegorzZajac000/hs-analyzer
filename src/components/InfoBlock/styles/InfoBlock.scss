@@ -9,6 +9,7 @@
   margin-bottom: 20px;
   margin-right: 20px;
   padding: 20px;
+  transition: max-width .2s ease-in-out;
 
   @media all and (max-width: $screen-sm-max) {
     border-radius: 7px;
