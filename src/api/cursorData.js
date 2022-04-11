@@ -18,7 +18,7 @@ const cursorData = (instance, path, loadingStateUpdate, config) => {
 
       while (res.data.cursor) {
         url = URLBuilder(`${instance.defaults.baseURL}${path}?cursor=${res.data.cursor}`, config);
-        await wait(100);
+        await wait(1001);
         res = await instance.get(url);
         data.push(res.data.data);
 
