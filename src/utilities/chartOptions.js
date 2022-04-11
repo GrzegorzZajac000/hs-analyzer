@@ -36,6 +36,13 @@ const chartOptions = (onClick, config = {
       chartWatermark: true
     },
     scales: {
+      x: {
+        ticks: {
+          autoSkip: true,
+          minRotation: 90,
+          maxRotation: 90
+        }
+      },
       dataAxis: {
         display: true,
         beginAtZero: true,
@@ -57,6 +64,7 @@ const chartOptions = (onClick, config = {
       }
     },
     responsive: true,
+    maintainAspectRatio: true,
     interaction: { mode: 'index', intersect: true },
     onClick
   };
