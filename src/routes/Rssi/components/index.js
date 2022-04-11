@@ -169,18 +169,18 @@ class Rssi extends BaseComponent {
     return (
       <section className='rssi route-section'>
         <div className='container-fluid'>
-          <div className='row'>
-            <div className='col-6'>
-              <WitnessInvalids sentData={this.state.sentBeacon} witnessedData={this.state.witnessedBeacon} />
-            </div>
-            <div className='col-6'>
+          <div className='row rssi-box-row'>
+            <div className='col-12 col-md-6 col-xl-4'>
               <RSSIChart data={this.state.witnessedBeacon} earnings={this.state.earnings} config={this.state.config} />
             </div>
-            <div className='col-6'>
+            <div className='col-12 col-md-6 col-xl-4'>
               <BeaconsChart data={this.state.sentBeacon} earnings={this.state.earnings} config={this.state.config} />
             </div>
-            <div className='col-6'>
+            <div className='col-12 col-md-6 col-xl-4'>
               <BeaconsValidChart data={this.state.sentBeacon} earnings={this.state.earnings} config={this.state.config} />
+            </div>
+            <div className='col-12 col-md-6 col-xl-12'>
+              <WitnessInvalids sentData={this.state.sentBeacon} witnessedData={this.state.witnessedBeacon} />
             </div>
           </div>
         </div>

@@ -4,16 +4,87 @@
 .rssi {
   width: auto;
 
+  &-box-row {
+    > div {
+      @media all and (min-width: 1201px) and (max-width: 1600px) {
+        flex: 0 0 auto;
+        width: 50%;
+      }
+
+      @media all and (max-width: $screen-sm-max) {
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
   &-box {
     background: $light-bg;
     border-radius: 8px;
-    margin-bottom: 40px;
+    height: 100%;
     padding: 16px;
+
+    @media all and (max-width: $screen-sm-max) {
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    &.witness-invalids {
+      margin-top: 20px;
+
+      @media all and (max-width: $screen-sm-max) {
+        margin-top: 0;
+      }
+    }
+
+    &.beacons-valid-chart {
+      @media all and (max-width: 1600px) {
+        margin-top: 20px;
+      }
+
+      @media all and (max-width: $screen-sm-max) {
+        margin-top: 0;
+      }
+    }
+
+    &-columns {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-between;
+
+      > div {
+        margin-bottom: 20px;
+        width: 49%;
+
+        @media all and (max-width: 1600px) {
+          width: 100%;
+        }
+
+        @media all and (max-width: 1420px) {
+          margin-bottom: 10px;
+        }
+
+        @media all and (max-width: $screen-md-max) {
+          margin-bottom: 5px;
+        }
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+
+        h2 {
+          @media all and (max-width: 1600px) {
+            margin-bottom: 5px;
+          }
+        }
+      }
+    }
 
     &-legend {
       display: flex;
       flex-direction: row-reverse;
-      font-size: 12px;
+      font-size: px-to-rem(12);
       justify-content: flex-end;
       margin-top: 10px;
       width: 100%;
@@ -27,12 +98,21 @@
         flex-direction: column;
         margin-right: 10px;
 
+        &:first-of-type {
+          margin-right: 0;
+        }
+
         &-box {
           border-radius: 4px;
           display: block;
           height: 24px;
           margin: 0 auto 4px;
           width: 24px;
+
+          @media all and (max-width: 1200px) {
+            height: 18px;
+            width: 18px;
+          }
         }
 
         &-label {
@@ -48,6 +128,10 @@
       justify-content: space-between;
       margin-bottom: 10px;
 
+      @media all and (max-width: 1600px) {
+        flex-wrap: wrap;
+      }
+
       &:last-of-type {
         margin-bottom: 0;
       }
@@ -60,13 +144,57 @@
         text-align: center;
         width: 125px;
 
+        @media all and (max-width: 1420px) {
+          border-radius: 8px;
+          padding: 8px;
+          width: 22.5%;
+        }
+
+        @media all and (max-width: $screen-md-max) {
+          border-radius: 4px;
+          padding: 4px;
+        }
+
+        @media all and (max-width: 480px) {
+          margin-bottom: 5px;
+          width: 49%;
+        }
+
         &.small {
           border-radius: 10px;
           padding: 10px;
           width: auto;
 
+          @media all and (max-width: 1600px) {
+            border-radius: 8px;
+            padding: 8px;
+            margin-bottom: 5px;
+            width: 30%;
+
+            &:nth-last-of-type(1),
+            &:nth-last-of-type(2),
+            &:nth-last-of-type(3) {
+              margin-bottom: 0;
+            }
+          }
+
+          @media all and (max-width: $screen-md-max) {
+            border-radius: 4px;
+            padding: 4px;
+          }
+
+          h4 {
+            @media all and (max-width: 1600px) {
+              font-size: px-to-rem(20);
+            }
+          }
+
           h5 {
             font-size: px-to-rem(14);
+
+            @media all and (max-width: 1600px) {
+              font-size: px-to-rem(12);
+            }
           }
 
           h6 {
@@ -91,11 +219,24 @@
           font-size: px-to-rem(18);
           font-weight: 400;
           margin-bottom: 5px;
+
+          @media all and (max-width: 1420px) {
+            font-size: px-to-rem(16);
+            margin-bottom: 0;
+          }
         }
 
         h4 {
           font-size: px-to-rem(28);
           font-weight: 700;
+
+          @media all and (max-width: 1420px) {
+            font-size: px-to-rem(24);
+          }
+
+          @media all and (max-width: $screen-md-max) {
+            font-size: px-to-rem(20);
+          }
         }
       }
     }
@@ -104,6 +245,10 @@
       color: $light-font-color;
       font-size: px-to-rem(22);
       margin-bottom: 10px;
+
+      @media all and (max-width: 1420px) {
+        font-size: px-to-rem(18);
+      }
     }
   }
 }

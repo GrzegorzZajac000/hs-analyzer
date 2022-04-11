@@ -105,10 +105,11 @@ class BeaconsValidChart extends BaseComponent {
 
     return (
       <React.Fragment>
-        <div className='rssi-box'>
+        <div className='rssi-box beacons-valid-chart'>
           <h2>Beacons Valid Chart</h2>
 
           <Bar
+            height={200}
             options={chartOptions((e, elements) => {
               try {
                 const dayData = this.state.daysDataset[elements[0].index];

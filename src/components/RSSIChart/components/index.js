@@ -102,6 +102,7 @@ class RSSIChart extends BaseComponent {
           <h2>RSSI Chart</h2>
 
           <Bar
+            height={200}
             options={chartOptions((e, elements) => {
               try {
                 const dayData = this.state.daysDataset[elements[0].index];
