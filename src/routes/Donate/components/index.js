@@ -3,10 +3,9 @@ import '../styles/Donate.scss';
 import QRCode from 'react-qr-code';
 import DonateAddress from '../../../components/DonateAddress';
 import HeliumAPI from '../../../api/HeliumAPI';
-import { toast } from 'react-toastify';
 import Flag from 'react-world-flags';
 import { Pie } from 'react-chartjs-2';
-import { arrayUnique, BaseComponent } from '../../../utilities';
+import { arrayUnique, BaseComponent, sendErrorToast } from '../../../utilities';
 import pLimit from 'p-limit';
 
 const limit = pLimit(1);
@@ -70,7 +69,7 @@ class Donate extends BaseComponent {
       })
       .catch(err => {
         console.error(err);
-        toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
+        sendErrorToast('Something went wrong with Helium API. Try one more time');
       });
   }
 

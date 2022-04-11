@@ -1,9 +1,8 @@
 import React from 'react';
 import '../styles/Snr.scss';
-import { BaseComponent, generateDateConfig } from '../../../utilities';
+import { BaseComponent, generateDateConfig, sendErrorToast } from '../../../utilities';
 import PropTypes from 'prop-types';
 import HeliumAPI from '../../../api/HeliumAPI';
-import { toast } from 'react-toastify';
 import { getDistance } from 'geolib';
 import DataTable from 'react-data-table-component';
 import ExpandedComponent from './ExpandedComponent';
@@ -147,7 +146,7 @@ class Snr extends BaseComponent {
       this.updateState({ data, loaded: true });
     }).catch(err => {
       console.error(err);
-      toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
+      sendErrorToast('Something went wrong with Helium API. Try one more time');
     });
   }
 

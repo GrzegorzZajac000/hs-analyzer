@@ -1,8 +1,7 @@
 import React from 'react';
 import '../styles/RSSIChart.scss';
 import PropTypes from 'prop-types';
-import { BaseComponent, chartOptions, dateUtility, generateLegend, generateLabels } from '../../../utilities';
-import { toast } from 'react-toastify';
+import { BaseComponent, chartOptions, dateUtility, generateLegend, generateLabels, sendErrorToast } from '../../../utilities';
 import { Bar } from 'react-chartjs-2';
 import DayModal from '../../DayModal';
 
@@ -28,7 +27,7 @@ class RSSIChart extends BaseComponent {
       .then(this.generateData)
       .catch(err => {
         console.error(err);
-        toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
+        sendErrorToast('Something went wrong with Helium API. Try one more time');
       })
   }
 

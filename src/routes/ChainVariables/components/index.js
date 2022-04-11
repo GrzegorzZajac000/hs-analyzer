@@ -1,8 +1,7 @@
 import React from 'react';
 import '../styles/ChainVariables.scss';
-import { BaseComponent } from '../../../utilities';
+import { BaseComponent, sendErrorToast } from '../../../utilities';
 import HeliumAPI from '../../../api/HeliumAPI';
-import { toast } from 'react-toastify';
 import ReactJson from 'react-json-view';
 
 class ChainVariables extends BaseComponent {
@@ -22,7 +21,7 @@ class ChainVariables extends BaseComponent {
       })
       .catch(err => {
         console.error(err);
-        toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
+        sendErrorToast('Something went wrong with Helium API. Try one more time');
       });
   }
 

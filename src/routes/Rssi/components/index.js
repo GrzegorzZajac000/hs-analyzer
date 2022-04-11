@@ -1,10 +1,9 @@
 import React from 'react';
 import '../styles/Rssi.scss';
 import HeliumAPI from '../../../api/HeliumAPI';
-import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { BeaconsChart, BeaconsValidChart, RSSIChart, WitnessInvalids } from '../../../components';
-import { BaseComponent, generateDateConfig } from '../../../utilities';
+import { BaseComponent, generateDateConfig, sendErrorToast } from '../../../utilities';
 import { Navigate } from 'react-router-dom';
 import pLimit from 'p-limit';
 
@@ -86,7 +85,7 @@ class Rssi extends BaseComponent {
       })
       .catch(err => {
         console.error(err);
-        toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
+        sendErrorToast('Something went wrong with Helium API. Try one more time');
       });
   }
 

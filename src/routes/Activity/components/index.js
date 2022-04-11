@@ -2,9 +2,8 @@ import React from 'react';
 import '../styles/Activity.scss';
 import HeliumAPI from '../../../api/HeliumAPI';
 import PropTypes from 'prop-types';
-import { BaseComponent, generateDateConfig, GetTimeAgo } from '../../../utilities';
+import { BaseComponent, generateDateConfig, GetTimeAgo, sendErrorToast } from '../../../utilities';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { toast } from 'react-toastify';
 import { getDistance } from 'geolib';
 import { CashCoin, Eye, Send, BroadcastPin, Truck, ConeStriped } from 'react-bootstrap-icons';
 import { Navigate } from 'react-router-dom';
@@ -87,7 +86,7 @@ class Activity extends BaseComponent {
       })
       .catch(err => {
         console.error(err);
-        toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
+        sendErrorToast('Something went wrong with Helium API. Try one more time');
       });
   }
 

@@ -3,7 +3,7 @@ import '../styles/HSInfoModal.scss';
 import Modal from 'react-bootstrap/Modal';
 import PropTypes from 'prop-types';
 import { X } from 'react-bootstrap-icons';
-import { BaseComponent, HSName, isCurrentHS } from '../../../utilities';
+import { BaseComponent, HSName, isCurrentHS, sendErrorToast } from '../../../utilities';
 import HeliumAPI from '../../../api/HeliumAPI';
 import { toast } from 'react-toastify';
 import { FormButton } from '../../';
@@ -39,8 +39,7 @@ class HSInfoModal extends BaseComponent {
         .catch(err => {
           console.error(err);
           this.updateState({ refreshing: false });
-
-          toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
+          sendErrorToast('Something went wrong with Helium API. Try one more time');
         });
     });
   }

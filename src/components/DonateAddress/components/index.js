@@ -16,9 +16,7 @@ class DonateAddress extends BaseComponent {
   }
 
   handleCopy () {
-    toast.success('Wallet address copied', {
-      theme: 'dark'
-    });
+    toast.success('Wallet address copied', { theme: 'dark' });
   }
 
   render () {

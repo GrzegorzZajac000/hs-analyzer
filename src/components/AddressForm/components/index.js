@@ -2,9 +2,8 @@ import React from 'react';
 import '../styles/AddressForm.scss';
 import { Form, Field } from 'react-final-form';
 import HeliumAPI from '../../../api/HeliumAPI';
-import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
-import { BaseComponent, HSName } from '../../../utilities';
+import { BaseComponent, HSName, sendErrorToast } from '../../../utilities';
 import { FormButton } from '../../';
 
 class AddressForm extends BaseComponent {
@@ -49,7 +48,7 @@ class AddressForm extends BaseComponent {
       .then(() => this.props.useHS(this.props.hsList.length - 1))
       .catch(err => {
         console.error(err);
-        toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
+        sendErrorToast('Something went wrong with Helium API. Try one more time');
       });
   }
 

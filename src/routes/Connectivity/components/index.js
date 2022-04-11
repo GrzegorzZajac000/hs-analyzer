@@ -1,8 +1,7 @@
 import React from 'react';
 import '../styles/Connectivity.scss';
-import { BaseComponent, HSName } from '../../../utilities';
+import { BaseComponent, HSName, sendErrorToast } from '../../../utilities';
 import ConnectivityAPI from '../../../api/ConnectivityAPI';
-import { toast } from 'react-toastify';
 import HeliumAPI from '../../../api/HeliumAPI';
 import PropTypes from 'prop-types';
 import { FormButton } from '../../../components';
@@ -50,7 +49,7 @@ class Connectivity extends BaseComponent {
         })
         .catch(err => {
           console.error(err);
-          toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
+          sendErrorToast('Something went wrong with Helium API. Try one more time');
           this.updateState({ loading: false });
         });
     });
@@ -72,7 +71,7 @@ class Connectivity extends BaseComponent {
         })
         .catch(err => {
           console.error(err);
-          toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
+          sendErrorToast('Something went wrong with Helium API. Try one more time');
           this.updateState({ loading: false });
         });
     });
@@ -103,7 +102,7 @@ class Connectivity extends BaseComponent {
         .catch(err => {
           console.error(err);
           this.updateState({ loading: false });
-          toast.error('Something went wrong with Helium API. Try one more time', { theme: 'dark' });
+          sendErrorToast('Something went wrong with Helium API. Try one more time');
         });
     });
   }
