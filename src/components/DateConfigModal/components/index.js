@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../styles/DateConfigModal.scss';
 import Modal from 'react-bootstrap/Modal';
 import PropTypes from 'prop-types';
-import { BaseComponent } from '../../../utilities';
+import { BaseComponent, Condition } from '../../../utilities';
 import Calendar from 'react-calendar';
 import { Form, Field } from 'react-final-form';
 
@@ -113,15 +113,17 @@ class DateConfigModal extends BaseComponent {
                   </div>
                 </div>
                 <div className='date-config-form-days-custom'>
-                  <h3>If custom, select date range</h3>
-                  <Field name='custom-dates-calendar'>
-                    {({ input, meta }) => (
-                      <React.Fragment>
-                        <CalendarComponent {...input} defaultView='month' minDetail='month' selectRange />
-                        <p className='input-error'>{meta.submitFailed && meta.error}</p>
-                      </React.Fragment>
-                    )}
-                  </Field>
+                  <Condition when='days' is='custom'>
+                    <h3>If custom, select date range</h3>
+                    <Field name='custom-dates-calendar'>
+                      {({ input, meta }) => (
+                        <React.Fragment>
+                          <CalendarComponent {...input} defaultView='month' minDetail='month' selectRange />
+                          <p className='input-error'>{meta.submitFailed && meta.error}</p>
+                        </React.Fragment>
+                      )}
+                    </Field>
+                  </Condition>
                 </div>
                 <div className='date-config-form-buttons'>
                   <button
