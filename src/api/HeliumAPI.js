@@ -5,7 +5,7 @@ import retry from 'axios-retry-after';
 import rateLimit from 'axios-rate-limit';
 
 const instance = rateLimit(axios.create({
-  baseURL: process.env.NODE_ENV === 'development' ? 'http://127.0.0.1/api' : 'https://api.hs-analyzer.com/api',
+  baseURL: process.env.NODE_ENV === 'development' ? 'https://api.hs-analyzer.com/api' : 'https://api.hs-analyzer.com/api',
   timeout: 120000,
   headers: {
     'Cache-Control': 'max-age=60',
