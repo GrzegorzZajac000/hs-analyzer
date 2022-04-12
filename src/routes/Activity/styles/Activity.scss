@@ -31,6 +31,14 @@
       width: calc(49% - 7.5px);
     }
 
+    &.activity-error {
+      .activity-item-icon {
+        > div {
+          background-color: $activity-error-color;
+        }
+      }
+    }
+
     &.activity-reward {
       .activity-item-icon {
         > div {

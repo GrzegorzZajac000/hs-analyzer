@@ -5,8 +5,15 @@ import PropTypes from 'prop-types';
 import { BaseComponent, generateDateConfig, GetTimeAgo, noExponents, sendErrorToast } from '../../../utilities';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { getDistance } from 'geolib';
-import { CashCoin, Eye, Send, BroadcastPin, Truck, ConeStriped } from 'react-bootstrap-icons';
+import { CashCoin, Eye, Send, BroadcastPin, Truck, ConeStriped, Bug } from 'react-bootstrap-icons';
 import { Navigate } from 'react-router-dom';
+
+const errorActivity = {
+  name: 'API Error - Empty Activity',
+  icon: <Bug size={18} />,
+  className: 'activity-error',
+  content: ''
+};
 
 class Activity extends BaseComponent {
   constructor (props) {
@@ -92,7 +99,7 @@ class Activity extends BaseComponent {
 
   generateRewards (activity) {
     if (!activity) {
-      return null;
+      return errorActivity;
     }
 
     return {
@@ -122,7 +129,7 @@ class Activity extends BaseComponent {
 
   generateTransferPackets (activity) {
     if (!activity) {
-      return null;
+      return errorActivity;
     }
 
     return {
@@ -157,7 +164,7 @@ class Activity extends BaseComponent {
 
   generateWitnessedBeacon (activity, hs) {
     if (!activity || !hs) {
-      return null;
+      return errorActivity;
     }
 
     const witnessedData = activity.path[0].witnesses.filter(item => item.gateway === hs.data.address);
@@ -190,7 +197,7 @@ class Activity extends BaseComponent {
 
   generateBroadcastedBeacon (activity) {
     if (!activity) {
-      return null;
+      return errorActivity;
     }
 
     const valid = activity.path[0].witnesses.filter(witness => witness.is_valid);
