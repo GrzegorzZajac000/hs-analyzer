@@ -16,7 +16,7 @@
   <script data-cfasync="false">!function(t){"use strict";t.loadCSS||(t.loadCSS=function(){});var e=loadCSS.relpreload={};if(e.support=function(){var e;try{e=t.document.createElement("link").relList.supports("preload")}catch(t){e=!1}return function(){return e}}(),e.bindMediaToggle=function(t){var e=t.media||"all";function a(){t.addEventListener?t.removeEventListener("load",a):t.attachEvent&&t.detachEvent("onload",a),t.setAttribute("onload",null),t.media=e}t.addEventListener?t.addEventListener("load",a):t.attachEvent&&t.attachEvent("onload",a),setTimeout(function(){t.rel="stylesheet",t.media="only x"}),setTimeout(a,3e3)},e.poly=function(){if(!e.support())for(var a=t.document.getElementsByTagName("link"),n=0;n<a.length;n++){var o=a[n];"preload"!==o.rel||"style"!==o.getAttribute("as")||o.getAttribute("data-loadcss")||(o.setAttribute("data-loadcss",!0),e.bindMediaToggle(o))}},!e.support()){e.poly();var a=t.setInterval(e.poly,500);t.addEventListener?t.addEventListener("load",function(){e.poly(),t.clearInterval(a)}):t.attachEvent&&t.attachEvent("onload",function(){e.poly(),t.clearInterval(a)})}"undefined"!=typeof exports?exports.loadCSS=loadCSS:t.loadCSS=loadCSS}("undefined"!=typeof global?global:this);</script>
   <% } %>
 
-  <meta name="copyright" content="">
+  <meta name="copyright" content="HS-Analyzer">
   <meta name="language" content="EN">
   <meta name="robots" content="index,follow">
   <meta name="Classification" content="Business">
@@ -40,6 +40,7 @@
   <meta name="apple-mobile-web-app-title" content="HS Analyzer">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
   <!-- Google Chrome Bar Color -->
   <meta name="theme-color" content="#FFF">
@@ -55,10 +56,40 @@
   <meta name="twitter:creator" content="">
 
   <% if (htmlWebpackPlugin.options.isProd) { %>
-  <link rel="manifest" href="<%= htmlWebpackPlugin.options.path %>favicon/manifest.json">
+  <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="/favicon/apple-touch-icon-167x167.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon-180x180.png">
+  <link rel="apple-touch-icon" sizes="1024x1024" href="/favicon/apple-touch-icon-1024x1024.png">
+  <link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 1)" href="/favicon/apple-touch-startup-image-320x460.png">
+  <link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)" href="/favicon/apple-touch-startup-image-640x920.png">
+  <link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" href="/favicon/apple-touch-startup-image-640x1096.png">
+  <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" href="/favicon/apple-touch-startup-image-750x1294.png">
+  <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 3)" href="/favicon/apple-touch-startup-image-1182x2208.png">
+  <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3)" href="/favicon/apple-touch-startup-image-1242x2148.png">
+  <link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 1)" href="/favicon/apple-touch-startup-image-748x1024.png">
+  <link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)" href="/favicon/apple-touch-startup-image-1496x2048.png">
+  <link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 1)" href="/favicon/apple-touch-startup-image-768x1004.png">
+  <link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)" href="/favicon/apple-touch-startup-image-1536x2008.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="228x228" href="/favicon/coast-228x228.png">
+  <link rel="manifest" href="/favicon/manifest.json">
+  <link rel="shortcut icon" href="/favicon/favicon.ico">
+  <link rel="yandex-tableau-widget" href="/favicon/yandex-browser-manifest.json">
+  <meta name="msapplication-TileColor" content="#fff">
+  <meta name="msapplication-TileImage" content="/favicon/mstile-144x144.png">
+  <meta name="msapplication-config" content="/favicon/browserconfig.xml">
   <% } %>
 
   <title>HS Analyzer - Helium hotspot tool for analysis</title>
+  <meta name="description" content="HS Analyzer is tool for Helium Project Hotspot. Check your RSSI, valid/invalid witnesses and more..."/>
 
   <style>#app{font-size: 0;}#app > *{font-size: 1rem;}.preload{-webkit-box-align:center;-webkit-box-pack:center;-webkit-align-items:center;align-items:center;background-color:#1b1c26;display:-webkit-box;display:-webkit-flex;display:flex;height:100vh;-webkit-justify-content:center;justify-content:center;opacity:0;position:fixed;top:0;-webkit-transition:opacity .4s ease-in-out,visibility 0 .4s;transition:opacity .4s ease-in-out,visibility 0 .4s;visibility:hidden;width:100vw;z-index:9996}.preload.app-preload{z-index:9999}.preload.show-preloader{opacity:1;visibility:visible}.preload-circle{display:inline-block;height:80px;position:relative;width:80px}.preload-circle div{-webkit-animation:preload 1.5s cubic-bezier(0,.2,.8,1) infinite;animation:preload 1.5s cubic-bezier(0,.2,.8,1) infinite;border:4px solid #cef;border-radius:50%;opacity:1;position:absolute}.preload-circle div:nth-child(2){-webkit-animation-delay:-.5s;animation-delay:-.5s}.preload-progress{color:#fff;position:absolute;text-align:center;top:50%;-webkit-transform:translateY(40px);transform:translateY(40px)}.preload-progress-entries{font-size:1rem;font-weight:700}.preload-progress-joke{font-size:.75rem;margin-top:3px}@-webkit-keyframes preload{0%{height:0;left:36px;opacity:1;top:36px;width:0}to{height:72px;left:0;opacity:0;top:0;width:72px}}@keyframes preload{0%{height:0;left:36px;opacity:1;top:36px;width:0}to{height:72px;left:0;opacity:0;top:0;width:72px}}</style>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap" rel="stylesheet">

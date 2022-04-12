@@ -1,6 +1,6 @@
 const title = 'HS Analyzer - Helium hotspot tool for analysis';
 const shortName = 'HS-A';
-const domain = process.env.DOMAIN || 'node.dev';
+const domain = process.env.DOMAIN || 'hs-analyzer.com';
 
 const config = {
   title: title,
