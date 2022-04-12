@@ -2,7 +2,7 @@ import React from 'react';
 import '../styles/Activity.scss';
 import HeliumAPI from '../../../api/HeliumAPI';
 import PropTypes from 'prop-types';
-import { BaseComponent, generateDateConfig, GetTimeAgo, sendErrorToast } from '../../../utilities';
+import { BaseComponent, generateDateConfig, GetTimeAgo, noExponents, sendErrorToast } from '../../../utilities';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { getDistance } from 'geolib';
 import { CashCoin, Eye, Send, BroadcastPin, Truck, ConeStriped } from 'react-bootstrap-icons';
@@ -113,7 +113,7 @@ class Activity extends BaseComponent {
         return (
           <div className='activity-item-desc-block' key={i}>
             <p>{rewardTitle}</p>
-            <h6>{reward.amount / 100000000} HNT</h6>
+            <h6>{noExponents(reward.amount / 100000000)} HNT</h6>
           </div>
         );
       })

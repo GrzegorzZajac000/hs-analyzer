@@ -11,6 +11,7 @@ import GetTimeAgo from './GetTimeAgo';
 import HSName from './HSName';
 import isCurrentHS from './isCurrentHS';
 import MenuLink from './MenuLink';
+import noExponents from './noExponents';
 import sendErrorToast from './sendErrorToast';
 import URLBuilder from './URLBuilder';
 
@@ -28,6 +29,7 @@ export {
   HSName,
   isCurrentHS,
   MenuLink,
+  noExponents,
   sendErrorToast,
   URLBuilder
 };
