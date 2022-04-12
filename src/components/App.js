@@ -51,7 +51,7 @@ class App extends React.Component {
 
               <ToastContainer
                 position='bottom-right'
-                autoClose={5000}
+                autoClose={false}
                 newestOnTop
                 closeOnClick
                 hideProgressBar
