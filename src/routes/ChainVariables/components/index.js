@@ -37,7 +37,7 @@ class ChainVariables extends BaseComponent {
                 src={this.state.data}
                 theme='ocean'
                 iconStyle='triangle'
-                indentWidth={8}
+                indentWidth={4}
                 collapsed={false}
                 enableClipboard={false}
                 displayDataTypes={false}
