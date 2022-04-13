@@ -7,6 +7,7 @@ import Flag from 'react-world-flags';
 import { Pie } from 'react-chartjs-2';
 import { arrayUnique, BaseComponent, sendErrorToast } from '../../../utilities';
 import pLimit from 'p-limit';
+import { captureException } from '@sentry/react';
 
 const limit = pLimit(1);
 
@@ -69,6 +70,7 @@ class Donate extends BaseComponent {
       })
       .catch(err => {
         console.error(err);
+        captureException(err);
         sendErrorToast('Something went wrong with Helium API. Try one more time');
       });
   }

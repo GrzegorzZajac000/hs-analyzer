@@ -7,6 +7,7 @@ import { BaseComponent, HSName, isCurrentHS, sendErrorToast } from '../../../uti
 import HeliumAPI from '../../../api/HeliumAPI';
 import { toast } from 'react-toastify';
 import { FormButton } from '../../';
+import { captureException } from '@sentry/react';
 
 class HSInfoModal extends BaseComponent {
   constructor (props) {
@@ -38,6 +39,7 @@ class HSInfoModal extends BaseComponent {
         })
         .catch(err => {
           console.error(err);
+          captureException(err);
           this.updateState({ refreshing: false });
           sendErrorToast('Something went wrong with Helium API. Try one more time');
         });

@@ -6,6 +6,7 @@ import { BeaconsChart, BeaconsValidChart, RSSIChart, WitnessInvalids } from '../
 import { BaseComponent, generateDateConfig, sendErrorToast } from '../../../utilities';
 import { Navigate } from 'react-router-dom';
 import pLimit from 'p-limit';
+import { captureException } from '@sentry/react';
 
 const limit = pLimit(1);
 
@@ -85,6 +86,7 @@ class Rssi extends BaseComponent {
       })
       .catch(err => {
         console.error(err);
+        captureException(err);
         sendErrorToast('Something went wrong with Helium API. Try one more time');
       });
   }

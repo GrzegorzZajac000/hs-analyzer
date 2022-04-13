@@ -3,6 +3,7 @@ import '../styles/ChainVariables.scss';
 import { BaseComponent, sendErrorToast } from '../../../utilities';
 import HeliumAPI from '../../../api/HeliumAPI';
 import ReactJson from 'react-json-view';
+import { captureException } from '@sentry/react';
 
 class ChainVariables extends BaseComponent {
   constructor (props) {
@@ -21,6 +22,7 @@ class ChainVariables extends BaseComponent {
       })
       .catch(err => {
         console.error(err);
+        captureException(err);
         sendErrorToast('Something went wrong with Helium API. Try one more time');
       });
   }

@@ -7,6 +7,7 @@ import { getDistance } from 'geolib';
 import DataTable from 'react-data-table-component';
 import ExpandedComponent from './ExpandedComponent';
 import { Navigate } from 'react-router-dom';
+import { captureException } from '@sentry/react';
 
 class Snr extends BaseComponent {
   constructor (props) {
@@ -146,6 +147,7 @@ class Snr extends BaseComponent {
       this.updateState({ data, loaded: true });
     }).catch(err => {
       console.error(err);
+      captureException(err);
       sendErrorToast('Something went wrong with Helium API. Try one more time');
     });
   }

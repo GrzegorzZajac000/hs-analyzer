@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { BaseComponent, chartOptions, dateUtility, generateLegend, generateLabels, sendErrorToast } from '../../../utilities';
 import { Bar } from 'react-chartjs-2';
 import DayModal from '../../DayModal';
+import { captureException } from '@sentry/react';
 
 class BeaconsValidChart extends BaseComponent {
   constructor (props) {
@@ -27,8 +28,9 @@ class BeaconsValidChart extends BaseComponent {
       .then(this.generateData)
       .catch(err => {
         console.error(err);
+        captureException(err);
         sendErrorToast('Something went wrong with Helium API. Try one more time');
-      })
+      });
   }
 
   generateData (labels) {

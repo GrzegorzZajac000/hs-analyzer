@@ -6,6 +6,7 @@ import { BaseComponent, sendErrorToast } from '../../../utilities';
 import DataTable from 'react-data-table-component';
 import NumberFormat from 'react-number-format';
 import pLimit from 'p-limit';
+import { captureException } from '@sentry/react';
 
 const limit = pLimit(1);
 
@@ -71,6 +72,7 @@ class Info extends BaseComponent {
       return this.updateState({ data, loaded: true });
     }).catch(err => {
       console.error(err);
+      captureException(err);
       sendErrorToast('Something went wrong with Helium API. Try one more time');
     });
   }

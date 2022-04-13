@@ -5,6 +5,7 @@ import HeliumAPI from '../../../api/HeliumAPI';
 import PropTypes from 'prop-types';
 import { BaseComponent, HSName, sendErrorToast } from '../../../utilities';
 import { FormButton } from '../../';
+import { captureException } from '@sentry/react';
 
 class AddressForm extends BaseComponent {
   constructor (props) {
@@ -48,6 +49,7 @@ class AddressForm extends BaseComponent {
       .then(() => this.props.useHS(this.props.hsList.length - 1))
       .catch(err => {
         console.error(err);
+        captureException(err);
         sendErrorToast('Something went wrong with Helium API. Try one more time');
       });
   }

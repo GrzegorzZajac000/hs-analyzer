@@ -7,6 +7,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { getDistance } from 'geolib';
 import { CashCoin, Eye, Send, BroadcastPin, Truck, ConeStriped, Bug } from 'react-bootstrap-icons';
 import { Navigate } from 'react-router-dom';
+import { captureException } from '@sentry/react';
 
 const errorActivity = {
   name: 'API Error - Empty Activity',
@@ -93,6 +94,7 @@ class Activity extends BaseComponent {
       })
       .catch(err => {
         console.error(err);
+        captureException(err);
         sendErrorToast('Something went wrong with Helium API. Try one more time');
       });
   }
