@@ -16,6 +16,7 @@ class Menu extends BaseComponent {
       mobileMenuOpen: false
     };
 
+    this.handleHide = this.handleHide.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
   }
 
