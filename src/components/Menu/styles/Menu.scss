@@ -17,7 +17,7 @@
     transform: translateX(-100%);
     transition: transform .25s ease-in-out;
     width: 400px;
-    z-index: 9997;
+    z-index: 9996;
 
     &.mobile-visible {
       transform: translateX(0);
@@ -123,7 +123,7 @@
   position: absolute;
   top: 0;
   width: 60px;
-  z-index: 99999;
+  z-index: 9998;
 
   @media all and (max-width: 1021px) {
     display: block;

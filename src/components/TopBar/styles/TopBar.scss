@@ -98,6 +98,7 @@
     margin-right: 20px;
     min-width: 400px;
     width: 100%;
+    z-index: 9995;
 
     @media all and (max-width: $screen-sm-max) {
       min-width: auto;
