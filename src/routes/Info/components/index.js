@@ -29,14 +29,14 @@ class Info extends BaseComponent {
         id: 'balance',
         name: 'Balance',
         selector: row => row.balance,
-        format: row => <NumberFormat value={row.balance} displayType='text' thousandSeparator=' ' suffix=' HNT' />,
+        format: row => <NumberFormat value={row.balance / 100000000} displayType='text' thousandSeparator=' ' suffix=' HNT' />,
         sortable: true,
         right: true
       },
       {
         name: 'Staked balance',
         selector: row => row.staked_balance,
-        format: row => <NumberFormat value={row.staked_balance} displayType='text' thousandSeparator=' ' suffix=' HNT' />,
+        format: row => <NumberFormat value={row.staked_balance / 100000000} displayType='text' thousandSeparator=' ' suffix=' HNT' />,
         sortable: true,
         right: true
       }
