@@ -4,8 +4,83 @@
 .activity {
   width: 100%;
 
+  &-filter {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+
+    .react-select {
+      width: 300px;
+    }
+
+    label {
+      margin-right: 10px;
+    }
+  }
+
   &-list {
     margin-top: 20px;
+
+    &.rewards {
+      .activity-constructed-challenge,
+      .activity-witnessed-beacon,
+      .activity-broadcasted-beacon,
+      .activity-challenged-beaconer,
+      .activity-transferred-packets {
+        display: none;
+      }
+    }
+
+    &.packets {
+      .activity-constructed-challenge,
+      .activity-witnessed-beacon,
+      .activity-broadcasted-beacon,
+      .activity-challenged-beaconer,
+      .activity-reward {
+        display: none;
+      }
+    }
+
+    &.constructed-challenge {
+      .activity-transferred-packets,
+      .activity-witnessed-beacon,
+      .activity-broadcasted-beacon,
+      .activity-challenged-beaconer,
+      .activity-reward {
+        display: none;
+      }
+    }
+
+    &.challenged-beaconer {
+      .activity-transferred-packets,
+      .activity-witnessed-beacon,
+      .activity-broadcasted-beacon,
+      .activity-constructed-challenge,
+      .activity-reward {
+        display: none;
+      }
+    }
+
+    &.witnessed-beacon {
+      .activity-transferred-packets,
+      .activity-challenged-beaconer,
+      .activity-broadcasted-beacon,
+      .activity-constructed-challenge,
+      .activity-reward {
+        display: none;
+      }
+    }
+
+    &.broadcasted-beacon {
+      .activity-transferred-packets,
+      .activity-challenged-beaconer,
+      .activity-witnessed-beacon,
+      .activity-constructed-challenge,
+      .activity-reward {
+        display: none;
+      }
+    }
 
     table {
       width: 100%;
@@ -20,6 +95,10 @@
           flex-flow: row wrap;
         }
       }
+
+      tr {
+        border-bottom: 12px solid $bg;
+      }
     }
   }
 
@@ -28,7 +107,12 @@
       display: flex;
       flex-direction: column;
       margin-bottom: 15px;
+      margin-right: 15px;
       width: calc(49% - 7.5px);
+
+      &:nth-child(2n) {
+        margin-right: 0;
+      }
     }
 
     &.activity-error {
@@ -214,19 +298,6 @@
           border-bottom-left-radius: 8px;
           border-top-right-radius: 0;
         }
-      }
-    }
-  }
-
-  &-item-spacer {
-    height: 12px;
-
-    @media all and (max-width: 660px) {
-      height: 100%;
-      width: 15px;
-
-      &:nth-of-type(4n + 4) {
-        display: none;
       }
     }
   }

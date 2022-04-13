@@ -8,6 +8,7 @@ import { getDistance } from 'geolib';
 import { CashCoin, Eye, Send, BroadcastPin, Truck, ConeStriped, Bug } from 'react-bootstrap-icons';
 import { Navigate } from 'react-router-dom';
 import { captureException } from '@sentry/react';
+import Select from 'react-select';
 
 const errorActivity = {
   name: 'API Error - Empty Activity',
@@ -24,11 +25,23 @@ class Activity extends BaseComponent {
       loaded: false,
       activityData: [],
       dataLoadingLength: 0,
+      dataFilter: { label: 'All', value: 'all' },
       config: generateDateConfig(this.props.dateMode, this.props.minTime, this.props.maxTime)
     };
 
+    this.filters = [
+      { label: 'All', value: 'all' },
+      { label: 'Rewards', value: 'rewards' },
+      { label: 'Packets', value: 'packets' },
+      { label: 'Constructed challenge', value: 'constructed-challenge' },
+      { label: 'Challenged beaconer', value: 'challenged-beaconer' },
+      { label: 'Witnessed beacon', value: 'witnessed-beacon' },
+      { label: 'Broadcasted beacon', value: 'broadcasted-beacon' }
+    ];
+
     this.getHSActivity = this.getHSActivity.bind(this);
     this.handleDataLoadingUpdate = this.handleDataLoadingUpdate.bind(this);
+    this.handleFilterChange = this.handleFilterChange.bind(this);
   }
 
   componentDidMount () {
@@ -66,6 +79,10 @@ class Activity extends BaseComponent {
 
   handleDataLoadingUpdate (dataLoadingLength) {
     this.updateState({ dataLoadingLength });
+  }
+
+  handleFilterChange (dataFilter) {
+    this.updateState({ dataFilter });
   }
 
   getHSActivity () {
@@ -264,21 +281,18 @@ class Activity extends BaseComponent {
       }
 
       return (
-        <React.Fragment key={i}>
-          <tr className={'activity-item ' + item.className}>
-            <td className='activity-item-icon'>
-              <div>{item.icon}</div>
-            </td>
-            <td className='activity-item-type'>{item.name}</td>
-            <td className='activity-item-desc'>{item.content}</td>
-            <td className='activity-item-block-height'>
-              <div className='activity-item-block-height-header'>Block height</div>
-              <div className='activity-item-block-height-content'>{activity.height}</div>
-            </td>
-            <td className='activity-item-time'>{GetTimeAgo(activity.time * 1000)}</td>
-          </tr>
-          <tr className='activity-item-spacer' />
-        </React.Fragment>
+        <tr key={i} className={'activity-item ' + item.className}>
+          <td className='activity-item-icon'>
+            <div>{item.icon}</div>
+          </td>
+          <td className='activity-item-type'>{item.name}</td>
+          <td className='activity-item-desc'>{item.content}</td>
+          <td className='activity-item-block-height'>
+            <div className='activity-item-block-height-header'>Block height</div>
+            <div className='activity-item-block-height-content'>{activity.height}</div>
+          </td>
+          <td className='activity-item-time'>{GetTimeAgo(activity.time * 1000)}</td>
+        </tr>
       );
     });
   }
@@ -308,7 +322,18 @@ class Activity extends BaseComponent {
     return (
       <section className='activity route-section' id='activity-infinite-scroll'>
         <h2>Latest activity</h2>
-        <div className='activity-list'>
+        <div className='activity-filter'>
+          <label htmlFor='filter-data'>Filter:</label>
+          <Select
+            className='react-select'
+            classNamePrefix='rs'
+            options={this.filters}
+            onChange={this.handleFilterChange}
+            value={this.state.dataFilter}
+            isSearchable={false}
+          />
+        </div>
+        <div className={'activity-list' + (` ${this.state.dataFilter.value}`)}>
           <InfiniteScroll
             dataLength={this.state.activityData.length}
             next={this.getHSActivity}
