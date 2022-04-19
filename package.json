@@ -21,7 +21,7 @@
     "@babel/register": "7.17.7",
     "@babel/runtime-corejs3": "7.17.9",
     "autoprefixer": "10.4.4",
-    "babel-loader": "8.2.4",
+    "babel-loader": "8.2.5",
     "babel-plugin-transform-minify-booleans": "6.9.4",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24",
     "babel-plugin-transform-remove-console": "6.9.4",
