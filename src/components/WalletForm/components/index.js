@@ -62,7 +62,7 @@ class WalletForm extends BaseComponent {
 
           if (hsList.length > 0) {
             toast.error(`Ooops! Hotspot ${hsList[0].label} is on the list`, { theme: 'dark' });
-            return Promise.reject(new Error(`Ooops! Hotspot ${hsList[0].label} is on the list`));
+            return Promise.reject(new Error(`Ooops! Hotspot is on the list`));
           }
 
           hs.value = res.address;
