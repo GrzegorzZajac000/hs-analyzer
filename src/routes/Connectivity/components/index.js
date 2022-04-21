@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { FormButton } from '../../../components';
 import { Navigate } from 'react-router-dom';
 import { captureException } from '@sentry/react';
+import { toast } from 'react-toastify';
 
 class Connectivity extends BaseComponent {
   constructor (props) {
@@ -101,6 +102,8 @@ class Connectivity extends BaseComponent {
             loading: false,
             textarea: `${this.state.textarea}\r\n${new Date().toISOString().substring(0, 19).replace('T', ' ')} Refreshing info done for ${HSName.toView(hs.data.name)}`
           });
+
+          toast.success('Hotspot listen address updated', { theme: 'dark' });
         })
         .catch(err => {
           console.error(err);
@@ -146,7 +149,7 @@ class Connectivity extends BaseComponent {
               <div className='col-6 connectivity-address-buttons'>
                 <FormButton className='btn btn-decor btn-lg' onClick={() => this.checkPortState(ip, port)} disabled={this.state.loading}>Check port state</FormButton>
                 <FormButton className='btn btn-decor btn-lg' onClick={() => this.ping(ip)} disabled={this.state.loading}>Ping</FormButton>
-                <FormButton className='btn btn-warning btn-lg' onClick={() => this.refreshInfo()} disabled={this.state.loading}>Refresh HS Info</FormButton>
+                <FormButton className='btn btn-warning btn-lg' onClick={() => this.refreshInfo()} disabled={this.state.loading}>Refresh Hotspot IP</FormButton>
               </div>
             </div>
           </div>
