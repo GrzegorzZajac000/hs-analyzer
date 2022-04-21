@@ -182,13 +182,13 @@ class Activity extends BaseComponent {
   }
 
   generateWitnessedBeacon (activity, hs) {
-    if (!activity || !hs) {
+    if (!activity || !hs || !hs.data || !hs.data.address) {
       return errorActivity;
     }
 
     const witnessedData = activity.path[0].witnesses.filter(item => item.gateway === hs.data.address);
 
-    if (!witnessedData || witnessedData.length <= 0) {
+    if (!witnessedData || witnessedData.length <= 0 || !hs.data.lat || !hs.data.lng) {
       return null;
     }
 
