@@ -6,11 +6,11 @@ const ExpandedComponent = ({ data }) => {
   const rows = data.witnesses.map((w, i) => {
     return (
       <tr key={i}>
-        <td>{w.frequency.toFixed(2)}</td>
+        <td>{w.frequency ? w.frequency.toFixed(2) : '???'}</td>
         <td>{w.channel}</td>
         <td>{w.signal}</td>
-        <td>{w.snr.toFixed(2)}</td>
-        <td>{(w.signal - w.snr).toFixed(2)}</td>
+        <td>{w.snr ? w.snr.toFixed(2) : '???'}</td>
+        <td>{(w.signal && w.snr) ? (w.signal - w.snr).toFixed(2) : '???'}</td>
         <td>{GetTimeAgo(w.timestamp / 1000000)}</td>
       </tr>
     );

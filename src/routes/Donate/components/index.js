@@ -122,7 +122,7 @@ class Donate extends BaseComponent {
           <td>
             <a href={`https://explorer.helium.com/accounts/${donate.payer}`} target='_blank' rel='noreferrer noopener'>{donate.payer}</a>
           </td>
-          <td>{(donate.payments[0].amount / 100000000).toFixed(2)} HNT</td>
+          <td>{donate.payments[0] ? (donate.payments[0].amount / 100000000).toFixed(2) : '??? '} HNT</td>
         </tr>
       );
     });

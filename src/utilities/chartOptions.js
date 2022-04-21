@@ -23,7 +23,7 @@ const chartOptions = (onClick, config = {
             const percentage = (parseInt(context.formattedValue, 10) / total) * 100;
 
             if (context.formattedValue !== '0') {
-              return ` ${context.formattedValue}: ${percentage.toFixed(2)}%`;
+              return ` ${context.formattedValue}: ${percentage ? percentage.toFixed(2) : '??? '}%`;
             } else {
               return ` ${context.formattedValue}: 0%`;
             }

@@ -111,7 +111,7 @@ class HSInfoModal extends BaseComponent {
             </tr>
             <tr>
               <td>Reward scale</td>
-              <td>{hsInfo.reward_scale.toFixed(2)}</td>
+              <td>{hsInfo.reward_scale ? hsInfo.reward_scale.toFixed(2) : '???'}</td>
             </tr>
             <tr>
               <td>Antenna info</td>

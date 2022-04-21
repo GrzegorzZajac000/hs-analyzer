@@ -37,7 +37,7 @@ class Snr extends BaseComponent {
             { latitude: row.lat, longitude: row.lon }
           );
 
-          return `~${(distance / 1000).toFixed(2)}km`;
+          return `~${distance ? (distance / 1000).toFixed(2) : '??? '}km`;
         }
       },
       {

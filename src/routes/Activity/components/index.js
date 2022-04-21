@@ -208,7 +208,7 @@ class Activity extends BaseComponent {
       content: (
         <div className='activity-item-desc-block'>
           <p>{witnessedData[0].is_valid ? 'Valid' : 'Invalid'}</p>
-          <h6>~{(distance / 1000).toFixed(2)}km | TX Power: {(activity.path[0].receipt && activity.path[0].receipt.tx_power) || 'Unknown'} | {witnessedData[0].signal} dBm RSSI | {witnessedData[0].snr.toFixed(2)} db SNR</h6>
+          <h6>~{distance ? (distance / 1000).toFixed(2) : '??? '}km | TX Power: {(activity.path[0].receipt && activity.path[0].receipt.tx_power) || 'Unknown'} | {witnessedData[0].signal} dBm RSSI | {witnessedData[0].snr ? witnessedData[0].snr.toFixed(2) : '??? '} db SNR</h6>
         </div>
       )
     };
