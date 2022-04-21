@@ -34,6 +34,10 @@ class RSSIChart extends BaseComponent {
   }
 
   generateData (labels) {
+    if (!this.props || !this.props.data || !this.props.earnings || this.props.data.length <= 0 || this.props.earnings.length <= 0) {
+      return;
+    }
+
     const chartDataset = this.generateChartDataset();
 
     let data = this.props.data.map(action => {

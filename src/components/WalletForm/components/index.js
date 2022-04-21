@@ -58,6 +58,11 @@ class WalletForm extends BaseComponent {
           }
 
           let hsList = this.props.hsList;
+
+          if (!(typeof hsList === 'object' && !Array.isArray(hsList) && hsList !== null)) {
+            hsList = [];
+          }
+
           hsList = hsList.filter(hs => hs.value === res.address);
 
           if (hsList.length > 0) {

@@ -28,6 +28,11 @@ class NameForm extends BaseComponent {
       errors.hs = 'Your address is wrong. Check it one more time';
     } else {
       let hsList = this.props.hsList;
+
+      if (!(typeof hsList === 'object' && !Array.isArray(hsList) && hsList !== null)) {
+        hsList = [];
+      }
+
       hsList = hsList.filter(hs => hs.value === values.hs.data.address);
 
       if (hsList.length > 0) {

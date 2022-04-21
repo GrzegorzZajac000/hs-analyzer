@@ -129,6 +129,10 @@ class Donate extends BaseComponent {
   }
 
   generateDataChart () {
+    if (!this.state.donates) {
+      return null;
+    }
+
     const labels = this.state.donates.map(donate => donate.long_country).filter(arrayUnique);
     const dataset = new Array(labels.length).fill(0);
 

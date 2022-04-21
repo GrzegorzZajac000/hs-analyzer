@@ -115,6 +115,10 @@ class Connectivity extends BaseComponent {
   }
 
   generateListenAddresses () {
+    if (!this.props.hsList || !this.props.hsList[this.props.currentHS] || !this.props.hsList[this.props.currentHS].data || !this.props.hsList[this.props.currentHS].data.status || !this.props.hsList[this.props.currentHS].data.status.listen_addrs) {
+      return;
+    }
+
     const listenAddressRegex = /^\/ip4\/(.*)\/tcp\/(.*)/;
 
     const ipAdresses = this.props.hsList[this.props.currentHS].data.status.listen_addrs.filter(la => {
