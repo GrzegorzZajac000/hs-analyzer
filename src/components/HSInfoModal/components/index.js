@@ -48,7 +48,7 @@ class HSInfoModal extends BaseComponent {
 
   renderLocation (hsInfo) {
     if (!hsInfo || !hsInfo.geocode || !hsInfo.geocode.long_city || !hsInfo.geocode.long_country || !hsInfo.geocode.long_street) {
-      return '-';
+      return '???';
     }
 
     return `${hsInfo.geocode.long_city} ${hsInfo.geocode.long_street}, ${hsInfo.geocode.long_country}`;
@@ -56,7 +56,7 @@ class HSInfoModal extends BaseComponent {
 
   renderAntenna (hsInfo) {
     if (!hsInfo || !hsInfo.gain || !hsInfo.elevation) {
-      return '-';
+      return '???';
     }
 
     return `${hsInfo.gain / 10}dBi, ${hsInfo.elevation}m`;
@@ -95,19 +95,19 @@ class HSInfoModal extends BaseComponent {
           <tbody>
             <tr>
               <td>Status</td>
-              <td>{hsInfo.status.online}</td>
+              <td>{(hsInfo && hsInfo.status && hsInfo.status.online) ? hsInfo.status.online : '???'}</td>
             </tr>
             <tr>
               <td>Height</td>
-              <td>{hsInfo.status.height}</td>
+              <td>{(hsInfo && hsInfo.status && hsInfo.status.height) ? hsInfo.status.height : '???'}</td>
             </tr>
             <tr>
               <td>Last change block</td>
-              <td>{hsInfo.last_change_block}</td>
+              <td>{(hsInfo && hsInfo.last_change_block) ? hsInfo.last_change_block : '???'}</td>
             </tr>
             <tr>
               <td>Last POC challenge</td>
-              <td>{hsInfo.last_poc_challenge}</td>
+              <td>{(hsInfo && hsInfo.last_poc_challenge) ? hsInfo.last_poc_challenge : '???'}</td>
             </tr>
             <tr>
               <td>Reward scale</td>
@@ -124,18 +124,22 @@ class HSInfoModal extends BaseComponent {
             <tr>
               <td>Location hex</td>
               <td>
-                <a href={`https://explorer.helium.com/hotspots/hex/${hsInfo.location_hex}`} target='_blank' rel='noreferrer noopener'>{hsInfo.location_hex}</a>
+                {
+                  (hsInfo && hsInfo.location_hex) ? <a href={`https://explorer.helium.com/hotspots/hex/${hsInfo.location_hex}`} target='_blank' rel='noreferrer noopener'>{hsInfo.location_hex}</a> : '???'
+                }
               </td>
             </tr>
             <tr>
               <td>Owner</td>
               <td>
-                <a href={`https://explorer.helium.com/accounts/${hsInfo.owner}`} target='_blank' rel='noreferrer noopener'>{hsInfo.owner}</a>
+                {
+                  (hsInfo && hsInfo.owner) ? <a href={`https://explorer.helium.com/accounts/${hsInfo.owner}`} target='_blank' rel='noreferrer noopener'>{hsInfo.owner}</a> : '???'
+                }
               </td>
             </tr>
             <tr>
               <td>Added in block</td>
-              <td>{hsInfo.block_added}</td>
+              <td>{(hsInfo && hsInfo.block_added) ? hsInfo.block_added : '???'}</td>
             </tr>
           </tbody>
         </table>
