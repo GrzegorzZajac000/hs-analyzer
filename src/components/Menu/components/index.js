@@ -34,7 +34,7 @@ class Menu extends BaseComponent {
         <nav className={'menu' + (this.state.mobileMenuOpen ? ' mobile-visible' : '')}>
           <Link to='/' className='menu-logo'>
             <img src={Logo} alt='HS-Analyzer' />
-            <p className='menu-logo-version'>v0.2.1</p>
+            <p className='menu-logo-version'>v0.2.2</p>
           </Link>
           <ul>
             <li>

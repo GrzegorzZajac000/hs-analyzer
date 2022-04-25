@@ -3,7 +3,7 @@ import '../styles/Rssi.scss';
 import HeliumAPI from '../../../api/HeliumAPI';
 import PropTypes from 'prop-types';
 import { BeaconsChart, BeaconsValidChart, RSSIChart, WitnessInvalids } from '../../../components';
-import { BaseComponent, generateDateConfig, sendErrorToast } from '../../../utilities';
+import { BaseComponent, generateDateConfig, sendErrorToast, isCurrentHS } from '../../../utilities';
 import { Navigate } from 'react-router-dom';
 import pLimit from 'p-limit';
 import { captureException } from '@sentry/react';
@@ -92,12 +92,20 @@ class Rssi extends BaseComponent {
   }
 
   getHSActivity () {
+    if (!isCurrentHS(this.props.currentHS) || this.props.hsList.length <= 0 || !this.props.hsList[this.props.currentHS].data.address) {
+      return null;
+    }
+
     return HeliumAPI.getHotspotActivity(
       this.props.hsList[this.props.currentHS].data.address,
       this.handleDataLoadingUpdate,
       this.state.config
     )
       .then(res => {
+        if (!isCurrentHS(this.props.currentHS) || this.props.hsList.length <= 0 || !this.props.hsList[this.props.currentHS].data.address) {
+          return null;
+        }
+
         const witnessedBeacon = [];
         const sentBeacon = [];
         const addr = this.props.hsList[this.props.currentHS].data.address;
@@ -135,6 +143,10 @@ class Rssi extends BaseComponent {
   }
 
   getEarnings () {
+    if (!isCurrentHS(this.props.currentHS) || this.props.hsList.length <= 0 || !this.props.hsList[this.props.currentHS].data.address) {
+      return null;
+    }
+
     const eConfig = this.state.config;
     delete eConfig.filter_types;
 

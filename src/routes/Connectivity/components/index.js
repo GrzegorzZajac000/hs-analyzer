@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/Connectivity.scss';
-import { BaseComponent, HSName, sendErrorToast } from '../../../utilities';
+import { BaseComponent, HSName, isCurrentHS, sendErrorToast } from '../../../utilities';
 import ConnectivityAPI from '../../../api/ConnectivityAPI';
 import HeliumAPI from '../../../api/HeliumAPI';
 import PropTypes from 'prop-types';
@@ -82,6 +82,10 @@ class Connectivity extends BaseComponent {
   }
 
   refreshInfo () {
+    if (!isCurrentHS(this.props.currentHS) || this.props.hsList.length <= 0 || !this.props.hsList[this.props.currentHS].data.address) {
+      return null;
+    }
+
     const hs = this.props.hsList[this.props.currentHS];
 
     this.updateState({

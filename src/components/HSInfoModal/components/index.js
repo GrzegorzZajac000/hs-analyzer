@@ -21,6 +21,10 @@ class HSInfoModal extends BaseComponent {
   }
 
   refreshInfo () {
+    if (!isCurrentHS(this.props.currentHS) || this.props.hsList.length <= 0) {
+      return;
+    }
+
     const hs = this.props.hsList[this.props.currentHS];
 
     this.updateState({ refreshing: true }, () => {

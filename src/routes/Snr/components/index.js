@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/Snr.scss';
-import { BaseComponent, generateDateConfig, sendErrorToast } from '../../../utilities';
+import { BaseComponent, generateDateConfig, sendErrorToast, isCurrentHS } from '../../../utilities';
 import PropTypes from 'prop-types';
 import HeliumAPI from '../../../api/HeliumAPI';
 import { getDistance } from 'geolib';
@@ -32,6 +32,10 @@ class Snr extends BaseComponent {
         name: 'Distance',
         selector: row => row,
         format: row => {
+          if (!isCurrentHS(this.props.currentHS) || this.props.hsList.length <= 0 || !this.props.hsList[this.props.currentHS].data.address) {
+            return '~??? km';
+          }
+
           const distance = getDistance(
             { latitude: this.props.hsList[this.props.currentHS].data.lat, longitude: this.props.hsList[this.props.currentHS].data.lng },
             { latitude: row.lat, longitude: row.lon }
@@ -91,11 +95,19 @@ class Snr extends BaseComponent {
   }
 
   getHSActivity () {
+    if (!isCurrentHS(this.props.currentHS) || this.props.hsList.length <= 0 || !this.props.hsList[this.props.currentHS].data.address) {
+      return null;
+    }
+
     return HeliumAPI.getHotspotActivity(
       this.props.hsList[this.props.currentHS].data.address,
       this.handleDataLoadingUpdate,
       this.state.config
     ).then(res => {
+      if (!isCurrentHS(this.props.currentHS) || this.props.hsList.length <= 0 || !this.props.hsList[this.props.currentHS].data.address) {
+        return null;
+      }
+
       const witnessedBeacon = {};
       const addr = this.props.hsList[this.props.currentHS].data.address;
 

@@ -2,7 +2,14 @@ import React from 'react';
 import '../styles/Activity.scss';
 import HeliumAPI from '../../../api/HeliumAPI';
 import PropTypes from 'prop-types';
-import { BaseComponent, generateDateConfig, GetTimeAgo, noExponents, sendErrorToast } from '../../../utilities';
+import {
+  BaseComponent,
+  generateDateConfig,
+  GetTimeAgo,
+  isCurrentHS,
+  noExponents,
+  sendErrorToast
+} from '../../../utilities';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { getDistance } from 'geolib';
 import { CashCoin, Eye, Send, BroadcastPin, Truck, ConeStriped, Bug } from 'react-bootstrap-icons';
@@ -86,6 +93,10 @@ class Activity extends BaseComponent {
   }
 
   getHSActivity () {
+    if (!isCurrentHS(this.props.currentHS) || this.props.hsList.length <= 0 || !this.props.hsList[this.props.currentHS].data.address) {
+      return null;
+    }
+
     return HeliumAPI.getHotspotActivity(
       this.props.hsList[this.props.currentHS].data.address,
       this.handleDataLoadingUpdate,
