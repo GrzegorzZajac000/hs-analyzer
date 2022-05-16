@@ -19,7 +19,7 @@ class Snr extends BaseComponent {
       dataLoadingLength: 0,
       config: {
         ...generateDateConfig(this.props.dateMode, this.props.minTime, this.props.maxTime),
-        filter_types: 'poc_receipts_v1'
+        filter_types: 'poc_receipts_v1,poc_receipts_v2'
       }
     };
 
@@ -86,7 +86,7 @@ class Snr extends BaseComponent {
         dataLoadingLength: 0,
         config: {
           ...generateDateConfig(this.props.dateMode, this.props.minTime, this.props.maxTime),
-          filter_types: 'poc_receipts_v1'
+          filter_types: 'poc_receipts_v1, poc_receipts_v2'
         }
       }, () => {
         this.getHSActivity().then(() => {});
