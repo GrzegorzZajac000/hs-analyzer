@@ -37,7 +37,8 @@ class Donate extends BaseComponent {
         max_time: new Date(maxTime).toISOString(),
         filter_types: 'payment_v1,payment_v2'
       },
-      donates: []
+      donates: [],
+      donatesLoaded: false
     };
 
     this.handleAmountChange = this.handleAmountChange.bind(this);
@@ -52,7 +53,8 @@ class Donate extends BaseComponent {
       '14aJz2XEweHeLW4PLddJuumBuDfVW9XwRZemn35PYu3GUBiuJcc',
       () => {},
       this.state.config
-    ).then(donates => donates.map(donate => limit(() => HeliumAPI.getTransactionForHash(donate.hash))))
+    ).then(donates => donates.filter(donate => donate.role === 'payee'))
+      .then(donates => donates.map(donate => limit(() => HeliumAPI.getTransactionForHash(donate.hash))))
       .then(promises => Promise.all(promises))
       .then(donates => donates.map(donate => donate.data.data))
       .then(donates => {
@@ -66,7 +68,7 @@ class Donate extends BaseComponent {
         return geocode;
       }))
       .then(() => {
-        this.updateState({ donates: donatesArr });
+        this.updateState({ donates: donatesArr, donatesLoaded: true });
       })
       .catch(err => {
         console.error(err);
@@ -83,7 +85,7 @@ class Donate extends BaseComponent {
   }
 
   generateDonatesArray () {
-    if (this.state.donates.length <= 0) {
+    if (!this.state.donatesLoaded) {
       return (
         <section className='donate-history-loading'>
           <div className='preload show-preloader'>
