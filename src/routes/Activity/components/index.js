@@ -257,12 +257,14 @@ class Activity extends BaseComponent {
       let item = {};
 
       switch (activity.type) {
+      case 'rewards_v1':
       case 'rewards_v2': {
         item = this.generateRewards(activity);
         break;
       }
 
-      case 'poc_receipts_v1': {
+      case 'poc_receipts_v1':
+      case 'poc_receipts_v2':{
         if (activity.path && activity.path[0] && activity.path[0].challengee && activity.path[0].challengee === hs.data.address) {
           item = this.generateBroadcastedBeacon(activity);
         } else if (activity.challenger && activity.challenger === hs.data.address) {
