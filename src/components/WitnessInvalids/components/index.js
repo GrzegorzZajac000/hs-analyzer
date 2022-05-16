@@ -19,11 +19,11 @@ class WitnessInvalids extends BaseComponent {
 
   componentDidMount () {
     const rData = this.props.witnessedData.map(action => {
-      if (!action || !action.path || !action.path[0] || !action.path[0].witnesses || !(typeof action.path[0].witnesses === 'object' && !Array.isArray(action.path[0].witnesses) && action.path[0].witnesses !== null)) {
+      if (!action || !action.path || !action.path[0] || !action.path[0].witnesses) {
         return [];
       }
 
-      return action.path[0].witnesses.filter(witness => witness.gateway === this.props.hsList[this.props.currentHS].value);
+      return action?.path[0]?.witnesses?.filter(witness => witness.gateway === this.props.hsList[this.props.currentHS].value);
     }).flat();
 
     const rssiGroups = [
