@@ -47,7 +47,8 @@ class Info extends BaseComponent {
     return Promise.all([
       limit(() => HeliumAPI.getBlockchainStats()),
       limit(() => HeliumAPI.getRichestAccounts()),
-      limit(() => HeliumAPI.getStatsForValidators())
+      limit(() => HeliumAPI.getStatsForValidators()),
+      limit(() => HeliumAPI.getOraclePrice())
     ]).then(res => {
       const data = {
         hotspots: {
@@ -67,7 +68,8 @@ class Info extends BaseComponent {
           cooldown: res[2].data.data.cooldown,
           staked: res[2].data.data.staked,
           unstaked: res[2].data.data.unstaked
-        }
+        },
+        price: res[3].data.data.price / 100000000
       };
 
       return this.updateState({ data, loaded: true });
@@ -106,6 +108,7 @@ class Info extends BaseComponent {
                 <InfoBlock title='Hotspots online' number={this.state.data.hotspots.online} />
                 <InfoBlock title='Hotspots online %' number={this.state.data.hotspots.onlinePercentage} suffix='%' decimals={3} />
                 <InfoBlock title='Hotspots dataonly' number={this.state.data.hotspots.dataonly} />
+                <InfoBlock title='HNT Price' number={this.state.data.price} prefix='$' decimals={4} />
               </div>
             </div>
           </div>
