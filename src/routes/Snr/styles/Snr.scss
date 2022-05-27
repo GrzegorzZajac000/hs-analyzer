@@ -1,12 +1,89 @@
 @import "../../../static/global-styles/variables";
 @import "../../../static/global-styles/functions";
 
+// VARIABLES
+$switch-bg: #fff;
+$switch-color: #bada55;
+
 .snr {
+  &-auto-expand-box {
+    align-items: center;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+
+    input {
+      &[type="checkbox"] {
+        height: 0;
+        visibility: hidden;
+        width: 0;
+      }
+
+      &:checked {
+        & + label + label {
+          &.switch {
+            background: $switch-color;
+
+            &::after {
+              left: calc(100% - 5px);
+              transform: translateX(-100%);
+            }
+          }
+        }
+      }
+    }
+
+    label {
+      &.switch {
+        background: grey;
+        border-radius: 12.5px;
+        cursor: pointer;
+        display: block;
+        height: 25px;
+        margin-right: 10px;
+        position: relative;
+        text-indent: -9999px;
+        width: 50px;
+
+        &::after {
+          background: $switch-bg;
+          border-radius: 11.5px;
+          content: "";
+          height: 21px;
+          left: 2px;
+          position: absolute;
+          top: 2px;
+          transition: .3s;
+          width: 21px;
+        }
+
+        &:active {
+          &::after {
+            width: 30px;
+          }
+        }
+      }
+
+      span {
+        display: block;
+        font-size: 14px;
+      }
+    }
+  }
+
   table {
     tbody {
+      td,
+      th {
+        width: 16.6%;
+      }
+
       @media all and (max-width: $screen-sm-max) {
         tr {
           td {
+            width: 100%;
+
             &:first-child {
               &::before {
                 content: "Frequency: ";

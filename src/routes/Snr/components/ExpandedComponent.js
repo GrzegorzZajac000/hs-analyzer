@@ -6,7 +6,7 @@ const ExpandedComponent = ({ data }) => {
   const rows = data.witnesses.map((w, i) => {
     return (
       <tr key={i}>
-        <td>{w.frequency ? w.frequency.toFixed(2) : '???'}</td>
+        <td>{w.frequency ? w.frequency.toFixed(2) : '???'} MHz</td>
         <td>{w.channel}</td>
         <td>{w.signal}</td>
         <td>{w.snr ? w.snr.toFixed(2) : '???'}</td>
