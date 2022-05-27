@@ -53,6 +53,7 @@ class Info extends BaseComponent {
         hotspots: {
           total: res[0].data.data.counts.hotspots,
           online: res[0].data.data.counts.hotspots_online,
+          onlinePercentage: (res[0].data.data.counts.hotspots_online / res[0].data.data.counts.hotspots) * 100,
           dataonly: res[0].data.data.counts.hotspots_dataonly
         },
         blockHeight: res[0].data.data.counts.blocks,
@@ -103,6 +104,7 @@ class Info extends BaseComponent {
                 <InfoBlock className='decor' title='Block height' number={this.state.data.blockHeight} />
                 <InfoBlock title='Hotspots total' number={this.state.data.hotspots.total} />
                 <InfoBlock title='Hotspots online' number={this.state.data.hotspots.online} />
+                <InfoBlock title='Hotspots online %' number={this.state.data.hotspots.onlinePercentage} suffix='%' decimals={3} />
                 <InfoBlock title='Hotspots dataonly' number={this.state.data.hotspots.dataonly} />
               </div>
             </div>
