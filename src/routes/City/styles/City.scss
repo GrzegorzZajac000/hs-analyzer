@@ -1,0 +1,16 @@
+@import "../../../static/global-styles/variables";
+@import "../../../static/global-styles/functions";
+
+.city {
+  h2 {
+    color: $light-font-color;
+    font-size: px-to-rem(26);
+    font-weight: 700;
+    margin-bottom: 20px;
+
+    @media all and (max-width: $screen-sm-max) {
+      font-size: px-to-rem(24);
+      margin-bottom: 15px;
+    }
+  }
+}

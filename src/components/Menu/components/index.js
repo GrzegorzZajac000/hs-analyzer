@@ -34,7 +34,7 @@ class Menu extends BaseComponent {
         <nav className={'menu' + (this.state.mobileMenuOpen ? ' mobile-visible' : '')}>
           <Link to='/' className='menu-logo'>
             <img src={Logo} alt='HS-Analyzer' />
-            <p className='menu-logo-version'>v0.2.6</p>
+            <p className='menu-logo-version'>v0.2.7</p>
           </Link>
           <ul>
             <li>
@@ -51,6 +51,9 @@ class Menu extends BaseComponent {
             </li>
             <li className={(Number.isInteger(this.props.currentHS) && this.props.currentHS >= 0) ? '' : 'disabled'}>
               <MenuLink to='/snr' onClick={this.handleHide}>SNR Data</MenuLink>
+            </li>
+            <li className={(Number.isInteger(this.props.currentHS) && this.props.currentHS >= 0) ? '' : 'disabled'}>
+              <MenuLink to='/city' onClick={this.handleHide}>Your city</MenuLink>
             </li>
             <li className={(Number.isInteger(this.props.currentHS) && this.props.currentHS >= 0) ? '' : 'disabled'}>
               <MenuLink to='/connectivity' onClick={this.handleHide}>Connectivity</MenuLink>
