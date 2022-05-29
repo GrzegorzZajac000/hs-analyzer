@@ -94,6 +94,21 @@
     }
   }
 
+  &-settings {
+    margin-right: 10px;
+
+    button {
+      background-color: transparent;
+      border: 0;
+      color: $light-font-color;
+      transition: color .2s ease-in-out;
+
+      &:hover {
+        color: $font-color;
+      }
+    }
+  }
+
   .react-select {
     margin-right: 20px;
     min-width: 400px;

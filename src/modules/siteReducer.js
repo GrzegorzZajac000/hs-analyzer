@@ -8,6 +8,7 @@ const HIDE_HS_MODAL = 'HIDE_HS_MODAL';
 const SET_DATE_MODE = 'SET_DATE_MODE';
 const SET_MIN_TIME = 'SET_MIN_TIME';
 const SET_MAX_TIME = 'SET_MAX_TIME';
+const SET_AUTO_EXPAND = 'SET_AUTO_EXPAND';
 
 export const setHsInfo = hsInfo => ({ type: SET_HS_INFO, hsInfo });
 export const addHSToList = hsObject => ({ type: ADD_HS_TO_LIST, hsObject });
@@ -19,6 +20,7 @@ export const hideHSModal = () => ({ type: HIDE_HS_MODAL });
 export const setDateMode = dateMode => ({ type: SET_DATE_MODE, dateMode });
 export const setMinTime = minTime => ({ type: SET_MIN_TIME, minTime });
 export const setMaxTime = maxTime => ({ type: SET_MAX_TIME, maxTime });
+export const setAutoExpand = autoExpand => ({ type: SET_AUTO_EXPAND, autoExpand });
 
 const initialState = {
   hsInfo: [],
@@ -27,7 +29,8 @@ const initialState = {
   hsModal: false,
   dateMode: '7',
   minTime: null,
-  maxTime: null
+  maxTime: null,
+  autoExpand: false
 };
 
 export default function counter (state = initialState, action) {
@@ -73,6 +76,9 @@ export default function counter (state = initialState, action) {
 
   case SET_MAX_TIME:
     return { ...state, maxTime: action.maxTime };
+
+  case SET_AUTO_EXPAND:
+    return { ...state, autoExpand: action.autoExpand };
 
   default:
     return state;

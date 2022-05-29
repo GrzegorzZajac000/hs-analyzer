@@ -17,7 +17,6 @@ class Snr extends BaseComponent {
       loaded: false,
       data: [],
       dataLoadingLength: 0,
-      autoExpand: false,
       config: {
         ...generateDateConfig(this.props.dateMode, this.props.minTime, this.props.maxTime),
         filter_types: 'poc_receipts_v1,poc_receipts_v2'
@@ -56,7 +55,6 @@ class Snr extends BaseComponent {
 
     this.getHSActivity = this.getHSActivity.bind(this);
     this.handleDataLoadingUpdate = this.handleDataLoadingUpdate.bind(this);
-    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
   }
 
   componentDidMount () {
@@ -170,10 +168,6 @@ class Snr extends BaseComponent {
     this.updateState({ dataLoadingLength });
   }
 
-  handleCheckboxChange () {
-    this.updateState({ autoExpand: !this.state.autoExpand });
-  }
-
   render () {
     if (!this.state.loaded) {
       return (
@@ -202,13 +196,6 @@ class Snr extends BaseComponent {
           <div className='row'>
             <div className='col-12'>
               <h2>SNR Data</h2>
-              <div className='auto-expand-box'>
-                <input type='checkbox' value={0} id='snr-auto-expand' onChange={this.handleCheckboxChange} />
-                <label htmlFor='snr-auto-expand'>
-                  <span>Auto expand</span>
-                </label>
-                <label className='switch' htmlFor='snr-auto-expand' />
-              </div>
             </div>
             <div className='col-12'>
               <DataTable
@@ -219,7 +206,7 @@ class Snr extends BaseComponent {
                 sortable
                 expandableRows
                 expandableRowsComponent={ExpandedComponent}
-                expandableRowExpanded={() => this.state.autoExpand}
+                expandableRowExpanded={() => this.props.autoExpand}
                 defaultSortFieldId='amount'
                 defaultSortAsc={false}
               />

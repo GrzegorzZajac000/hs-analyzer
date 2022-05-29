@@ -1,0 +1,31 @@
+@import "../../../static/global-styles/variables";
+@import "../../../static/global-styles/functions";
+
+.settings-modal {
+  color: $light-font-color;
+
+  &-close {
+    background: none;
+    border: 0;
+    color: $light-font-color;
+    font-size: px-to-rem(32);
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    transition: color .2s ease-in-out;
+
+    &:hover {
+      color: $font-color;
+    }
+  }
+
+  h2 {
+    font-size: px-to-rem(32);
+    font-weight: 700;
+    margin-bottom: 20px;
+
+    @media all and (max-width: $screen-sm-max) {
+      font-size: px-to-rem(26);
+    }
+  }
+}

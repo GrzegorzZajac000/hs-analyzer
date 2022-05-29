@@ -13,8 +13,7 @@ class City extends BaseComponent {
 
     this.state = {
       cityData: [],
-      loaded: false,
-      autoExpand: false
+      loaded: false
     };
 
     this.columns = [
@@ -63,8 +62,6 @@ class City extends BaseComponent {
         }
       }
     ];
-
-    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
   }
 
   componentDidMount () {
@@ -87,10 +84,6 @@ class City extends BaseComponent {
         }
       }))
       .then(cityData => this.updateState({ cityData, loaded: true }))
-  }
-
-  handleCheckboxChange () {
-    this.updateState({ autoExpand: !this.state.autoExpand });
   }
 
   render () {
@@ -117,13 +110,6 @@ class City extends BaseComponent {
           <div className='row'>
             <div className='col-12'>
               <h2>Hotspots in {`${this.props.hsList[this.props.currentHS].data.geocode.long_city}, ${this.props.hsList[this.props.currentHS].data.geocode.long_state}, ${this.props.hsList[this.props.currentHS].data.geocode.long_country}`}</h2>
-              <div className='auto-expand-box'>
-                <input type='checkbox' value={0} id='city-auto-expand' onChange={this.handleCheckboxChange} />
-                <label htmlFor='city-auto-expand'>
-                  <span>Auto expand</span>
-                </label>
-                <label className='switch' htmlFor='city-auto-expand' />
-              </div>
             </div>
             <div className='col-12'>
               <DataTable
@@ -134,7 +120,7 @@ class City extends BaseComponent {
                 sortable
                 expandableRows
                 expandableRowsComponent={ExpandedComponent}
-                expandableRowExpanded={() => this.state.autoExpand}
+                expandableRowExpanded={() => this.props.autoExpand}
                 defaultSortFieldId='name'
                 defaultSortAsc
               />

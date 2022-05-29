@@ -2,9 +2,10 @@ import React from 'react';
 import '../styles/TopBar.scss';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
-import { ConfirmModal, HSInfoModal, DateConfigModal } from '../../index';
+import { ConfirmModal, HSInfoModal, DateConfigModal, SettingsModal } from '../../index';
 import { BaseComponent, isCurrentHS, getOptionLabel } from '../../../utilities';
 import { toast } from 'react-toastify';
+import { GearFill } from 'react-bootstrap-icons';
 
 class TopBar extends BaseComponent {
   constructor (props) {
@@ -13,7 +14,8 @@ class TopBar extends BaseComponent {
     this.state = {
       hsInfoModalShow: false,
       removeModalShow: false,
-      configDateModalShow: false
+      configDateModalShow: false,
+      settingsModalShow: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -25,6 +27,8 @@ class TopBar extends BaseComponent {
     this.handleHSRemoveClick = this.handleHSRemoveClick.bind(this);
     this.handleHSRemoveHide = this.handleHSRemoveHide.bind(this);
     this.handleHSRemoveConfirm = this.handleHSRemoveConfirm.bind(this);
+    this.handleSettingsShow = this.handleSettingsShow.bind(this);
+    this.handleSettingsHide = this.handleSettingsHide.bind(this);
   }
 
   handleChange (option) {
@@ -92,6 +96,14 @@ class TopBar extends BaseComponent {
     toast.success('HS removed!', { theme: 'dark' });
   }
 
+  handleSettingsShow () {
+    this.updateState({ settingsModalShow: true });
+  }
+
+  handleSettingsHide () {
+    this.updateState({ settingsModalShow: false });
+  }
+
   render () {
     return (
       <React.Fragment>
@@ -115,6 +127,12 @@ class TopBar extends BaseComponent {
           </div>
 
           <div className='top-bar-right'>
+            <div className='top-bar-settings'>
+              <button onClick={this.handleSettingsShow}>
+                <GearFill />
+              </button>
+            </div>
+
             <div className={'top-bar-dropdown' + (isCurrentHS(this.props.currentHS) ? '' : ' hidden')}>
               <div className='dropdown'>
                 <button
@@ -143,6 +161,7 @@ class TopBar extends BaseComponent {
           onHide={this.handleHSRemoveHide}
           message={<React.Fragment>Are you sure to remove <strong>{(this.props.hsList && isCurrentHS(this.props.currentHS)) ? this.props.hsList[this.props.currentHS].label : ''}</strong> from list?</React.Fragment>}
         />
+        <SettingsModal show={this.state.settingsModalShow} onHide={this.handleSettingsHide} />
       </React.Fragment>
     );
   }

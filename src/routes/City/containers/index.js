@@ -15,7 +15,8 @@ const mapActionCreators = {};
 const mapStateToProps = state => {
   return {
     hsList: state.site.hsList,
-    currentHS: state.site.currentHS
+    currentHS: state.site.currentHS,
+    autoExpand: state.site.autoExpand
   };
 };
 

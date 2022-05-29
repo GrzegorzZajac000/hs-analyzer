@@ -12,6 +12,7 @@ import InfoBlock from './InfoBlock';
 import Menu from './Menu';
 import NameForm from './NameForm';
 import RSSIChart from './RSSIChart';
+import SettingsModal from './SettingsModal';
 import TopBar from './TopBar';
 import WalletForm from './WalletForm';
 import WitnessInvalids from './WitnessInvalids';
@@ -31,6 +32,7 @@ export {
   Menu,
   NameForm,
   RSSIChart,
+  SettingsModal,
   TopBar,
   WalletForm,
   WitnessInvalids

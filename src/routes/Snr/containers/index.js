@@ -18,7 +18,8 @@ const mapStateToProps = state => {
     currentHS: state.site.currentHS,
     dateMode: state.site.dateMode,
     minTime: state.site.minTime,
-    maxTime: state.site.maxTime
+    maxTime: state.site.maxTime,
+    autoExpand: state.site.autoExpand
   };
 };
 
