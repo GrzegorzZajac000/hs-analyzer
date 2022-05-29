@@ -1,0 +1,74 @@
+// VARIABLES
+$switch-bg: #fff;
+$switch-color: #bada55;
+
+.auto-expand-box {
+  align-items: center;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+
+  input {
+    &[type="checkbox"] {
+      height: 0;
+      visibility: hidden;
+      width: 0;
+    }
+
+    &:checked {
+      & + label + label {
+        &.switch {
+          background: $switch-color;
+
+          &::after {
+            transform: translateX(calc(100% + 2px));
+          }
+
+          &:active {
+            &::after {
+              transform: translateX(calc(100% + 2px - 18px));
+            }
+          }
+        }
+      }
+    }
+  }
+
+  label {
+    &.switch {
+      background: grey;
+      border-radius: 12.5px;
+      cursor: pointer;
+      display: block;
+      height: 25px;
+      margin-right: 10px;
+      position: relative;
+      text-indent: -9999px;
+      width: 50px;
+
+      &::after {
+        background: $switch-bg;
+        border-radius: 11.5px;
+        content: "";
+        height: 21px;
+        left: 3px;
+        position: absolute;
+        top: 2px;
+        transition: transform .25s ease-in-out, width .25s ease-in-out;
+        width: 21px;
+      }
+
+      &:active {
+        &::after {
+          width: 30px;
+        }
+      }
+    }
+
+    > span {
+      display: block;
+      font-size: 14px;
+    }
+  }
+}

@@ -202,7 +202,7 @@ class Snr extends BaseComponent {
           <div className='row'>
             <div className='col-12'>
               <h2>SNR Data</h2>
-              <div className='snr-auto-expand-box'>
+              <div className='auto-expand-box'>
                 <input type='checkbox' value={0} id='snr-auto-expand' onChange={this.handleCheckboxChange} />
                 <label htmlFor='snr-auto-expand'>
                   <span>Auto expand</span>

@@ -1,7 +1,41 @@
 @import "../../../static/global-styles/variables";
 @import "../../../static/global-styles/functions";
 
+// VARIABLES
+$switch-bg: #fff;
+$switch-color: #bada55;
+
 .city {
+  &-expanded {
+    display: flex;
+    flex-direction: column;
+
+    > div {
+      margin-bottom: 10px;
+
+      h3 {
+        font-size: px-to-rem(11);
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      p {
+        font-size: px-to-rem(16);
+        letter-spacing: .1px;
+        text-transform: capitalize;
+
+        a {
+          color: $decor-color;
+          transition: color .25s ease-in-out;
+
+          &:hover {
+            color: $dark-decor-color;
+          }
+        }
+      }
+    }
+  }
+
   h2 {
     color: $light-font-color;
     font-size: px-to-rem(26);

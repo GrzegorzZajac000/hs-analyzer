@@ -1,10 +1,11 @@
 import React from 'react';
 import '../styles/City.scss';
-import { BaseComponent, HSName } from '../../../utilities';
+import { BaseComponent, HSName, isCurrentHS } from '../../../utilities';
 import HeliumAPI from '../../../api/HeliumAPI';
 import { Navigate } from 'react-router-dom';
-import ExpandedComponent from '../../Snr/components/ExpandedComponent';
+import ExpandedComponent from './ExpandedComponent';
 import DataTable from 'react-data-table-component';
+import { getDistance } from 'geolib';
 
 class City extends BaseComponent {
   constructor (props) {
@@ -19,25 +20,51 @@ class City extends BaseComponent {
     this.columns = [
       {
         name: 'Name',
-        selector: row => row.name
+        id: 'name',
+        selector: row => row.name,
+        sortable: true
       },
       {
         name: 'Elevation',
-        selector: row => row.elevation
+        selector: row => row.elevation,
+        format: row => `${row.elevation} m`,
+        sortable: true
       },
       {
         name: 'Gain',
-        selector: row => row.gain
+        selector: row => row.gain,
+        format: row => `${row.gain / 10} dBi`,
+        sortable: true
       },
       {
         name: 'Mode',
-        selector: row => row.mode
+        selector: row => row.mode,
+        sortable: true
       },
       {
         name: 'Reward Scale',
-        selector: row => row.rewardScale
+        selector: row => row.rewardScale,
+        sortable: true
+      },
+      {
+        name: 'Distance',
+        selector: row => row,
+        format: row => {
+          if (!isCurrentHS(this.props.currentHS) || this.props.hsList.length <= 0 || !this.props.hsList[this.props.currentHS].data.address) {
+            return '~??? km';
+          }
+
+          const distance = getDistance(
+            { latitude: this.props.hsList[this.props.currentHS].data.lat, longitude: this.props.hsList[this.props.currentHS].data.lng },
+            { latitude: row.lat, longitude: row.lon }
+          );
+
+          return `~${distance ? (distance / 1000).toFixed(2) : '0 '}km`;
+        }
       }
     ];
+
+    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
   }
 
   componentDidMount () {
@@ -49,6 +76,8 @@ class City extends BaseComponent {
           elevation: hs.elevation,
           gain: hs.gain,
           location: `${hs.geocode.long_street}, ${hs.geocode.long_city}, ${hs.geocode.long_state}, ${hs.geocode.long_country}`,
+          lat: hs.lat,
+          lon: hs.lng,
           mode: hs.mode,
           name: HSName.toView(hs.name),
           owner: hs.owner,
@@ -58,6 +87,10 @@ class City extends BaseComponent {
         }
       }))
       .then(cityData => this.updateState({ cityData, loaded: true }))
+  }
+
+  handleCheckboxChange () {
+    this.updateState({ autoExpand: !this.state.autoExpand });
   }
 
   render () {
@@ -80,23 +113,32 @@ class City extends BaseComponent {
 
     return (
       <section className='city route-section'>
-        <div className='row'>
-          <div className='col-12'>
-            <h2>{`${this.props.hsList[this.props.currentHS].data.geocode.long_city}, ${this.props.hsList[this.props.currentHS].data.geocode.long_state}, ${this.props.hsList[this.props.currentHS].data.geocode.long_country}`}</h2>
-          </div>
-          <div className='col-12'>
-            <DataTable
-              columns={this.columns}
-              data={this.state.cityData}
-              responsive
-              striped
-              sortable
-              expandableRows
-              expandableRowsComponent={ExpandedComponent}
-              expandableRowExpanded={() => this.state.autoExpand}
-              defaultSortFieldId='name'
-              defaultSortAsc={false}
-            />
+        <div className='container-fluid'>
+          <div className='row'>
+            <div className='col-12'>
+              <h2>Hotspots in {`${this.props.hsList[this.props.currentHS].data.geocode.long_city}, ${this.props.hsList[this.props.currentHS].data.geocode.long_state}, ${this.props.hsList[this.props.currentHS].data.geocode.long_country}`}</h2>
+              <div className='auto-expand-box'>
+                <input type='checkbox' value={0} id='city-auto-expand' onChange={this.handleCheckboxChange} />
+                <label htmlFor='city-auto-expand'>
+                  <span>Auto expand</span>
+                </label>
+                <label className='switch' htmlFor='city-auto-expand' />
+              </div>
+            </div>
+            <div className='col-12'>
+              <DataTable
+                columns={this.columns}
+                data={this.state.cityData}
+                responsive
+                striped
+                sortable
+                expandableRows
+                expandableRowsComponent={ExpandedComponent}
+                expandableRowExpanded={() => this.state.autoExpand}
+                defaultSortFieldId='name'
+                defaultSortAsc
+              />
+            </div>
           </div>
         </div>
       </section>
