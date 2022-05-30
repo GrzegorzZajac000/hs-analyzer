@@ -60,6 +60,10 @@
     display: flex;
     margin-right: 20px;
 
+    @media all and (max-width: $screen-md-max) {
+      display: none;
+    }
+
     &.hidden {
       display: none;
     }
@@ -97,6 +101,14 @@
   &-settings {
     margin-right: 10px;
 
+    @media all and (max-width: $screen-md-max) {
+      margin-right: 0;
+    }
+
+    @media all and (max-width: $screen-xs-max) {
+      margin-left: 10px;
+    }
+
     button {
       background-color: transparent;
       border: 0;
@@ -105,6 +117,11 @@
 
       &:hover {
         color: $font-color;
+      }
+
+      svg {
+        height: 22px;
+        width: 22px;
       }
     }
   }
