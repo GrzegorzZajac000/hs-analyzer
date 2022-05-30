@@ -14,7 +14,7 @@ const instance = rateLimit(axios.create({
     'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
     'Content-Type': 'application/json'
   }
-}), { maxRequests: 1, perMilliseconds: 1001 });
+}), { maxRequests: 1, perMilliseconds: 101 });
 
 instance.interceptors.response.use(null, retry(instance, {
   isRetryable (error) {
