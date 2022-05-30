@@ -47,7 +47,6 @@ class TopBar extends BaseComponent {
     return (
       <React.Fragment>
         <a className='dropdown-item' href={`https://explorer.helium.com/hotspots/${this.props.hsList[this.props.currentHS].data.address}`} target='_blank' rel='noreferrer noopener'>Helium Explorer</a>
-        <a className='dropdown-item' href={`https://www.heliumtracker.io/hotspots/${this.props.hsList[this.props.currentHS].data.address}`} target='_blank' rel='noreferrer noopener'>HeliumTracker</a>
         <a className='dropdown-item' href={`https://etl.dewi.org/dashboard/7-hotspot-details?hotspot_address=${this.props.hsList[this.props.currentHS].data.address}&days=30`} target='_blank' rel='noreferrer noopener'>ETL dewi</a>
         <a className='dropdown-item' href='https://dashboard.helium.com/' target='_blank' rel='noreferrer noopener'>Helium dashboard</a>
       </React.Fragment>
@@ -143,7 +142,7 @@ class TopBar extends BaseComponent {
                   aria-haspopup='true'
                   aria-expanded='false'
                 >
-                  Check your HS in other tools
+                  Check your HS in official tools
                 </button>
                 <div className='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
                   {this.generateDropdown()}
