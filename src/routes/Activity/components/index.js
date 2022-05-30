@@ -194,6 +194,8 @@ class Activity extends BaseComponent {
       return errorActivity;
     }
 
+    const witnessedDataHSAmount = activity.path[0].witnesses.length;
+    const witnessedDataHSValidAmount = activity.path[0].witnesses.filter(witness => witness.is_valid).length;
     const witnessedData = activity.path[0].witnesses.filter(item => item.gateway === hs.data.address);
 
     if (!witnessedData || witnessedData.length <= 0 || !hs.data.lat || !hs.data.lng) {
@@ -215,7 +217,7 @@ class Activity extends BaseComponent {
       className: 'activity-witnessed-beacon',
       content: (
         <div className='activity-item-desc-block'>
-          <p>{witnessedData[0].is_valid ? 'Valid' : 'Invalid'}</p>
+          <p>{witnessedData[0].is_valid ? 'Valid' : 'Invalid'}: {witnessedDataHSValidAmount}/{witnessedDataHSAmount - witnessedDataHSValidAmount}</p>
           <h6>~{distance ? (distance / 1000).toFixed(2) : '??? '}km | TX Power: {(activity.path[0].receipt && activity.path[0].receipt.tx_power) || 'Unknown'} | {witnessedData[0].signal} dBm RSSI | {witnessedData[0].snr ? witnessedData[0].snr.toFixed(2) : '??? '} db SNR</h6>
         </div>
       )
