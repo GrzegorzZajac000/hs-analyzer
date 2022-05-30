@@ -102,11 +102,8 @@ class Activity extends BaseComponent {
       this.handleDataLoadingUpdate,
       this.state.config
     )
-      .then(res => {
-        const arr = this.state.activityData.concat(res);
-        return this.updateState({ activityData: arr, loaded: true });
-      })
-      .then(() => {
+      .then(res => this.state.activityData.concat(res))
+      .then(arr => {
         let minTime = new Date(this.state.config.min_time);
         minTime.setDate(minTime.getDate() - 3);
         minTime = new Date(minTime).setMinutes(0);
@@ -118,7 +115,7 @@ class Activity extends BaseComponent {
           max_time: this.state.config.min_time
         };
 
-        this.updateState({ config });
+        this.updateState({ config, activityData: arr, loaded: true });
       })
       .catch(err => {
         console.error(err);
@@ -311,6 +308,10 @@ class Activity extends BaseComponent {
   }
 
   render () {
+    if (this.props.currentHS === null) {
+      return <Navigate to='/' />;
+    }
+
     if (!this.state.loaded) {
       return (
         <section className='activity route-section'>
@@ -326,10 +327,6 @@ class Activity extends BaseComponent {
           </div>
         </section>
       );
-    }
-
-    if (this.props.currentHS === null) {
-      return <Navigate to='/' />;
     }
 
     return (
