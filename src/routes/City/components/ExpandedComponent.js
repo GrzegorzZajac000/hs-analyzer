@@ -14,7 +14,7 @@ const ExpandedComponent = ({ data }) => {
       </div>
       <div>
         <h3>Block height</h3>
-        <p>{data.block}</p>
+        <p>{data.block} / {data.blockchainHeight} = {data.blockchainHeight - data.block} blocks ago</p>
       </div>
       <div>
         <h3>Geocode</h3>

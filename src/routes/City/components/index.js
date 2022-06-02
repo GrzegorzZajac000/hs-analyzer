@@ -115,11 +115,14 @@ class City extends BaseComponent {
       return;
     }
 
-    return HeliumAPI.getHotspotForCity(this.props.hsList[this.props.currentHS].data.geocode.city_id)
-      .then(res => res.map(hs => {
+    return Promise.all([
+      HeliumAPI.getHotspotForCity(this.props.hsList[this.props.currentHS].data.geocode.city_id),
+      HeliumAPI.getBlockchainHeight()
+    ])
+      .then(res => res[0].map(hs => {
         return {
           address: hs.address,
-          block: hs.block,
+          block: (hs.status && hs.status.height) ? hs.status.height : '?',
           elevation: hs.elevation,
           gain: hs.gain,
           location: `${hs.geocode.long_street}, ${hs.geocode.long_city}, ${hs.geocode.long_state}, ${hs.geocode.long_country}`,
@@ -130,7 +133,8 @@ class City extends BaseComponent {
           owner: hs.owner,
           rewardScale: hs.reward_scale ? hs.reward_scale.toFixed(2) : 0,
           status: hs.status.online,
-          timestamp_added: hs.timestamp_added
+          timestamp_added: hs.timestamp_added,
+          blockchainHeight: res[1].data.data.height
         }
       }))
       .then(cityData => this.updateState({ cityData, loaded: true }))

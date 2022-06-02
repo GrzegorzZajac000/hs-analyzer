@@ -14,10 +14,15 @@ class HSInfoModal extends BaseComponent {
     super(props);
 
     this.state = {
-      refreshing: false
+      refreshing: false,
+      blockchainHeight: 0
     };
 
     this.refreshInfo = this.refreshInfo.bind(this);
+  }
+
+  componentDidMount () {
+    HeliumAPI.getBlockchainHeight().then(res => this.updateState({ blockchainHeight: res.data.data.height }));
   }
 
   refreshInfo () {
@@ -37,8 +42,9 @@ class HSInfoModal extends BaseComponent {
 
           return this.props.updateHS(hsObj, this.props.currentHS);
         })
-        .then(() => {
-          this.updateState({ refreshing: false });
+        .then(() => HeliumAPI.getBlockchainHeight())
+        .then(res => {
+          this.updateState({ blockchainHeight: res.data.data.height, refreshing: false });
           toast.success('HS info updated!', { theme: 'dark' });
         })
         .catch(err => {
@@ -103,7 +109,7 @@ class HSInfoModal extends BaseComponent {
             </tr>
             <tr>
               <td>Height</td>
-              <td>{(hsInfo && hsInfo.status && hsInfo.status.height) ? hsInfo.status.height : '???'}</td>
+              <td>{(hsInfo && hsInfo.status && hsInfo.status.height) ? hsInfo.status.height : '???'} / {this.state.blockchainHeight} = {this.state.blockchainHeight - hsInfo.status.height}</td>
             </tr>
             <tr>
               <td>Last change block</td>
