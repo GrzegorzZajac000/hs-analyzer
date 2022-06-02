@@ -92,7 +92,7 @@ class TopBar extends BaseComponent {
       this.props.useHS(null);
     }
 
-    toast.success('HS removed!', { theme: 'dark' });
+    toast.success('HS removed!', { theme: 'dark', autoClose: 3000 });
   }
 
   handleSettingsShow () {

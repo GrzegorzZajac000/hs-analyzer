@@ -8,8 +8,9 @@ import createStore from '../store/createStore';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ToastContainer } from 'react-toastify';
+import { BaseComponent } from '../utilities';
 
-class App extends React.Component {
+class App extends BaseComponent {
   constructor (props) {
     super(props);
 
@@ -17,6 +18,16 @@ class App extends React.Component {
     this.persistor = null;
 
     this.persistor = persistStore(this.store, null);
+
+    this.state = {
+      topBar: 0
+    };
+
+    this.updateTopBar = this.updateTopBar.bind(this);
+  }
+
+  updateTopBar () {
+    this.updateState({ topBar: this.state.topBar + 1 });
   }
 
   render () {
@@ -31,13 +42,13 @@ class App extends React.Component {
                     <Menu />
                   </div>
                   <div className='col-9 col-xl-10 gx-0 body-container'>
-                    <TopBar />
+                    <TopBar id={this.state.topBar} />
                     <HSModal />
 
                     <Routes>
                       <Route path='/' element={<Info />} />
                       <Route path='/chain-variables' element={<ChainVariables />} />
-                      <Route path='/city' element={<City />} />
+                      <Route path='/city' element={<City updateTopBar={this.updateTopBar} />} />
                       <Route path='/connectivity' element={<Connectivity />} />
                       <Route path='/activity' element={<Activity />} />
                       <Route path='/rssi' element={<Rssi />} />

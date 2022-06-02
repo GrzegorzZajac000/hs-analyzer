@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import City from '../components';
+import { addHSToList, removeHSFromList, useHS } from '../../../modules/siteReducer';
 
 class CityContainer extends Component {
   render () {
@@ -10,7 +11,11 @@ class CityContainer extends Component {
   }
 }
 
-const mapActionCreators = {};
+const mapActionCreators = {
+  addHSToList,
+  removeHSFromList,
+  useHS
+};
 
 const mapStateToProps = state => {
   return {

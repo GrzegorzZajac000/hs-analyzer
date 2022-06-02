@@ -1,11 +1,13 @@
 import React from 'react';
 import '../styles/City.scss';
-import { BaseComponent, HSName, isCurrentHS } from '../../../utilities';
+import { BaseComponent, HSName, isCurrentHS, sendErrorToast } from '../../../utilities';
 import HeliumAPI from '../../../api/HeliumAPI';
 import { Navigate } from 'react-router-dom';
 import ExpandedComponent from './ExpandedComponent';
 import DataTable from 'react-data-table-component';
 import { getDistance } from 'geolib';
+import { captureException } from '@sentry/react';
+import { toast } from 'react-toastify';
 
 class City extends BaseComponent {
   constructor (props) {
@@ -19,7 +21,6 @@ class City extends BaseComponent {
     this.columns = [
       {
         name: 'Name',
-        id: 'name',
         selector: row => row.name,
         sortable: true
       },
@@ -47,7 +48,19 @@ class City extends BaseComponent {
       },
       {
         name: 'Distance',
-        selector: row => row,
+        id: 'distance',
+        selector: row => {
+          if (!isCurrentHS(this.props.currentHS) || this.props.hsList.length <= 0 || !this.props.hsList[this.props.currentHS].data.address) {
+            return 99999999;
+          }
+
+          const distance = getDistance(
+            { latitude: this.props.hsList[this.props.currentHS].data.lat, longitude: this.props.hsList[this.props.currentHS].data.lng },
+            { latitude: row.lat, longitude: row.lon }
+          );
+
+          return distance ? (distance / 1000) : 0;
+        },
         format: row => {
           if (!isCurrentHS(this.props.currentHS) || this.props.hsList.length <= 0 || !this.props.hsList[this.props.currentHS].data.address) {
             return '~??? km';
@@ -60,12 +73,49 @@ class City extends BaseComponent {
 
           return `~${distance ? (distance / 1000).toFixed(2) : '0 '}km`;
         }
+      },
+      {
+        name: '',
+        selector: row => row.address,
+        sortable: false,
+        format: row => {
+          return this.checkIfHSExists(row.address)
+            ? (
+              <button className='btn btn-danger btn-sm' onClick={() => this.removeHS(row.address)}>
+                Remove
+              </button>
+            )
+            : (
+              <button className='btn btn-decor btn-sm' onClick={() => this.addHS(row.address)}>
+                Add to analysis
+              </button>
+            )
+        }
       }
     ];
+
+    this.getCityData = this.getCityData.bind(this);
+    this.addHS = this.addHS.bind(this);
+    this.removeHS = this.removeHS.bind(this);
+    this.checkIfHSExists = this.checkIfHSExists.bind(this);
   }
 
   componentDidMount () {
-    HeliumAPI.getHotspotForCity(this.props.hsList[this.props.currentHS].data.geocode.city_id)
+    this.getCityData();
+  }
+
+  componentDidUpdate (prevProps, prevState, snapshot) {
+    if (this.props !== prevProps) {
+      this.getCityData();
+    }
+  }
+
+  getCityData () {
+    if (!isCurrentHS(this.props.currentHS)) {
+      return;
+    }
+
+    return HeliumAPI.getHotspotForCity(this.props.hsList[this.props.currentHS].data.geocode.city_id)
       .then(res => res.map(hs => {
         return {
           address: hs.address,
@@ -84,6 +134,56 @@ class City extends BaseComponent {
         }
       }))
       .then(cityData => this.updateState({ cityData, loaded: true }))
+      .then(() => this.props.updateTopBar())
+  }
+
+  addHS (address) {
+    return HeliumAPI.getHotspotForAddress(address)
+      .then(res => {
+        const hs = {};
+        hs.value = res.data.data.address;
+        hs.label = HSName.toView(res.data.data.name);
+        hs.data = res.data.data;
+
+        return this.props.addHSToList(hs);
+      })
+      .then(() => this.getCityData())
+      .then(() => {
+        toast.success('HS added to list', { theme: 'dark', autoClose: 3000 });
+      })
+      .catch(err => {
+        console.error(err);
+        captureException(err);
+        sendErrorToast('Something went wrong with Helium API. Try one more time');
+      });
+  }
+
+  removeHS (address) {
+    const hsNo = this.props.hsList.map((hs, i) => {
+      if (hs.value === address) {
+        return i;
+      }
+
+      return null;
+    }).filter(i => i !== null)[0];
+
+    const hsCurr = this.props.currentHS;
+    this.props.removeHSFromList(hsNo);
+
+    if (hsCurr === hsNo) {
+      if (this.props.hsList.length > 0) {
+        this.props.useHS(0);
+      } else {
+        this.props.useHS(null);
+        return false;
+      }
+    }
+
+    return this.getCityData().then(() => toast.success('HS removed!', { theme: 'dark', autoClose: 3000 }));
+  }
+
+  checkIfHSExists (address) {
+    return this.props.hsList.filter(hs => hs.value === address).length > 0;
   }
 
   render () {
@@ -121,7 +221,7 @@ class City extends BaseComponent {
                 expandableRows
                 expandableRowsComponent={ExpandedComponent}
                 expandableRowExpanded={() => this.props.autoExpand}
-                defaultSortFieldId='name'
+                defaultSortFieldId='distance'
                 defaultSortAsc
               />
             </div>
