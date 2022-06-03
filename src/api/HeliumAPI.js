@@ -477,12 +477,12 @@ const HeliumAPI = {
   },
 
   // Transactions
-  getTransactionForHash: hash => {
+  getTransactionForHash: (hash, actor) => {
     if (!hash) {
       throw new Error('HeliumAPI.getTransactionForHash - hash is required');
     }
 
-    return instance.get(`/v1/transactions/${hash}`);
+    return instance.get(`/v1/transactions/${hash}?actor=${actor}`);
   },
 
   // Pending Transactions

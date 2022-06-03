@@ -97,12 +97,34 @@ class Activity extends BaseComponent {
       return null;
     }
 
-    return HeliumAPI.getHotspotActivity(
-      this.props.hsList[this.props.currentHS].data.address,
-      this.handleDataLoadingUpdate,
-      this.state.config
-    )
-      .then(res => this.state.activityData.concat(res))
+    return Promise.all([
+      HeliumAPI.getHotspotChallenges(
+        this.props.hsList[this.props.currentHS].data.address,
+        this.handleDataLoadingUpdate,
+        this.state.config
+      ),
+      HeliumAPI.getRewardsForHotspot(
+        this.props.hsList[this.props.currentHS].data.address,
+        () => {},
+        this.state.config
+      )
+    ]).then(res => {
+      const arr = res;
+
+      arr[1] = arr[1].map(item => {
+        if (!item.time && item.timestamp) {
+          item.time = Date.parse(item.timestamp) / 1000;
+          delete item.timestamp;
+        }
+
+        return item;
+      });
+
+      return arr.flat().sort((a, b) => {
+        const x = a.time; const y = b.time;
+        return ((x > y) ? -1 : ((x < y) ? 1 : 0));
+      });
+    }).then(res => this.state.activityData.concat(res))
       .then(arr => {
         let minTime = new Date(this.state.config.min_time);
         minTime.setDate(minTime.getDate() - 3);
@@ -129,28 +151,26 @@ class Activity extends BaseComponent {
       return errorActivity;
     }
 
+    let rewardTitle = '';
+
+    switch (activity.type) {
+    case 'poc_witness': { rewardTitle = 'Witnessed Beacon'; break; }
+    case 'poc_challengee': { rewardTitle = 'Broadcasted Beacon'; break; }
+    case 'poc_challenger': { rewardTitle = 'Challenged Beaconer'; break; }
+    case 'dc_rewards': { rewardTitle = 'Transferred Packets'; break; }
+    default: { rewardTitle = activity.type; }
+    }
+
     return {
       name: 'Received Mining Rewards',
       icon: <CashCoin size={18} />,
       className: 'activity-reward',
-      content: activity.rewards.map((reward, i) => {
-        let rewardTitle = '';
-
-        switch (reward.type) {
-        case 'poc_witnesses': { rewardTitle = 'Witnessed Beacon'; break; }
-        case 'poc_challengees': { rewardTitle = 'Broadcasted Beacon'; break; }
-        case 'poc_challengers': { rewardTitle = 'Challenged Beaconer'; break; }
-        case 'data_credits': { rewardTitle = 'Transferred Packets'; break; }
-        default: { rewardTitle = reward.type; }
-        }
-
-        return (
-          <div className='activity-item-desc-block' key={i}>
-            <p>{rewardTitle}</p>
-            <h6>{noExponents(reward.amount / 100000000)} HNT</h6>
-          </div>
-        );
-      })
+      content: (
+        <div className='activity-item-desc-block'>
+          <p>{rewardTitle}</p>
+          <h6>{noExponents(activity.amount / 100000000)} HNT</h6>
+        </div>
+      )
     }
   }
 
@@ -163,11 +183,7 @@ class Activity extends BaseComponent {
       name: 'Transferred Packets',
       icon: <Truck size={18} />,
       className: 'activity-transferred-packets',
-      content: (
-        <div className='activity-item-desc-block'>
-          <p>{activity.state_channel.summaries[0].num_packets} packets | {activity.state_channel.summaries[0].num_dcs}DC</p>
-        </div>
-      )
+      content: null
     };
   }
 
@@ -255,9 +271,12 @@ class Activity extends BaseComponent {
     return this.state.activityData.map((activity, i) => {
       let item = {};
 
+      console.log(activity);
+
       switch (activity.type) {
-      case 'rewards_v1':
-      case 'rewards_v2': {
+      case 'poc_challengee':
+      case 'poc_witness':
+      case 'dc_rewards': {
         item = this.generateRewards(activity);
         break;
       }
@@ -301,9 +320,9 @@ class Activity extends BaseComponent {
           <td className='activity-item-desc'>{item.content}</td>
           <td className='activity-item-block-height'>
             <div className='activity-item-block-height-header'>Block height</div>
-            <div className='activity-item-block-height-content'>{activity.height}</div>
+            <div className='activity-item-block-height-content'>{activity.height ? activity.height : activity.block ? activity.block : '?'}</div>
           </td>
-          <td className='activity-item-time'>{GetTimeAgo(activity.time * 1000)}</td>
+          <td className='activity-item-time'>{activity.time ? GetTimeAgo(activity.time * 1000) : '?'}</td>
         </tr>
       );
     });

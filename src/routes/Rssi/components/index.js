@@ -96,7 +96,7 @@ class Rssi extends BaseComponent {
       return null;
     }
 
-    return HeliumAPI.getHotspotActivity(
+    return HeliumAPI.getHotspotChallenges(
       this.props.hsList[this.props.currentHS].data.address,
       this.handleDataLoadingUpdate,
       this.state.config

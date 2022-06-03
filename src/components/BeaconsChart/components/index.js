@@ -112,7 +112,6 @@ class BeaconsChart extends BaseComponent {
             options={chartOptions((e, elements) => {
               try {
                 const dayData = this.state.daysDataset[elements[0].index];
-                console.log(this.state);
                 this.updateState({ dayModalShow: true, dayModalData: dayData });
               } catch (e) {}
             })}
