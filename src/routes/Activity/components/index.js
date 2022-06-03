@@ -271,8 +271,6 @@ class Activity extends BaseComponent {
     return this.state.activityData.map((activity, i) => {
       let item = {};
 
-      console.log(activity);
-
       switch (activity.type) {
       case 'poc_challengee':
       case 'poc_witness':
