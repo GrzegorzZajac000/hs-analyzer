@@ -153,11 +153,6 @@ class Info extends BaseComponent {
               />
             </div>
           </div>
-          <div className='row'>
-            <div className='col-12'>
-              <p className='legacy-info'>If you liked old version of this tool, you can use it on <a href='https://legacy.hs-analyzer.com/' target='_blank' rel='noreferrer noopener'>https://legacy.hs-analyzer.com</a> :)</p>
-            </div>
-          </div>
         </div>
       </section>
     );
