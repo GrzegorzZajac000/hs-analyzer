@@ -23,11 +23,6 @@
   h3 {
     font-size: px-to-rem(18);
     font-weight: 400;
-    margin-bottom: 5px;
-
-    @media all and (max-width: 1420px) {
-      font-size: px-to-rem(16);
-      margin-bottom: 0;
-    }
+    margin-bottom: 10px;
   }
 }

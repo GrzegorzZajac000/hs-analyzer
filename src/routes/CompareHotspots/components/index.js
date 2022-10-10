@@ -301,7 +301,7 @@ class CompareHotspots extends BaseComponent {
 
     return (
       <>
-        <div className='col-6'>
+        <div className='col-12 col-xl-6'>
           <h3>Common witnesses - {this.state.compareBoth.length}</h3>
           <DataTable
             columns={this.columns}
@@ -313,7 +313,7 @@ class CompareHotspots extends BaseComponent {
             paginationPerPage={10}
           />
         </div>
-        <div className='col-6'>
+        <div className='col-12 col-xl-6'>
           <h3>Witnesses only for {HSName.toView(this.props.hsList[this.props.currentHS].data.name)}  - {this.state.compareA.length}</h3>
           <DataTable
             columns={this.columns}
@@ -325,7 +325,7 @@ class CompareHotspots extends BaseComponent {
             paginationPerPage={10}
           />
         </div>
-        <div className='col-6'>
+        <div className='col-12 col-xl-6'>
           <h3>Witnesses only for {HSName.toView(this.state.comparableHotspot.name)}  - {this.state.compareB.length}</h3>
           <DataTable
             columns={this.columns}
@@ -372,7 +372,7 @@ class CompareHotspots extends BaseComponent {
             </div>
           </div>
           <div className='row'>
-            <div className='col-6'>
+            <div className='col-12 col-xl-6'>
               <h3>{HSName.toView(this.props.hsList[this.props.currentHS].data.name)} witnesses - {this.state.data_1.length}</h3>
               <DataTable
                 columns={this.columns}
@@ -384,7 +384,7 @@ class CompareHotspots extends BaseComponent {
                 paginationPerPage={10}
               />
             </div>
-            <div className='col-6'>
+            <div className='col-12 col-xl-6'>
               {this.generateSecondHotspotData()}
             </div>
             {this.generateDiffs()}
