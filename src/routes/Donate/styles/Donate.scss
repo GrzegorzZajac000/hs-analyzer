@@ -2,9 +2,7 @@
 @import "../../../static/global-styles/functions";
 
 .donate {
-  @media all and (max-width: $screen-md-max) {
-    text-align: center;
-  }
+  text-align: center;
 
   &-content {
     text-align: center;
@@ -25,6 +23,24 @@
       border-radius: 8px;
       padding: 20px;
       width: 100%;
+
+      &-bg {
+        align-items: center;
+        background: #fff;
+        border-radius: 8px;
+        display: flex;
+        height: 240px;
+        justify-content: center;
+        margin: 0 auto;
+        width: 240px;
+
+        @media all and (max-width: 400px) {
+          background: transparent;
+          border-radius: 0;
+          height: auto;
+          width: auto;
+        }
+      }
     }
   }
 
