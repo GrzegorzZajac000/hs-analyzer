@@ -44,6 +44,37 @@ class CompareHotspots extends BaseComponent {
       .then(() => {});
   }
 
+  componentDidUpdate (prevProps, prevState, snapshot) {
+    if (prevProps.currentHS !== this.props.currentHS && this.props.currentHS === null) {
+      this.updateState({ loaded: false, data_1: [], data_2: [], compareBoth: [], compareA: [], compareB: [], dataLoadingLength: 0, comparableHotspot: null });
+    }
+
+    if (
+      (
+        prevProps.dateMode !== this.props.dateMode ||
+        prevProps.minTime !== this.props.minTime ||
+        prevProps.maxTime !== this.props.maxTime
+      ) || (
+        prevProps.currentHS !== this.props.currentHS &&
+        this.props.currentHS !== null
+      ) || (
+        prevProps.hsList.length !== this.props.hsList.length &&
+        this.props.currentHS !== null
+      )
+    ) {
+      this.updateState({
+        loaded: false,
+        dataLoadingLength: 0,
+        config: {
+          ...generateDateConfig(this.props.dateMode, this.props.minTime, this.props.maxTime),
+          filter_types: 'poc_receipts_v1, poc_receipts_v2'
+        }
+      }, () => {
+        this.getHSActivity().then(() => {});
+      });
+    }
+  }
+
   getHSActivity () {
     if (!isCurrentHS(this.props.currentHS) || this.props.hsList.length <= 0 || !this.props.hsList[this.props.currentHS].data.address) {
       return null;
@@ -99,7 +130,7 @@ class CompareHotspots extends BaseComponent {
         return key;
       });
 
-      this.updateState({ data_1: data, loaded: true });
+      this.updateState({ data_1: data, data_2: [], compareBoth: [], compareA: [], compareB: [], comparableHotspot: null, loaded: true });
     }).catch(err => {
       console.error(err);
       captureException(err);
