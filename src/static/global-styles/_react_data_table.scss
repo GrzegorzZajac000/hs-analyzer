@@ -130,6 +130,14 @@
       }
     }
   }
+
+  > div {
+    &:first-of-type:last-of-type {
+      background-color: $box-bg;
+      border-radius: 16px;
+      color: $light-font-color;
+    }
+  }
 }
 
 .rdt_Pagination {
