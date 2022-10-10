@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Routes, Route } from 'react-router';
 import { Menu, TopBar, HSModal } from './index';
-import { Activity, ChainVariables, City, Connectivity, Donate, Info, NoMatch, Rssi, Snr } from '../routes';
+import { Activity, ChainVariables, City, CompareHotspots, Connectivity, Donate, Info, NoMatch, Rssi, Snr } from '../routes';
 import { Provider } from 'react-redux';
 import createStore from '../store/createStore';
 import { persistStore } from 'redux-persist';
@@ -54,6 +54,7 @@ class App extends BaseComponent {
                       <Route path='/rssi' element={<Rssi />} />
                       <Route path='/snr' element={<Snr />} />
                       <Route path='/donate' element={<Donate />} />
+                      <Route path='/compare-hotspots' element={<CompareHotspots />} />
 
                       <Route path='*' element={<NoMatch />} />
                     </Routes>

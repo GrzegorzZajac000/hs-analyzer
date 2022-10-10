@@ -1,0 +1,33 @@
+@import "../../../static/global-styles/variables";
+@import "../../../static/global-styles/functions";
+
+.compare-hotspots {
+  /* stylelint-disable selector-class-pattern */
+  .rdt_Pagination {
+    margin-bottom: 20px;
+  }
+  /* stylelint-enable selector-class-pattern */
+
+  h2 {
+    color: $light-font-color;
+    font-size: px-to-rem(26);
+    font-weight: 700;
+    margin-bottom: 20px;
+
+    @media all and (max-width: $screen-sm-max) {
+      font-size: px-to-rem(24);
+      margin-bottom: 15px;
+    }
+  }
+
+  h3 {
+    font-size: px-to-rem(18);
+    font-weight: 400;
+    margin-bottom: 5px;
+
+    @media all and (max-width: 1420px) {
+      font-size: px-to-rem(16);
+      margin-bottom: 0;
+    }
+  }
+}

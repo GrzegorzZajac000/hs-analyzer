@@ -34,7 +34,7 @@ class Menu extends BaseComponent {
         <nav className={'menu' + (this.state.mobileMenuOpen ? ' mobile-visible' : '')}>
           <Link to='/' className='menu-logo'>
             <img src={Logo} alt='HS-Analyzer' />
-            <p className='menu-logo-version'>v0.4.0</p>
+            <p className='menu-logo-version'>v0.4.1</p>
           </Link>
           <ul>
             <li>
@@ -47,7 +47,7 @@ class Menu extends BaseComponent {
               <MenuLink to='/activity' onClick={this.handleHide}>Latest activity</MenuLink>
             </li>
             <li className={(Number.isInteger(this.props.currentHS) && this.props.currentHS >= 0) ? '' : 'disabled'}>
-              <MenuLink to='/rssi' onClick={this.handleHide}>RSSI / Beacon Analysis</MenuLink>
+              <MenuLink to='/rssi' onClick={this.handleHide}>Data Analysis</MenuLink>
             </li>
             <li className={(Number.isInteger(this.props.currentHS) && this.props.currentHS >= 0) ? '' : 'disabled'}>
               <MenuLink to='/snr' onClick={this.handleHide}>SNR Data</MenuLink>
@@ -58,12 +58,12 @@ class Menu extends BaseComponent {
             <li className={(Number.isInteger(this.props.currentHS) && this.props.currentHS >= 0) ? '' : 'disabled'}>
               <MenuLink to='/connectivity' onClick={this.handleHide}>Connectivity</MenuLink>
             </li>
+            <li className={(Number.isInteger(this.props.currentHS) && this.props.currentHS >= 0) ? '' : 'disabled'}>
+              <MenuLink to='/compare-hotspots' onClick={this.handleHide}>Compare hotspots</MenuLink>
+            </li>
             <li>
               <MenuLink to='/donate' onClick={this.handleHide}>Donate</MenuLink>
             </li>
-            {/* <li> */}
-            {/*  <a href='https://github.com/GrzegorzZajac000/hs-analyzer' target='_blank' rel='noreferrer noopener'>GitHub <WindowPlus size={18} /></a> */}
-            {/* </li> */}
           </ul>
         </nav>
 

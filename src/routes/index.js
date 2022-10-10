@@ -1,6 +1,7 @@
 import Activity from './Activity';
 import ChainVariables from './ChainVariables';
 import City from './City';
+import CompareHotspots from './CompareHotspots';
 import Connectivity from './Connectivity';
 import Donate from './Donate';
 import Info from './Info';
@@ -12,6 +13,7 @@ export {
   Activity,
   ChainVariables,
   City,
+  CompareHotspots,
   Connectivity,
   Donate,
   Info,
