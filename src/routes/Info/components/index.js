@@ -4,7 +4,7 @@ import { InfoBlock } from '../../../components';
 import HeliumAPI from '../../../api/HeliumAPI';
 import { BaseComponent, sendErrorToast } from '../../../utilities';
 import DataTable from 'react-data-table-component';
-import NumberFormat from 'react-number-format';
+import { NumericFormat } from 'react-number-format';
 import pLimit from 'p-limit';
 import { captureException } from '@sentry/react';
 
@@ -29,14 +29,14 @@ class Info extends BaseComponent {
         id: 'balance',
         name: 'Balance',
         selector: row => row.balance,
-        format: row => <NumberFormat value={row.balance / 100000000} displayType='text' thousandSeparator=' ' suffix=' HNT' />,
+        format: row => <NumericFormat value={row.balance / 100000000} displayType='text' thousandSeparator=' ' suffix=' HNT' />,
         sortable: true,
         right: true
       },
       {
         name: 'Staked balance',
         selector: row => row.staked_balance,
-        format: row => <NumberFormat value={row.staked_balance / 100000000} displayType='text' thousandSeparator=' ' suffix=' HNT' />,
+        format: row => <NumericFormat value={row.staked_balance / 100000000} displayType='text' thousandSeparator=' ' suffix=' HNT' />,
         sortable: true,
         right: true
       }
