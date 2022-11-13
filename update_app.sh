@@ -1,5 +1,4 @@
 #/bin/bash
-nvm use
 npm install --global yarn
 pm2 stop index.js
 git pull
