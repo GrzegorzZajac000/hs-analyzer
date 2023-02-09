@@ -45,7 +45,8 @@ class RSSIChart extends BaseComponent {
     }).flat();
 
     data = data.map(action => {
-      action.date = dateUtility(new Date(action.timestamp / 1000000));
+      const d = action.timestamp.toString().length <= 10 ? action.timestamp * 1000 : action.timestamp / 1000000;
+      action.date = dateUtility(new Date(d));
       return action;
     });
 

@@ -56,7 +56,10 @@ class DayModal extends BaseComponent {
 
       switch (this.props.mode) {
       case 'rssi': {
-        dayData = this.props.data.filter(action => new Date(action.timestamp / 1000).getHours() === i);
+        dayData = this.props.data.filter(action => {
+          const d = action.timestamp.toString().length <= 10 ? action.timestamp * 1000 : action.timestamp / 1000000;
+          return new Date(d).getHours() === i;
+        });
 
         chartDataset[0].data.push(dayData.filter(w => w.signal < -130).length);
         chartDataset[1].data.push(dayData.filter(w => w.signal >= -130 && w.signal < -120).length);

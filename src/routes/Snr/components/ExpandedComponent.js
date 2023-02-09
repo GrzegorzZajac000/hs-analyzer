@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 const ExpandedComponent = ({ data }) => {
   const rows = data.witnesses.map((w, i) => {
+    const d = w.timestamp.toString().length <= 10 ? w.timestamp * 1000 : w.timestamp / 1000000;
+
     return (
       <tr key={i}>
         <td>{w.frequency ? w.frequency.toFixed(2) : '???'} MHz</td>
@@ -11,7 +13,7 @@ const ExpandedComponent = ({ data }) => {
         <td>{w.signal}</td>
         <td>{w.snr ? w.snr.toFixed(2) : '???'}</td>
         <td>{(w.signal && w.snr) ? (w.signal - w.snr).toFixed(2) : '???'}</td>
-        <td>{GetTimeAgo(w.timestamp / 1000000)}</td>
+        <td>{GetTimeAgo(d)}</td>
       </tr>
     );
   });
